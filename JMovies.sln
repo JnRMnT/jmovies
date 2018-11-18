@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.UI", "JMovies\JMovies.UI.csproj", "{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.App", "..\JMovies.App\JMovies.App.csproj", "{B6D4698D-9F93-4395-9049-3880CA48CBF3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Tests", "JMovies.Tests\JMovies.Tests.csproj", "{69822E63-61E3-4EDC-8F96-1C2B5E23F955}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Entities", "JMovies.Entities\JMovies.Entities.csproj", "{CF5923A7-C00B-45AB-8DAB-B9C765D2B3B1}"
@@ -23,6 +21,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Common", "JMovies.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Configuration", "JMovies.Configuration\JMovies.Configuration.csproj", "{B4FE33D0-B4D8-4FEA-A2D8-2501FBFADE0A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JMovies.WebJobs", "JMovies.WebJobs", "{653E924D-91A5-41C9-9D47-55F15E5A643D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{B3B8944F-5290-4D94-95EF-1EB8F57C0724}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.WebJobs.FetchIMDBData", "JMovies.WebJobs\JMovies.WebJobs.FetchIMDBData\JMovies.WebJobs.FetchIMDBData.csproj", "{B88551AF-AB97-45E8-9C9C-61273B47BE49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.App", "JMovies.App\JMovies.App.csproj", "{B6D4698D-9F93-4395-9049-3880CA48CBF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,10 +39,6 @@ Global
 		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6D4698D-9F93-4395-9049-3880CA48CBF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6D4698D-9F93-4395-9049-3880CA48CBF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6D4698D-9F93-4395-9049-3880CA48CBF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6D4698D-9F93-4395-9049-3880CA48CBF3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{69822E63-61E3-4EDC-8F96-1C2B5E23F955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{69822E63-61E3-4EDC-8F96-1C2B5E23F955}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69822E63-61E3-4EDC-8F96-1C2B5E23F955}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,9 +71,20 @@ Global
 		{B4FE33D0-B4D8-4FEA-A2D8-2501FBFADE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4FE33D0-B4D8-4FEA-A2D8-2501FBFADE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4FE33D0-B4D8-4FEA-A2D8-2501FBFADE0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B88551AF-AB97-45E8-9C9C-61273B47BE49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B88551AF-AB97-45E8-9C9C-61273B47BE49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B88551AF-AB97-45E8-9C9C-61273B47BE49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B88551AF-AB97-45E8-9C9C-61273B47BE49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6D4698D-9F93-4395-9049-3880CA48CBF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6D4698D-9F93-4395-9049-3880CA48CBF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6D4698D-9F93-4395-9049-3880CA48CBF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6D4698D-9F93-4395-9049-3880CA48CBF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B88551AF-AB97-45E8-9C9C-61273B47BE49} = {653E924D-91A5-41C9-9D47-55F15E5A643D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B83A6A9-E91A-4EDB-8DD9-89B5C719BF5F}

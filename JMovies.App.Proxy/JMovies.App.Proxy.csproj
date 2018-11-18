@@ -73,7 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\JMovies.App\JMovies.App.csproj">
+    <ProjectReference Include="..\JMovies.App\JMovies.App.csproj">
       <Project>{b6d4698d-9f93-4395-9049-3880ca48cbf3}</Project>
       <Name>JMovies.App</Name>
     </ProjectReference>
