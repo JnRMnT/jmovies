@@ -155,7 +155,9 @@
     <Content Include="Connected Services\Application Insights\ConnectedService.json" />
     <Content Include="ConfigurationFiles\FlowExecutionConfiguration.json" />
     <Content Include="ConfigurationFiles\Flows\BasicResolutionTest.json" />
-    <Content Include="log4net.config" />
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ConfigurationFiles\Schemas\FlowConfiguration-schema.json" />
     <Content Include="app_publish.pfx" />
     <None Include="packages.config" />

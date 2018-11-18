@@ -4,6 +4,7 @@ using JMovies.Entities;
 using JMovies.Entities.Interfaces;
 using JMovies.Utilities.Providers;
 using JMovies.Utilities.Unity;
+using log4net.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace JMovies.App
         /// </summary>
         protected void Application_Start(object sender, EventArgs e)
         {
+            XmlConfigurator.Configure();
             SingletonUnity.ActiveContainer.RegisterType<IContextProvider, ContextProvider>();
             SingletonUnity.ActiveContainer.RegisterType<IPathProvider, PathProvider>();
             SingletonUnity.ActiveContainer.RegisterSingleton<IFlowConfigurationProvider, JsonFileBasedFlowConfigurationProvider>();

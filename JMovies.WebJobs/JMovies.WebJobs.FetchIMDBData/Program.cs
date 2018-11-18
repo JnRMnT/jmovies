@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using JMovies.Entities.Framework;
+using JMovies.Utilities.Logging;
+using log4net.Config;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
@@ -9,8 +12,16 @@ namespace JMovies.WebJobs.FetchIMDBData
     {
         static void Main(string[] args)
         {
+            try
+            {
+                XmlConfigurator.Configure();
 
-            Console.WriteLine("Test");
+            }
+            catch (Exception e)
+            {
+                DefaultLogger.Error(e);
+                throw;
+            }
         }
     }
 }

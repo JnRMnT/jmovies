@@ -8,6 +8,7 @@ using JMovies.Entities.Responses;
 using JMovies.Tests.Providers;
 using JMovies.Utilities.Providers;
 using JMovies.Utilities.Unity;
+using log4net.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity;
 using Unity.Lifetime;
@@ -20,7 +21,7 @@ namespace JMovies.Tests
         [TestMethod]
         public void AppBasicResolutionTest()
         {
-            InitalizeUnity();
+            Initialize();
             JMAppClient jmAppClient = SingletonUnity.Resolve<JMAppClient>();
             Context dummyContext = new Context();
             jmAppClient.ContextProvider.SetContext(dummyContext);
@@ -34,8 +35,9 @@ namespace JMovies.Tests
         {
         }
 
-        private void InitalizeUnity()
+        private void Initialize()
         {
+            XmlConfigurator.Configure();
             SingletonUnity.ActiveContainer.RegisterType<IContextProvider, TemporaryContextProvider>();
             SingletonUnity.ActiveContainer.RegisterType<IPathProvider, PathProvider>();
             SingletonUnity.ActiveContainer.RegisterSingleton<IFlowConfigurationProvider, JsonFileBasedFlowConfigurationProvider>();
