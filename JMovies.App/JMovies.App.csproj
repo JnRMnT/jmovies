@@ -157,6 +157,7 @@
     <Content Include="ConfigurationFiles\Flows\BasicResolutionTest.json" />
     <Content Include="log4net.config" />
     <Content Include="ConfigurationFiles\Schemas\FlowConfiguration-schema.json" />
+    <Content Include="app_publish.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\jmoviesapp - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
@@ -190,6 +191,12 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>app_publish.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
