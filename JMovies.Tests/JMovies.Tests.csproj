@@ -83,7 +83,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\UnityHelper.cs" />
     <Compile Include="Providers\PathProvider.cs" />
+    <Compile Include="IMDbScrapingTests.cs" />
     <Compile Include="UnityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -106,6 +108,10 @@
     <ProjectReference Include="..\JMovies.Entities\JMovies.Entities.csproj">
       <Project>{CF5923A7-C00B-45AB-8DAB-B9C765D2B3B1}</Project>
       <Name>JMovies.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JMovies.IMDb\JMovies.IMDb.csproj">
+      <Project>{EE35B06F-713B-4395-AD12-8D5C8BB58443}</Project>
+      <Name>JMovies.IMDb</Name>
     </ProjectReference>
     <ProjectReference Include="..\JMovies.Utilities\JMovies.Utilities.csproj">
       <Project>{BDD698F4-48B9-4D26-9FC1-D656E15CBCA6}</Project>
