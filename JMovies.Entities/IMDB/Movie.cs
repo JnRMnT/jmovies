@@ -15,5 +15,11 @@ namespace JMovies.Entities.IMDB
         public string StoryLine { get; set; }
         public Credit[] Credits { get; set; }
         public int Year { get; set; }
+        public string[] TagLines { get; set; }
+        public Keyword[] Keywords { get; set; }
+        public Genre[] Genres { get; set; }
+        public OfficialSite[] OfficialSites { get; set; }
+        public Country[] Countries { get; set; }
+        public Language[] Languages { get; set; }
     }
 }

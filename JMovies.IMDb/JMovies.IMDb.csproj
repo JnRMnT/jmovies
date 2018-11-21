@@ -95,7 +95,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.4.3.0\lib\net46\System.Net.Http.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Net.Http.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -156,7 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\ScreenScrapingExtensions.cs" />
+    <Compile Include="Helpers\MoviePageDetailsHelper.cs" />
     <Compile Include="Helpers\SummaryCastHelper.cs" />
+    <Compile Include="Helpers\SummaryStorylineHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IMDbScraperDataProvider.cs" />
   </ItemGroup>

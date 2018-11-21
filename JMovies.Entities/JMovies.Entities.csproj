@@ -54,9 +54,14 @@
     <Compile Include="IMDB\ActingCredit.cs" />
     <Compile Include="IMDB\Actor.cs" />
     <Compile Include="IMDB\Character.cs" />
+    <Compile Include="IMDB\Country.cs" />
     <Compile Include="IMDB\Credit.cs" />
     <Compile Include="IMDB\CreditRoleType.cs" />
+    <Compile Include="IMDB\Genre.cs" />
+    <Compile Include="IMDB\Keyword.cs" />
+    <Compile Include="IMDB\Language.cs" />
     <Compile Include="IMDB\Movie.cs" />
+    <Compile Include="IMDB\OfficialSite.cs" />
     <Compile Include="IMDB\Person.cs" />
     <Compile Include="Interfaces\IActionClass.cs" />
     <Compile Include="Interfaces\IContextProvider.cs" />

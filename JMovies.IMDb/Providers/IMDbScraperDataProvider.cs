@@ -102,11 +102,14 @@ namespace JMovies.IMDb.Providers
             HtmlNode storyLineSection = documentNode.QuerySelector("#titleStoryLine");
             if (storyLineSection != null)
             {
-                HtmlNode storyLine = storyLineSection.QuerySelector("p span");
-                if (storyLine != null)
-                {
-                    movie.StoryLine = storyLine.InnerText.Prepare();
-                }
+                SummaryStorylineHelper.Parse(movie, storyLineSection);
+            }
+
+            //Parse Details Section
+            HtmlNode detailsSection = documentNode.QuerySelector("#titleDetails");
+            if (detailsSection != null)
+            {
+                MoviePageDetailsHelper.Parse(movie, detailsSection);
             }
 
             if (!fetchDetailedCast)
