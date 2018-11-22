@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using System;
 
 namespace JMovies.IMDb.Helpers
 {
@@ -74,6 +75,39 @@ namespace JMovies.IMDb.Helpers
                             }
                         }
                         movie.Languages = languages.ToArray();
+                    }
+                    else if (IMDbConstants.ReleaseDateHeaderRegex.IsMatch(headerContent))
+                    {
+                        Match releaseDateMatch = IMDbConstants.ReleaseDateRegex.Match(headerNode.NextSibling.InnerText.Prepare());
+                        if (releaseDateMatch.Success)
+                        {
+                            ReleaseDate releaseDate = new ReleaseDate();
+                            releaseDate.Country = new Country();
+                            releaseDate.Country.Name = releaseDateMatch.Groups[2].Value;
+                            releaseDate.Date = DateTime.Parse(releaseDateMatch.Groups[1].Value);
+                            movie.ReleaseDates = new ReleaseDate[] { releaseDate };
+                        }
+                    }
+                    else if (IMDbConstants.AKAHeaderRegex.IsMatch(headerContent))
+                    {
+                        AKA aka = new AKA
+                        {
+                            Name = headerNode.NextSibling.InnerText.Prepare()
+                        };
+                        movie.AKAs = new AKA[] { aka };
+                    }
+                    else if (IMDbConstants.FilmingLocationsHeaderRegex.IsMatch(headerContent))
+                    {
+                        List<string> filmingLocations = new List<string>();
+                        foreach (HtmlNode locationLinkNode in headerNode.ParentNode.QuerySelectorAll("a"))
+                        {
+                            Match locationLinkMatch = IMDbConstants.LocationsLinkRegex.Match(locationLinkNode.OuterHtml);
+                            if (locationLinkMatch.Success)
+                            {
+                                filmingLocations.Add(locationLinkMatch.Groups[1].Value.Prepare());
+                            }
+                        }
+                        movie.FilmingLocations = filmingLocations.ToArray();
                     }
                 }
             }

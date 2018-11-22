@@ -21,5 +21,8 @@ namespace JMovies.Entities.IMDB
         public OfficialSite[] OfficialSites { get; set; }
         public Country[] Countries { get; set; }
         public Language[] Languages { get; set; }
+        public ReleaseDate[] ReleaseDates { get; set; }
+        public AKA[] AKAs { get; set; }
+        public string[] FilmingLocations { get; set; }
     }
 }

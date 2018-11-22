@@ -30,6 +30,7 @@ namespace JMovies.IMDb.Providers
             htmlDocument.OptionWriteEmptyNodes = true;
 
             var webRequest = HttpWebRequest.Create(url);
+            webRequest.Headers["Accept-Language"] = "en-US";
             using (Stream stream = webRequest.GetResponse().GetResponseStream())
             {
                 htmlDocument.Load(stream);

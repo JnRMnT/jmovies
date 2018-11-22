@@ -29,6 +29,10 @@ namespace JMovies.Common.Constants
         public static readonly string CountryOfOriginFilterName = "country_of_origin";
         public static readonly string Language = "Language";
         public static readonly string PrimaryLanguageFilterName = "primary_language";
+        public static readonly string ReleaseDate = "Release Date";
+        public static readonly string AKA = "Also Known As";
+        public static readonly string FilmingLocation = "Filming Location";
+        public static readonly string LocationsFilterName = "locations";
 
         public static readonly Regex StarsSummaryRegex = new Regex(Star + "[s]?:", RegexOptions.IgnoreCase);
         public static readonly Regex DirectorsSummaryRegex = new Regex(Director + "[s]?:", RegexOptions.IgnoreCase);
@@ -47,5 +51,10 @@ namespace JMovies.Common.Constants
         public static readonly Regex CountryOfOriginRegex = new Regex(CountryOfOriginFilterName + "=(.+?)[&\"]", RegexOptions.IgnoreCase);
         public static readonly Regex LanguagesHeaderRegex = new Regex(Language + "[s]?:", RegexOptions.IgnoreCase);
         public static readonly Regex PrimaryLanguageRegex = new Regex(PrimaryLanguageFilterName + "=(.+?)[&\"]", RegexOptions.IgnoreCase);
+        public static readonly Regex ReleaseDateHeaderRegex = new Regex(ReleaseDate + "[s]?:", RegexOptions.IgnoreCase);
+        public static readonly Regex ReleaseDateRegex = new Regex(@"\s*(.+)\s*\((.+)\)", RegexOptions.IgnoreCase);
+        public static readonly Regex AKAHeaderRegex = new Regex(AKA + ":", RegexOptions.IgnoreCase);
+        public static readonly Regex FilmingLocationsHeaderRegex = new Regex(FilmingLocation + "[s]?:", RegexOptions.IgnoreCase);
+        public static readonly Regex LocationsLinkRegex = new Regex(LocationsFilterName + "=.+\">(.+)<\\/a>", RegexOptions.IgnoreCase);
     }
 }
