@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using System;
+using JMovies.Entities.Common;
 
 namespace JMovies.IMDb.Helpers
 {
@@ -108,6 +109,44 @@ namespace JMovies.IMDb.Helpers
                             }
                         }
                         movie.FilmingLocations = filmingLocations.ToArray();
+                    }
+                    else if (IMDbConstants.BudgetHeaderRegex.IsMatch(headerContent))
+                    {
+                        movie.Budget = new Budget();
+                        movie.Budget.Amount = headerNode.NextSibling.InnerText.Prepare().ToAmount();
+                        movie.Budget.Description = string.Empty;
+                        foreach (HtmlNode attributeNode in headerNode.ParentNode.QuerySelectorAll(".attribute"))
+                        {
+                            Match attributeMatch = GeneralRegexConstants.PharantesisRegex.Match(attributeNode.InnerText.Prepare());
+                            if (attributeMatch.Success)
+                            {
+                                if (!string.IsNullOrEmpty(movie.Budget.Description))
+                                {
+                                    movie.Budget.Description += " ";
+                                }
+                                movie.Budget.Description += attributeMatch.Groups[1].Value;
+                            }
+                        }
+                    }
+                    else if (IMDbConstants.ProductionCompanyHeaderRegex.IsMatch(headerContent))
+                    {
+                        List<Company> productionCompanies = new List<Company>();
+                        foreach (HtmlNode productionCompanyNode in headerNode.ParentNode.QuerySelectorAll("a"))
+                        {
+                            Match companyIDMatch = IMDbConstants.ProductionCompanyLinkRegex.Match(productionCompanyNode.Attributes["href"].Value);
+                            if (companyIDMatch.Success)
+                            {
+                                Company productionCompany = new Company();
+                                productionCompany.Name = productionCompanyNode.InnerText.Prepare();
+                                productionCompany.ID = companyIDMatch.Groups[1].Value.ToLong();
+                                productionCompanies.Add(productionCompany);
+                            }
+                        }
+                        movie.ProductionCompanies = productionCompanies.ToArray();
+                    }
+                    else if (IMDbConstants.RuntimeHeaderRegex.IsMatch(headerContent))
+                    {
+                        movie.Runtime = headerNode.ParentNode.QuerySelector("time").Attributes["datetime"].Value.ToHtmlTimeSpan();
                     }
                 }
             }

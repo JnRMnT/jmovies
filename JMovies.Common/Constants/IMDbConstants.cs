@@ -17,6 +17,8 @@ namespace JMovies.Common.Constants
         public static readonly string PersonIDPrefix = "nm";
         public static readonly string CharactersPath = "characters/";
         public static readonly string KeywordsPath = "keyword/";
+        public static readonly string CompanyIDPrefix = "co";
+        public static readonly string CompaniesPath = "company/";
 
         public static readonly string Star = "Star";
         public static readonly string Director = "Director";
@@ -33,6 +35,9 @@ namespace JMovies.Common.Constants
         public static readonly string AKA = "Also Known As";
         public static readonly string FilmingLocation = "Filming Location";
         public static readonly string LocationsFilterName = "locations";
+        public static readonly string Budget = "Budget";
+        public static readonly string ProductionCompany = "Production Co";
+        public static readonly string Runtime = "Runtime";
 
         public static readonly Regex StarsSummaryRegex = new Regex(Star + "[s]?:", RegexOptions.IgnoreCase);
         public static readonly Regex DirectorsSummaryRegex = new Regex(Director + "[s]?:", RegexOptions.IgnoreCase);
@@ -56,5 +61,9 @@ namespace JMovies.Common.Constants
         public static readonly Regex AKAHeaderRegex = new Regex(AKA + ":", RegexOptions.IgnoreCase);
         public static readonly Regex FilmingLocationsHeaderRegex = new Regex(FilmingLocation + "[s]?:", RegexOptions.IgnoreCase);
         public static readonly Regex LocationsLinkRegex = new Regex(LocationsFilterName + "=.+\">(.+)<\\/a>", RegexOptions.IgnoreCase);
+        public static readonly Regex BudgetHeaderRegex = new Regex(Budget + ":", RegexOptions.IgnoreCase);
+        public static readonly Regex ProductionCompanyHeaderRegex = new Regex(ProductionCompany + ":", RegexOptions.IgnoreCase);
+        public static readonly Regex ProductionCompanyLinkRegex = new Regex(CompaniesPath + CompanyIDPrefix + @"(\d+).*?");
+        public static readonly Regex RuntimeHeaderRegex = new Regex(Runtime + ":", RegexOptions.IgnoreCase);
     }
 }

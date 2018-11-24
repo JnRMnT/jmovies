@@ -24,5 +24,8 @@ namespace JMovies.Entities.IMDB
         public ReleaseDate[] ReleaseDates { get; set; }
         public AKA[] AKAs { get; set; }
         public string[] FilmingLocations { get; set; }
+        public Budget Budget { get; set; }
+        public Company[] ProductionCompanies { get; set; }
+        public TimeSpan Runtime { get; set; }
     }
 }

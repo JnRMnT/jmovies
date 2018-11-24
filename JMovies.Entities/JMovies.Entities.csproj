@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Amount.cs" />
     <Compile Include="Framework\BaseRequest.cs" />
     <Compile Include="Framework\BaseResponse.cs" />
     <Compile Include="Framework\Context.cs" />
@@ -54,7 +55,9 @@
     <Compile Include="IMDB\ActingCredit.cs" />
     <Compile Include="IMDB\Actor.cs" />
     <Compile Include="IMDB\AKA.cs" />
+    <Compile Include="IMDB\Budget.cs" />
     <Compile Include="IMDB\Character.cs" />
+    <Compile Include="IMDB\Company.cs" />
     <Compile Include="IMDB\Country.cs" />
     <Compile Include="IMDB\Credit.cs" />
     <Compile Include="IMDB\CreditRoleType.cs" />

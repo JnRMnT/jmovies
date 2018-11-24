@@ -76,7 +76,9 @@
   <ItemGroup>
     <Compile Include="Configuration\ConfigReader.cs" />
     <Compile Include="ExceptionHandling\ExceptionHandler.cs" />
+    <Compile Include="Extensions\AmountExtensions.cs" />
     <Compile Include="Extensions\PrimitiveExtensions.cs" />
+    <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Logging\DefaultLogger.cs" />
     <Compile Include="Providers\JsonFileBasedFlowConfigurationProvider.cs" />
     <Compile Include="Providers\JsonFileBasedFlowExecutionConfigurationProvider.cs" />
