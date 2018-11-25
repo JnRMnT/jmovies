@@ -10,6 +10,7 @@ namespace JMovies.Common.Constants
     public class IMDbConstants
     {
         public static readonly int IMDbIDLength = 7;
+        public static readonly string DefaultScrapingCulture = "en-US";
         public static readonly string BaseURL = "https://www.imdb.com/";
         public static readonly string MoviesPath = "title/";
         public static readonly string MovieIDPrefix = "tt";
@@ -19,9 +20,12 @@ namespace JMovies.Common.Constants
         public static readonly string KeywordsPath = "keyword/";
         public static readonly string CompanyIDPrefix = "co";
         public static readonly string CompaniesPath = "company/";
+        public static readonly string FullCreditsPath = "fullcredits/";
+        public static readonly string TVSeriesOgType = "video.tv_show";
 
         public static readonly string Star = "Star";
         public static readonly string Director = "Director";
+        public static readonly string DirectedBy = "Directed By";
         public static readonly string Writer = "Writer";
         public static readonly string Creator = "Creator";
         public static readonly string Tagline = "Tagline";
@@ -44,7 +48,7 @@ namespace JMovies.Common.Constants
         public static readonly Regex WritersSummaryRegex = new Regex(Writer + "[s]?:", RegexOptions.IgnoreCase);
         public static readonly Regex CreatorsSummaryRegex = new Regex(Creator + "[s]?:", RegexOptions.IgnoreCase);
         public static readonly Regex PersonIDURLMatcher = new Regex(Regex.Escape(PersonsPath) + PersonIDPrefix + @"(\d+)", RegexOptions.IgnoreCase);
-        public static readonly Regex MovieYearRegex = new Regex(@"(.+)\((\d{4})\)\s*");
+        public static readonly Regex MovieYearRegex = new Regex(@"(.+)\((\d{4})[–-]?(\d{4})?\)\s*");
         public static readonly Regex CharacterRegex = new Regex(CharactersPath + PersonIDPrefix + @"(\d+).*?");
         public static readonly Regex TaglinesSummaryRegex = new Regex(Tagline + "[s]?:", RegexOptions.IgnoreCase);
         public static readonly Regex PlotKeywordsSummaryRegex = new Regex(PlotKeyword + "[s]?:", RegexOptions.IgnoreCase);
@@ -65,5 +69,6 @@ namespace JMovies.Common.Constants
         public static readonly Regex ProductionCompanyHeaderRegex = new Regex(ProductionCompany + ":", RegexOptions.IgnoreCase);
         public static readonly Regex ProductionCompanyLinkRegex = new Regex(CompaniesPath + CompanyIDPrefix + @"(\d+).*?");
         public static readonly Regex RuntimeHeaderRegex = new Regex(Runtime + ":", RegexOptions.IgnoreCase);
+        public static readonly Regex CharacterEpisodeInfoRegex = new Regex(@"\n*\s*\(?(\d+)\s+episodes?,\s+(\d+)-?(\d*)\)?\s*\n*", RegexOptions.IgnoreCase);
     }
 }

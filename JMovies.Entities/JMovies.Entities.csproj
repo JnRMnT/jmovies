@@ -68,6 +68,8 @@
     <Compile Include="IMDB\OfficialSite.cs" />
     <Compile Include="IMDB\Person.cs" />
     <Compile Include="IMDB\ReleaseDate.cs" />
+    <Compile Include="IMDB\TVCharacter.cs" />
+    <Compile Include="IMDB\TVSeries.cs" />
     <Compile Include="Interfaces\IActionClass.cs" />
     <Compile Include="Interfaces\IContextProvider.cs" />
     <Compile Include="Interfaces\IFlowConfigurationProvider.cs" />

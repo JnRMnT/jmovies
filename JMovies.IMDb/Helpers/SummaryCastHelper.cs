@@ -43,15 +43,6 @@ namespace JMovies.IMDb.Helpers
                     if (roleType == CreditRoleType.Acting)
                     {
                         //Ignore acting credits, they are covered from cast summary
-                        //ActingCredit actor = new ActingCredit
-                        //{
-                        //    Person = new Actor
-                        //    {
-                        //        IMDbID = personIDMatch.Groups[1].Value.ToLong(),
-                        //        FullName = creditNode.InnerText.Prepare()
-                        //    }
-                        //};
-                        //credits.Add(actor);
                     }
                     else
                     {

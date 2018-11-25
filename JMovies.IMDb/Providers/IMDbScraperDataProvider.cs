@@ -11,6 +11,7 @@ using System.Net;
 using Fizzler.Systems.HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using JMovies.IMDb.Helpers;
+using System.Text;
 
 namespace JMovies.IMDb.Providers
 {
@@ -25,16 +26,13 @@ namespace JMovies.IMDb.Providers
 
             Movie movie = new Movie();
             string url = IMDbConstants.BaseURL + IMDbConstants.MoviesPath + IMDbConstants.MovieIDPrefix + id.ToString().PadLeft(IMDbConstants.IMDbIDLength, '0');
-            HtmlDocument htmlDocument = new HtmlDocument();
-            HtmlAgilityPack.HtmlNode.ElementsFlags["br"] = HtmlElementFlag.Empty;
-            htmlDocument.OptionWriteEmptyNodes = true;
+            HtmlDocument htmlDocument = GetNewHtmlDocument();
 
-            var webRequest = HttpWebRequest.Create(url);
-            webRequest.Headers["Accept-Language"] = "en-US";
+            WebRequest webRequest = HttpWebRequest.Create(url);
+            webRequest.Headers["Accept-Language"] = IMDbConstants.DefaultScrapingCulture;
             using (Stream stream = webRequest.GetResponse().GetResponseStream())
             {
-                htmlDocument.Load(stream);
-                stream.Close();
+                htmlDocument.Load(stream, Encoding.UTF8);
             }
             HtmlNode documentNode = htmlDocument.DocumentNode;
 
@@ -47,6 +45,15 @@ namespace JMovies.IMDb.Providers
             else
             {
                 return null;
+            }
+            HtmlNode titleTypeTag = documentNode.QuerySelector("meta[property='og:type']");
+            if (titleTypeTag != null && titleTypeTag.Attributes["content"].Value == IMDbConstants.TVSeriesOgType)
+            {
+                //Initialize movie as TV Series
+                movie = new TVSeries
+                {
+                    IMDbID = movie.IMDbID
+                };
             }
 
             //Parse Title
@@ -65,6 +72,19 @@ namespace JMovies.IMDb.Providers
                 {
                     movie.OriginalTitle = originalTitleNode.InnerText.Prepare();
                 }
+
+                foreach (HtmlNode titleLink in titleWrapper.QuerySelectorAll("a"))
+                {
+                    if (titleLink.OuterHtml.Contains("/releaseinfo"))
+                    {
+                        Match yearMatch = IMDbConstants.MovieYearRegex.Match(titleLink.InnerText.Prepare());
+                        movie.Year = yearMatch.Groups[2].Value.Trim().ToInteger();
+                        if (yearMatch.Groups.Count > 3)
+                        {
+                            (movie as TVSeries).EndYear = yearMatch.Groups[3].Value.Trim().ToInteger();
+                        }
+                    }
+                }
             }
             else
             {
@@ -82,15 +102,12 @@ namespace JMovies.IMDb.Providers
                     movie.PlotSummary = summaryText.InnerText.Prepare();
                 }
 
-                if (!fetchDetailedCast)
+                foreach (HtmlNode creditSummaryNode in summaryWrapper.QuerySelectorAll(".credit_summary_item"))
                 {
-                    foreach (HtmlNode creditSummaryNode in summaryWrapper.QuerySelectorAll(".credit_summary_item"))
+                    Credit[] summaryCredits = SummaryCastHelper.GetCreditInfo(creditSummaryNode);
+                    if (summaryCredits != null && summaryCredits.Length > 0)
                     {
-                        Credit[] summaryCredits = SummaryCastHelper.GetCreditInfo(creditSummaryNode);
-                        if (summaryCredits != null && summaryCredits.Length > 0)
-                        {
-                            credits.AddRange(summaryCredits);
-                        }
+                        credits.AddRange(summaryCredits);
                     }
                 }
             }
@@ -117,62 +134,125 @@ namespace JMovies.IMDb.Providers
             {
                 //Parse Cast Table
                 HtmlNode castListNode = documentNode.QuerySelector(".cast_list");
-                if (castListNode != null)
-                {
-                    foreach (HtmlNode castNode in castListNode.QuerySelectorAll("tr"))
-                    {
-                        IEnumerable<HtmlNode> castColumns = castNode.QuerySelectorAll("td");
-                        if (castColumns != null && castColumns.Count() == 4)
-                        {
-                            HtmlNode personNode = castColumns.ElementAt(1);
-                            HtmlNode charactersNode = castColumns.ElementAt(3);
-
-                            ActingCredit actingCredit = new ActingCredit();
-                            actingCredit.Person = new Actor();
-                            Match personIDMatch = IMDbConstants.PersonIDURLMatcher.Match(personNode.QuerySelector("a").Attributes["href"].Value);
-                            if (personIDMatch.Success && personIDMatch.Groups.Count > 1)
-                            {
-                                actingCredit.Person.IMDbID = personIDMatch.Groups[1].Value.ToLong();
-                                actingCredit.Person.FullName = personNode.InnerText.Prepare();
-                            }
-
-                            List<Character> characters = new List<Character>();
-                            foreach (HtmlNode characterNode in charactersNode.QuerySelectorAll("a"))
-                            {
-                                characters.Add(GetCharacter(characterNode));
-                            }
-                            if (characters.Count == 0)
-                            {
-                                Character character = GetCharacter(charactersNode);
-                                if (!string.IsNullOrEmpty(character.Name) || character.IMDbID != null)
-                                {
-                                    characters.Add(character);
-                                }
-                            }
-                            actingCredit.Characters = characters.ToArray();
-                            credits.Add(actingCredit);
-                        }
-                    }
-                    movie.Credits = credits.ToArray();
-                }
+                ParseCastList(movie, credits, castListNode);
             }
             else
             {
-
+                //Fetch credits through full credits page
+                WebRequest fullCreditsPageRequest = HttpWebRequest.Create(url + "/" + IMDbConstants.FullCreditsPath);
+                fullCreditsPageRequest.Headers["Accept-Language"] = IMDbConstants.DefaultScrapingCulture;
+                HtmlDocument creditsPageDocument = GetNewHtmlDocument();
+                using (Stream stream = fullCreditsPageRequest.GetResponse().GetResponseStream())
+                {
+                    creditsPageDocument.Load(stream, Encoding.UTF8);
+                }
+                HtmlNode fullCreditsPageDocumentNode = creditsPageDocument.DocumentNode;
+                HtmlNode fullCreditsPageCastListNode = fullCreditsPageDocumentNode.QuerySelector(".cast_list");
+                ParseCastList(movie, credits, fullCreditsPageCastListNode);
+                movie.Credits = credits.ToArray();
             }
 
             return movie;
         }
 
-        private static Character GetCharacter(HtmlNode characterNode)
+        private static void ParseCastList(Movie movie, List<Credit> credits, HtmlNode castListNode)
         {
-            Character character = new Character();
-            character.Name = characterNode.InnerText.Prepare();
-            if (IMDbConstants.CharacterRegex.IsMatch(characterNode.OuterHtml))
+            if (castListNode != null)
             {
-                character.IMDbID = IMDbConstants.CharacterRegex.Match(characterNode.OuterHtml).Groups[1].Value.ToLong();
+                foreach (HtmlNode castNode in castListNode.QuerySelectorAll("tr"))
+                {
+                    IEnumerable<HtmlNode> castColumns = castNode.QuerySelectorAll("td");
+                    if (castColumns != null && castColumns.Count() == 4)
+                    {
+                        HtmlNode personNode = castColumns.ElementAt(1);
+                        HtmlNode charactersNode = castColumns.ElementAt(3);
+
+                        ActingCredit actingCredit = new ActingCredit();
+                        actingCredit.Person = new Actor();
+                        Match personIDMatch = IMDbConstants.PersonIDURLMatcher.Match(personNode.QuerySelector("a").Attributes["href"].Value);
+                        if (personIDMatch.Success && personIDMatch.Groups.Count > 1)
+                        {
+                            actingCredit.Person.IMDbID = personIDMatch.Groups[1].Value.ToLong();
+                            actingCredit.Person.FullName = personNode.InnerText.Prepare();
+                        }
+
+                        List<Character> characters = new List<Character>();
+                        foreach (HtmlNode characterNode in charactersNode.QuerySelectorAll("a"))
+                        {
+                            Character character = GetCharacter(characterNode, characters, movie);
+                            if (character != null)
+                            {
+                                characters.Add(character);
+                            }
+                        }
+                        if (characters.Count == 0)
+                        {
+                            Character character = GetCharacter(charactersNode.FirstChild, characters, movie);
+                            if (character != null && (!string.IsNullOrEmpty(character.Name) || character.IMDbID != null))
+                            {
+                                characters.Add(character);
+                            }
+                        }
+                        actingCredit.Characters = characters.ToArray();
+                        credits.Add(actingCredit);
+                    }
+                }
+                movie.Credits = credits.ToArray();
             }
-            return character;
+        }
+
+        private static HtmlDocument GetNewHtmlDocument()
+        {
+            HtmlDocument htmlDocument = new HtmlDocument();
+            HtmlNode.ElementsFlags["br"] = HtmlElementFlag.Empty;
+            htmlDocument.OptionWriteEmptyNodes = true;
+            return htmlDocument;
+        }
+
+        private static Character GetCharacter(HtmlNode characterNode, List<Character> characters, Movie movie)
+        {
+            if (!characterNode.GetClasses().Any(e => e == "toggle-episodes"))
+            {
+                Character character = null;
+                if (movie is TVSeries)
+                {
+                    character = new TVCharacter();
+                }
+                else
+                {
+                    character = new Character();
+                }
+
+                HtmlNode episodeInformationNode = characterNode.ParentNode.QuerySelector(".toggle-episodes");
+                if (episodeInformationNode == null)
+                {
+                    character.Name = Regex.Replace(Regex.Replace(characterNode.InnerText.Prepare(), @"\n", string.Empty), @"\s+", @" ").Trim();
+                }
+                else
+                {
+                    character.Name = Regex.Replace(Regex.Replace(characterNode.InnerText.Prepare(), @"\n", string.Empty), @"\s+", @" ").Trim();
+                    Match characterEpisodeInfoMatch = IMDbConstants.CharacterEpisodeInfoRegex.Match(episodeInformationNode.InnerText.Prepare());
+                    if (characterEpisodeInfoMatch.Success)
+                    {
+                        TVCharacter tvCharacter = character as TVCharacter;
+                        tvCharacter.EpisodeCount = characterEpisodeInfoMatch.Groups[1].Value.ToInteger();
+                        tvCharacter.StartYear = characterEpisodeInfoMatch.Groups[2].Value.ToInteger();
+                        if (characterEpisodeInfoMatch.Groups.Count > 3)
+                        {
+                            tvCharacter.EndYear = characterEpisodeInfoMatch.Groups[3].Value.ToInteger();
+                        }
+                    }
+                }
+                if (IMDbConstants.CharacterRegex.IsMatch(characterNode.OuterHtml))
+                {
+                    character.IMDbID = IMDbConstants.CharacterRegex.Match(characterNode.OuterHtml).Groups[1].Value.ToLong();
+                }
+                return character;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -20,5 +20,16 @@ namespace JMovies.Tests
             Assert.IsNotNull(movie);
             Assert.AreEqual(movieID, movie.IMDbID);
         }
+
+        [TestMethod]
+        public void DetailedMovieScraping()
+        {
+            long movieID = 1477834;//1477834;//397442;//6412452;
+            UnityHelper.Initialize();
+            IIMDbDataProvider imdbDataProvider = SingletonUnity.Resolve<IIMDbDataProvider>();
+            Movie movie = imdbDataProvider.GetMovie(movieID, true);
+            Assert.IsNotNull(movie);
+            Assert.AreEqual(movieID, movie.IMDbID);
+        }
     }
 }
