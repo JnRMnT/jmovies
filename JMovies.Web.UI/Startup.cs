@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(JMovies.Startup))]
+[assembly: OwinStartup(typeof(JMovies.Web.UI.Startup))]
 
-namespace JMovies
+namespace JMovies.Web.UI
 {
     public partial class Startup
     {

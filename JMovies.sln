@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.IMDb", "JMovies.IMD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Web.UI", "JMovies.Web.UI\JMovies.Web.UI.csproj", "{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "JMovies.Web.App", "JMovies.Web.App\JMovies.Web.App.njsproj", "{B6CE51CE-89D1-4E43-8112-E80EEBFCFD1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6CE51CE-89D1-4E43-8112-E80EEBFCFD1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6CE51CE-89D1-4E43-8112-E80EEBFCFD1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6CE51CE-89D1-4E43-8112-E80EEBFCFD1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6CE51CE-89D1-4E43-8112-E80EEBFCFD1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
