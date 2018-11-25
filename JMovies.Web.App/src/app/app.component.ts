@@ -3,14 +3,14 @@ import { Component } from '@angular/core';
 import { HttpService } from './http.service';
 import { LoadingService } from './loading.service';
 import { TranslateService } from './translate.service';
-import { ViewContainerRef, AfterViewInit } from '@angular/core';
+import { ViewContainerRef, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements OnInit {
     constructor(httpService: HttpService,
         private loadingService: LoadingService,
         vcr: ViewContainerRef,
@@ -29,7 +29,7 @@ export class AppComponent implements AfterViewInit {
         });
     }
 
-    ngAfterViewInit() {
+    ngOnInit() {
         this.loadingService.attemptToDeactivate();
     }
 

@@ -4,6 +4,9 @@
       "TypeIdentifier": "JMovies.Configuration.FlowItems.InitializationFlowItem, JMovies.Configuration"
     },
     {
+      "TypeIdentifier": "JMovies.Configuration.FlowItems.FlowActionCallItem, JMovies.Configuration"
+    },
+    {
       "TypeIdentifier": "JMovies.Configuration.FlowItems.ResultManagementFlowItem, JMovies.Configuration"
     }
   ]

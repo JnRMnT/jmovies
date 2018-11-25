@@ -9,5 +9,6 @@ namespace JMovies.Entities.IMDB
     public class TVSeries: Movie
     {
         public int EndYear { get; set; }
+        public override ProductionTypeEnum ProductonType => ProductionTypeEnum.TVSeries;
     }
 }

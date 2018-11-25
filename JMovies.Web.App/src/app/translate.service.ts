@@ -1,4 +1,4 @@
-import { Injectable, APP_INITIALIZER } from '@angular/core';
+ï»¿import { Injectable, APP_INITIALIZER } from '@angular/core';
 import { HttpService } from './http.service';
 import { Resource } from './models/general-models/resource';
 import { $ } from 'protractor';
@@ -14,7 +14,7 @@ export class TranslateService {
         },
         "tr-TR": {
             "Title.Error": "Hata",
-            "Exception.Common": "Ýsteðinizi þu anda gerçekleþtiremiyoruz, lütfen daha sonra tekrar deneyiniz."
+            "Exception.Common": "Ä°steÄŸinizi ÅŸu anda gerÃ§ekleÅŸtiremiyoruz, lÃ¼tfen daha sonra tekrar deneyiniz."
         }
     };
 

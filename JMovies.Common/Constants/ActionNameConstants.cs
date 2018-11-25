@@ -9,5 +9,6 @@ namespace JMovies.Common.Constants
     public class ActionNameConstants
     {
         public static readonly string BasicResolutionTest = "BasicResolutionTest";
+        public static readonly string StaticDataManagement = "StaticDataManagement";
     }
 }

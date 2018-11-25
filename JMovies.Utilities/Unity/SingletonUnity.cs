@@ -31,5 +31,10 @@ namespace JMovies.Utilities.Unity
         {
             return ActiveContainer.Resolve<T>();
         }
+
+        public static object Resolve(Type type)
+        {
+            return ActiveContainer.Resolve(type);
+        }
     }
 }

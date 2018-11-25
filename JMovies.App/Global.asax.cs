@@ -1,6 +1,6 @@
-﻿using Cosmonaut.ApplicationInsights;
-using JMovies.App.Business.Context;
+﻿using JMovies.App.Business.Context;
 using JMovies.App.Business.Providers;
+using JMovies.App.Business.Providers.StaticData;
 using JMovies.Entities;
 using JMovies.Entities.Interfaces;
 using JMovies.Utilities.Providers;
@@ -27,7 +27,8 @@ namespace JMovies.App
             SingletonUnity.ActiveContainer.RegisterType<IPathProvider, PathProvider>();
             SingletonUnity.ActiveContainer.RegisterSingleton<IFlowConfigurationProvider, JsonFileBasedFlowConfigurationProvider>();
             SingletonUnity.ActiveContainer.RegisterSingleton<IFlowExecutionConfigurationProvider, JsonFileBasedFlowExecutionConfigurationProvider>();
-            AppInsightsTelemetryModule.Instance.Initialize(new TelemetryConfiguration("766ad6f7-1622-4a65-9bda-c3c75458aa4a"));
+            MainStaticDataProvider.RegisterProvider<IResourcesStaticDataProvider, ResourcesStaticDataProvider>();
+            MainStaticDataProvider.Initialize();
         }
     }
 }

@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="JMoviesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="JMMovie">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="IMDBID" Type="bigint" />
+          <Property Name="ProductionType" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="125" Nullable="false" />
+          <Property Name="OriginalTitle" Type="nvarchar" MaxLength="125" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="EndYear" Type="int" />
+          <Property Name="PlotSummary" Type="nvarchar(max)" />
+          <Property Name="StoryLine" Type="nvarchar(max)" />
+          <Property Name="Runtime" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="JMResource">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="varchar" MaxLength="75" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JMResourceTranslation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResourceID" Type="bigint" Nullable="false" />
+          <Property Name="Culture" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JMUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="EMailAddress" Type="varchar" MaxLength="75" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_JMResourceTranslation_JMResource1">
+          <End Role="JMResource" Type="Self.JMResource" Multiplicity="1" />
+          <End Role="JMResourceTranslation" Type="Self.JMResourceTranslation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JMResource">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="JMResourceTranslation">
+              <PropertyRef Name="ResourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JMoviesModelStoreContainer">
+          <EntitySet Name="JMMovie" EntityType="Self.JMMovie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JMResource" EntityType="Self.JMResource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JMResourceTranslation" EntityType="Self.JMResourceTranslation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JMUser" EntityType="Self.JMUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_JMResourceTranslation_JMResource1" Association="Self.FK_JMResourceTranslation_JMResource1">
+            <End Role="JMResource" EntitySet="JMResource" />
+            <End Role="JMResourceTranslation" EntitySet="JMResourceTranslation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JMoviesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="JMUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMailAddress" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="JMoviesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="JMUsers" EntityType="Self.JMUser" />
+          <EntitySet Name="JMMovies" EntityType="JMoviesModel.JMMovie" />
+          <EntitySet Name="JMResources" EntityType="JMoviesModel.JMResource" />
+          <EntitySet Name="JMResourceTranslations" EntityType="JMoviesModel.JMResourceTranslation" />
+          <AssociationSet Name="FK_JMResourceTranslation_JMResource1" Association="JMoviesModel.FK_JMResourceTranslation_JMResource1">
+            <End Role="JMResource" EntitySet="JMResources" />
+            <End Role="JMResourceTranslation" EntitySet="JMResourceTranslations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="JMMovie">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IMDBID" Type="Int64" />
+          <Property Name="ProductionType" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="125" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalTitle" Type="String" MaxLength="125" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="EndYear" Type="Int32" />
+          <Property Name="PlotSummary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StoryLine" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Runtime" Type="Time" Precision="7" />
+        </EntityType>
+        <EntityType Name="JMResource">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="JMResourceTranslations" Relationship="JMoviesModel.FK_JMResourceTranslation_JMResource1" FromRole="JMResource" ToRole="JMResourceTranslation" />
+        </EntityType>
+        <EntityType Name="JMResourceTranslation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResourceID" Type="Int64" Nullable="false" />
+          <Property Name="Culture" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="JMResource" Relationship="JMoviesModel.FK_JMResourceTranslation_JMResource1" FromRole="JMResourceTranslation" ToRole="JMResource" />
+        </EntityType>
+        <Association Name="FK_JMResourceTranslation_JMResource1">
+          <End Type="JMoviesModel.JMResource" Role="JMResource" Multiplicity="1" />
+          <End Type="JMoviesModel.JMResourceTranslation" Role="JMResourceTranslation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JMResource">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="JMResourceTranslation">
+              <PropertyRef Name="ResourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JMoviesModelStoreContainer" CdmEntityContainer="JMoviesEntities">
+          <EntitySetMapping Name="JMUsers">
+            <EntityTypeMapping TypeName="JMoviesModel.JMUser">
+              <MappingFragment StoreEntitySet="JMUser">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="EMailAddress" ColumnName="EMailAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JMMovies">
+            <EntityTypeMapping TypeName="JMoviesModel.JMMovie">
+              <MappingFragment StoreEntitySet="JMMovie">
+                <ScalarProperty Name="Runtime" ColumnName="Runtime" />
+                <ScalarProperty Name="StoryLine" ColumnName="StoryLine" />
+                <ScalarProperty Name="PlotSummary" ColumnName="PlotSummary" />
+                <ScalarProperty Name="EndYear" ColumnName="EndYear" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="OriginalTitle" ColumnName="OriginalTitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ProductionType" ColumnName="ProductionType" />
+                <ScalarProperty Name="IMDBID" ColumnName="IMDBID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JMResources">
+            <EntityTypeMapping TypeName="JMoviesModel.JMResource">
+              <MappingFragment StoreEntitySet="JMResource">
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JMResourceTranslations">
+            <EntityTypeMapping TypeName="JMoviesModel.JMResourceTranslation">
+              <MappingFragment StoreEntitySet="JMResourceTranslation">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+                <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

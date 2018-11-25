@@ -18,11 +18,6 @@ namespace JMovies
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Default", action = "Index", id = UrlParameter.Optional }
             );
-            routes.MapRoute(
-                name: "Api",
-                url: "Api/{controller}/{action}/{id}",
-                defaults: new { controller = "Default", action = "Index", id = UrlParameter.Optional }
-            );
         }
     }
 }

@@ -29,6 +29,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>jmovies_general.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,12 +50,28 @@
     <Compile Include="Providers\PathProvider.cs" />
     <Compile Include="Providers\SessionBasedContextProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\StaticDataProviders\ResourcesStaticDataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JMovies.App.Proxy\JMovies.App.Proxy.csproj">
+      <Project>{4842AD38-FBBE-4A11-8A85-CC70D568940F}</Project>
+      <Name>JMovies.App.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JMovies.Common\JMovies.Common.csproj">
+      <Project>{F7DA0180-9A8F-4394-A36D-097F5988366E}</Project>
+      <Name>JMovies.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JMovies.Entities\JMovies.Entities.csproj">
       <Project>{CF5923A7-C00B-45AB-8DAB-B9C765D2B3B1}</Project>
       <Name>JMovies.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JMovies.Utilities\JMovies.Utilities.csproj">
+      <Project>{BDD698F4-48B9-4D26-9FC1-D656E15CBCA6}</Project>
+      <Name>JMovies.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="jmovies_general.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

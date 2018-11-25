@@ -48,14 +48,11 @@
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\JMovies\packages\Unity.5.8.11\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
-    <Reference Include="Cosmonaut, Version=2.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Cosmonaut.2.6.2\lib\netstandard1.6\Cosmonaut.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Cosmonaut.ApplicationInsights, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Cosmonaut.ApplicationInsights.2.1.1\lib\netstandard1.6\Cosmonaut.ApplicationInsights.dll</HintPath>
-    </Reference>
-    <Reference Include="Cosmonaut.Extensions.Microsoft.DependencyInjection, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Cosmonaut.Extensions.Microsoft.DependencyInjection.2.3.0\lib\netstandard2.0\Cosmonaut.Extensions.Microsoft.DependencyInjection.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Humanizer, Version=2.5.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
       <HintPath>..\packages\Humanizer.Core.2.5.1\lib\netstandard2.0\Humanizer.dll</HintPath>
@@ -97,8 +94,8 @@
       <HintPath>..\packages\Microsoft.Azure.DocumentDB.Core.2.1.3\lib\netstandard1.6\Microsoft.Azure.DocumentDB.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.1.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
@@ -120,6 +117,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\JMovies\packages\System.Configuration.ConfigurationManager.4.4.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
     </Reference>
@@ -130,8 +128,8 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\JMovies\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
-    <Reference Include="System.Diagnostics.TraceSource, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.TraceSource.4.0.0\lib\net46\System.Diagnostics.TraceSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.TraceSource, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.TraceSource.4.3.0\lib\net46\System.Diagnostics.TraceSource.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Diagnostics.Tracing, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -314,6 +312,7 @@
     </Content>
     <Content Include="ConfigurationFiles\Schemas\FlowConfiguration-schema.json" />
     <Content Include="app_publish.pfx" />
+    <Content Include="ConfigurationFiles\Flows\StaticDataManagement.json" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\jmoviesapp - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
@@ -334,6 +333,10 @@
     <ProjectReference Include="..\JMovies.Configuration\JMovies.Configuration.csproj">
       <Project>{B4FE33D0-B4D8-4FEA-A2D8-2501FBFADE0A}</Project>
       <Name>JMovies.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JMovies.DataAccess\JMovies.DataAccess.csproj">
+      <Project>{e09cd1eb-1aad-447a-b3ae-2e55234b8c57}</Project>
+      <Name>JMovies.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\JMovies.Entities\JMovies.Entities.csproj">
       <Project>{CF5923A7-C00B-45AB-8DAB-B9C765D2B3B1}</Project>
@@ -373,7 +376,6 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties ConfigurationFiles_4Flows_4flowconfiguration-schema_1json__JSONSchema="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="..\packages\Microsoft.Azure.DocumentDB.Core.2.1.3\build\Microsoft.Azure.DocumentDB.Core.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.Core.2.1.3\build\Microsoft.Azure.DocumentDB.Core.targets')" />

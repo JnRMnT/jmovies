@@ -13,9 +13,13 @@ namespace JMovies.Web.Providers
 
         public Entities.Context GetContext()
         {
-            if (HttpContext.Current != null && HttpContext.Current.Session != null)
+            if (HttpContext.Current != null && HttpContext.Current.Session != null && HttpContext.Current.Session["Context"] != null)
             {
                 return HttpContext.Current.Session["Context"] as Entities.Context;
+            }
+            else if (HttpContext.Current != null && HttpContext.Current.Items != null && HttpContext.Current.Items["Context"] != null)
+            {
+                return HttpContext.Current.Items["Context"] as Entities.Context;
             }
             else
             {
@@ -28,6 +32,10 @@ namespace JMovies.Web.Providers
             if (HttpContext.Current != null && HttpContext.Current.Session != null)
             {
                 HttpContext.Current.Session["Context"] = context;
+            }
+            else
+            {
+                HttpContext.Current.Items["Context"] = context;
             }
         }
     }

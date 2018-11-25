@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="03e6237f63624a5ca1052985915682b4" Name="Diagram1">
+        <EntityTypeShape EntityType="JMoviesModel.JMUser" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JMoviesModel.JMMovie" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="JMoviesModel.JMResource" Width="1.5" PointX="3.75" PointY="1.125" />
+        <EntityTypeShape EntityType="JMoviesModel.JMResourceTranslation" Width="1.5" PointX="6" PointY="0.875" />
+        <AssociationConnector Association="JMoviesModel.FK_JMResourceTranslation_JMResource1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

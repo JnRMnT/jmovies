@@ -27,5 +27,12 @@ namespace JMovies.Entities.IMDB
         public Budget Budget { get; set; }
         public Company[] ProductionCompanies { get; set; }
         public TimeSpan Runtime { get; set; }
+        public virtual ProductionTypeEnum ProductonType
+        {
+            get
+            {
+                return ProductionTypeEnum.Movie;
+            }
+        }
     }
 }
