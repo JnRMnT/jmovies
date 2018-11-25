@@ -27,9 +27,22 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "src/styles.less",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/font-awesome/css/font-awesome.min.css",
+              "./node_modules/animate.css/animate.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "./node_modules/smooth-scroll/dist/smooth-scroll.min.js",
+              "./node_modules/smooth-scroll/dist/smooth-scroll.polyfills.min.js",
+              "./node_modules/moment/min/moment-with-locales.min.js",
+              "./node_modules/systemjs/dist/system.min.js",
+              "./node_modules/lodash/lodash.min.js",
+              "./node_modules/q/q.js",
+              "./node_modules/jquery-slimscroll/jquery.slimscroll.min.js"
+            ]
           },
           "configurations": {
             "production": {

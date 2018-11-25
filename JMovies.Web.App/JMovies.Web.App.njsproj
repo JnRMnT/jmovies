@@ -41,6 +41,10 @@
     <Content Include="project-config.json">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\app\app-footer\app-footer.component.html" />
+    <Content Include="src\app\app-footer\app-footer.component.less" />
+    <Content Include="src\app\app-header\app-header.component.html" />
+    <Content Include="src\app\app-header\app-header.component.less" />
     <Content Include="src\app\app.component.html" />
     <Content Include="src\app\app.component.less" />
     <Content Include="src\assets\.gitkeep" />
@@ -59,6 +63,13 @@
     <Folder Include="e2e\src\" />
     <Folder Include="src\" />
     <Folder Include="src\app\" />
+    <Folder Include="src\app\app-footer\" />
+    <Folder Include="src\app\app-header\" />
+    <Folder Include="src\app\app-initializer\" />
+    <Folder Include="src\app\models\" />
+    <Folder Include="src\app\models\general-models\" />
+    <Folder Include="src\app\models\response-models\" />
+    <Folder Include="src\app\models\request-models\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\environments\" />
   </ItemGroup>
@@ -69,10 +80,26 @@
       <SubType>Code</SubType>
       <Publish>False</Publish>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\app-footer\app-footer.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\app-footer\app-footer.component.ts" />
+    <TypeScriptCompile Include="src\app\app-header\app-header.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\app-header\app-header.component.ts" />
+    <TypeScriptCompile Include="src\app\app-initializer\app-initializer.module.ts" />
     <TypeScriptCompile Include="src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="src\app\app.component.spec.ts" />
     <TypeScriptCompile Include="src\app\app.component.ts" />
     <TypeScriptCompile Include="src\app\app.module.ts" />
+    <TypeScriptCompile Include="src\app\http.service.spec.ts" />
+    <TypeScriptCompile Include="src\app\http.service.ts" />
+    <TypeScriptCompile Include="src\app\loading.service.spec.ts" />
+    <TypeScriptCompile Include="src\app\loading.service.ts" />
+    <TypeScriptCompile Include="src\app\models\general-models\resource.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\translate.pipe.spec.ts" />
+    <TypeScriptCompile Include="src\app\translate.pipe.ts" />
+    <TypeScriptCompile Include="src\app\translate.service.spec.ts" />
+    <TypeScriptCompile Include="src\app\translate.service.ts" />
     <TypeScriptCompile Include="src\environments\environment.prod.ts" />
     <TypeScriptCompile Include="src\environments\environment.ts" />
     <TypeScriptCompile Include="src\main.ts" />
