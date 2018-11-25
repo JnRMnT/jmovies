@@ -20,6 +20,10 @@ namespace JMovies.Web.UI
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
+            ); config.Routes.MapHttpRoute(
+                name: "CatchAll",
+                routeTemplate: "{*url}",
+                defaults: new { id = RouteParameter.Optional, action = "Index", controller = "Default" }
             );
         }
     }

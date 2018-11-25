@@ -6,9 +6,9 @@ import { TranslateService } from './translate.service';
 import { ViewContainerRef, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
     constructor(httpService: HttpService,

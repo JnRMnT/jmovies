@@ -10,7 +10,7 @@ namespace JMovies.Web.Providers
 {
     public class SessionBasedContextProvider : IContextProvider
     {
-
+        private Entities.Context temporaryContext;
         public Entities.Context GetContext()
         {
             if (HttpContext.Current != null && HttpContext.Current.Session != null && HttpContext.Current.Session["Context"] != null)
@@ -23,7 +23,7 @@ namespace JMovies.Web.Providers
             }
             else
             {
-                return null;
+                return temporaryContext;
             }
         }
 
@@ -33,9 +33,13 @@ namespace JMovies.Web.Providers
             {
                 HttpContext.Current.Session["Context"] = context;
             }
-            else
+            else if (HttpContext.Current != null && HttpContext.Current.Items != null)
             {
                 HttpContext.Current.Items["Context"] = context;
+            }
+            else
+            {
+                temporaryContext = context;
             }
         }
     }

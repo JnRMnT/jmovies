@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Optimization;
 
-namespace JMovies
+namespace JMovies.Web.UI
 {
     public class BundleConfig
     {

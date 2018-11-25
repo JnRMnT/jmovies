@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web.Mvc;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web;
+using System.Web.Hosting;
+using System.Web.Http;
 
-namespace JMovies.Web.UI.Controllers
+namespace JMovies.Web.UI
 {
-    public class DefaultController : Controller
+    public class DefaultController : ApiController
     {
-        public FileResult Index()
+        [HttpGet]
+        public HttpResponseMessage Index()
         {
-            return new FilePathResult("~/App/index.html", "text/html");
+            var response = new HttpResponseMessage();
+            response.Content = new StringContent(File.ReadAllText(HttpContext.Current.Server.MapPath("~/App/index.html")));
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+            return response;
         }
     }
 }

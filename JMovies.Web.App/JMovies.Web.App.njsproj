@@ -47,6 +47,12 @@
     <Content Include="src\app\app-header\app-header.component.less" />
     <Content Include="src\app\app.component.html" />
     <Content Include="src\app\app.component.less" />
+    <Content Include="src\app\dashboard\dashboard.component.html" />
+    <Content Include="src\app\dashboard\dashboard.component.less" />
+    <Content Include="src\app\movie\movie.component.html" />
+    <Content Include="src\app\movie\movie.component.less" />
+    <Content Include="src\app\page-not-found\page-not-found.component.html" />
+    <Content Include="src\app\page-not-found\page-not-found.component.less" />
     <Content Include="src\assets\.gitkeep" />
     <Content Include="src\browserslist" />
     <Content Include="src\favicon.ico" />
@@ -66,10 +72,13 @@
     <Folder Include="src\app\app-footer\" />
     <Folder Include="src\app\app-header\" />
     <Folder Include="src\app\app-initializer\" />
+    <Folder Include="src\app\dashboard\" />
     <Folder Include="src\app\models\" />
     <Folder Include="src\app\models\general-models\" />
     <Folder Include="src\app\models\response-models\" />
     <Folder Include="src\app\models\request-models\" />
+    <Folder Include="src\app\movie\" />
+    <Folder Include="src\app\page-not-found\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\environments\" />
   </ItemGroup>
@@ -89,6 +98,8 @@
     <TypeScriptCompile Include="src\app\app.component.spec.ts" />
     <TypeScriptCompile Include="src\app\app.component.ts" />
     <TypeScriptCompile Include="src\app\app.module.ts" />
+    <TypeScriptCompile Include="src\app\dashboard\dashboard.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\dashboard\dashboard.component.ts" />
     <TypeScriptCompile Include="src\app\http.service.spec.ts" />
     <TypeScriptCompile Include="src\app\http.service.ts" />
     <TypeScriptCompile Include="src\app\loading.service.spec.ts" />
@@ -96,6 +107,10 @@
     <TypeScriptCompile Include="src\app\models\general-models\resource.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\movie\movie.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\movie\movie.component.ts" />
+    <TypeScriptCompile Include="src\app\page-not-found\page-not-found.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\page-not-found\page-not-found.component.ts" />
     <TypeScriptCompile Include="src\app\translate.pipe.spec.ts" />
     <TypeScriptCompile Include="src\app\translate.pipe.ts" />
     <TypeScriptCompile Include="src\app\translate.service.spec.ts" />
