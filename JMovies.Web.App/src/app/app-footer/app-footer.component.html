@@ -1,3 +1,3 @@
-<footer>
+<footer class="container">
     FOOTER
 </footer>

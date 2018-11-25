@@ -88,8 +88,10 @@
     <Compile Include="Interfaces\IStaticDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\BasicResolutionTestRequest.cs" />
+    <Compile Include="Requests\GetMovieDetailsRequest.cs" />
     <Compile Include="Requests\StaticDataManagementRequest.cs" />
     <Compile Include="Responses\BasicResolutionTestResponse.cs" />
+    <Compile Include="Responses\GetMovieDetailsResponse.cs" />
     <Compile Include="Responses\StaticDataManagementResponse.cs" />
   </ItemGroup>
   <ItemGroup>

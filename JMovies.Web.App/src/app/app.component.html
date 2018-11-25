@@ -1,6 +1,6 @@
-<div *ngIf="renderedCulture == translateService.activeCulture">
+<div *ngIf="renderedCulture == translateService.activeCulture" class="container-fluid main-container">
     <app-header (cultureChanged)="handleCultureChange($event)"></app-header>
-    <div class="content">
+    <div class="container router-container">
         <router-outlet></router-outlet>
     </div>
     <app-footer></app-footer>

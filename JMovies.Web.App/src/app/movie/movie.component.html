@@ -1,3 +1,13 @@
-<p>
-  movie works!
-</p>
+<div>
+    <div class="row" *ngIf="movie">
+        <div class="col-6">
+            {{movie.title}}
+        </div>
+        <div class="col" *ngIf="movie.originalTitle">
+            {{movie.originalTitle}}
+        </div>
+        <div class="col">
+            {{movie.year}}
+        </div>
+    </div>
+</div>

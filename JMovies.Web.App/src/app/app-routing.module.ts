@@ -5,7 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MovieComponent } from './movie/movie.component';
 
 const routes: Routes = [
-    { path: 'app/movie', component: MovieComponent },
+    { path: 'app/movie/:id', component: MovieComponent },
     { path: 'app/dashboard', component: DashboardComponent },
     { path: '', redirectTo: 'app/dashboard', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent }

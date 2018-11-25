@@ -53,6 +53,9 @@
     <Content Include="src\app\movie\movie.component.less" />
     <Content Include="src\app\page-not-found\page-not-found.component.html" />
     <Content Include="src\app\page-not-found\page-not-found.component.less" />
+    <Content Include="src\app\variables.less">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\assets\.gitkeep" />
     <Content Include="src\browserslist" />
     <Content Include="src\favicon.ico" />
@@ -104,7 +107,19 @@
     <TypeScriptCompile Include="src\app\http.service.ts" />
     <TypeScriptCompile Include="src\app\loading.service.spec.ts" />
     <TypeScriptCompile Include="src\app\loading.service.ts" />
+    <TypeScriptCompile Include="src\app\models\general-models\movie.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\general-models\production-type-enum.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\models\general-models\resource.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\request-models\getMovieDetailsRequest.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\response-models\getMovieDetailsResponse.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\movie\movie.component.spec.ts" />
