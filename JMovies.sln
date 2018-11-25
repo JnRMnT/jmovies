@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.UI", "JMovies\JMovies.UI.csproj", "{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Tests", "JMovies.Tests\JMovies.Tests.csproj", "{69822E63-61E3-4EDC-8F96-1C2B5E23F955}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Entities", "JMovies.Entities\JMovies.Entities.csproj", "{CF5923A7-C00B-45AB-8DAB-B9C765D2B3B1}"
@@ -31,16 +29,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.App", "JMovies.App\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.IMDb", "JMovies.IMDb\JMovies.IMDb.csproj", "{EE35B06F-713B-4395-AD12-8D5C8BB58443}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Web.UI", "JMovies.Web.UI\JMovies.Web.UI.csproj", "{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{69822E63-61E3-4EDC-8F96-1C2B5E23F955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{69822E63-61E3-4EDC-8F96-1C2B5E23F955}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69822E63-61E3-4EDC-8F96-1C2B5E23F955}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -85,6 +81,10 @@ Global
 		{EE35B06F-713B-4395-AD12-8D5C8BB58443}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE35B06F-713B-4395-AD12-8D5C8BB58443}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE35B06F-713B-4395-AD12-8D5C8BB58443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B9BDCC2-5791-4F8D-A945-E31B84869E5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
