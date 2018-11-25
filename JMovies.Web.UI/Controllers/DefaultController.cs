@@ -5,8 +5,7 @@ using System.Web.Mvc;
 
 namespace JMovies.Web.UIControllers
 {
-    [Authorize]
-    public class HomeController : Controller
+    public class DefaultController : Controller
     {
         public ActionResult Index()
         {
