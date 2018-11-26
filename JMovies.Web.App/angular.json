@@ -29,7 +29,7 @@
             "styles": [
               "src/styles.less",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/font-awesome/css/font-awesome.min.css",
+              "./node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "./node_modules/animate.css/animate.min.css"
             ],
             "scripts": [
@@ -41,7 +41,8 @@
               "./node_modules/systemjs/dist/system.min.js",
               "./node_modules/lodash/lodash.min.js",
               "./node_modules/q/q.js",
-              "./node_modules/jquery-slimscroll/jquery.slimscroll.min.js"
+              "./node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
+              "./node_modules/@fortawesome/fontawesome-free/js/all.min.js"
             ]
           },
           "configurations": {

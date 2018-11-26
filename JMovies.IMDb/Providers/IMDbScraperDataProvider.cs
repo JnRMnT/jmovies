@@ -78,10 +78,13 @@ namespace JMovies.IMDb.Providers
                     if (titleLink.OuterHtml.Contains("/releaseinfo"))
                     {
                         Match yearMatch = IMDbConstants.MovieYearRegex.Match(titleLink.InnerText.Prepare());
-                        movie.Year = yearMatch.Groups[2].Value.Trim().ToInteger();
-                        if (yearMatch.Groups.Count > 3)
+                        if (yearMatch.Success)
                         {
-                            (movie as TVSeries).EndYear = yearMatch.Groups[3].Value.Trim().ToInteger();
+                            movie.Year = yearMatch.Groups[2].Value.Trim().ToInteger();
+                            if (yearMatch.Groups.Count > 3)
+                            {
+                                (movie as TVSeries).EndYear = yearMatch.Groups[3].Value.Trim().ToInteger();
+                            }
                         }
                     }
                 }

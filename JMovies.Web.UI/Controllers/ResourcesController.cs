@@ -1,5 +1,6 @@
 ﻿using JMovies.Entities.Framework;
 using JMovies.Utilities.Unity;
+using JMovies.Web.Controllers;
 using JMovies.Web.Providers.StaticDataProviders;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Web.Http;
 
 namespace JMovies.Web.UI.Controllers
 {
-    public class ResourcesController : ApiController
+    public class ResourcesController : BaseApiController
     {
         [HttpGet]
         [Route("api/resources")]

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JMovies.Web.Controllers;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -10,7 +9,7 @@ using System.Web.Http;
 
 namespace JMovies.Web.UI
 {
-    public class DefaultController : ApiController
+    public class DefaultController : BaseApiController
     {
         [HttpGet]
         public HttpResponseMessage Index()

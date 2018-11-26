@@ -26,17 +26,24 @@ namespace JMovies.IMDb.Helpers
                         List<OfficialSite> officialSites = new List<OfficialSite>();
                         Parallel.ForEach(detailBox.QuerySelectorAll("a"), (HtmlNode officialSiteLink) =>
                         {
-                            string url = IMDbConstants.BaseURL + officialSiteLink.Attributes["href"].Value;
-                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                            request.AllowAutoRedirect = false;
-                            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                            try
                             {
-                                string redirectURL = response.Headers["Location"];
-                                officialSites.Add(new OfficialSite
+                                string url = IMDbConstants.BaseURL + officialSiteLink.Attributes["href"].Value;
+                                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                                request.AllowAutoRedirect = false;
+                                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                                 {
-                                    Title = officialSiteLink.InnerText.Prepare(),
-                                    URL = redirectURL
-                                });
+                                    string redirectURL = response.Headers["Location"];
+                                    officialSites.Add(new OfficialSite
+                                    {
+                                        Title = officialSiteLink.InnerText.Prepare(),
+                                        URL = redirectURL
+                                    });
+                                }
+                            }
+                            catch
+                            {
+                                //simply ignore official site errors
                             }
                         });
                         movie.OfficialSites = officialSites.ToArray();
