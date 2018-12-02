@@ -58,7 +58,11 @@ export class TranslateService {
         if (!this.resources) {
             return "";
         }
-        return this.resources[key];
+        if (this.resources[key]) {
+            return this.resources[key];
+        } else {
+            return key;
+        }
     }
 
     public getLocalResource(key: string): string {

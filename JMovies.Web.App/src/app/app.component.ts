@@ -1,4 +1,6 @@
-import * as $ from 'jquery';
+/// <reference path="..\..\node_modules\@types\jquery.slimscroll\index.d.ts" />
+import 'jquery';
+import * as _ from "lodash";
 import { Component } from '@angular/core';
 import { HttpService } from './http.service';
 import { LoadingService } from './loading.service';

@@ -1,5 +1,25 @@
 @import "app/variables.less";
+@import "./mixins.less";
 
 body {
     background-color: @bgColor !important;
+}
+
+.btn-primary {
+    background-color: @primaryButtonColor !important;
+    border-color: @primaryButtonColor !important;
+
+    &:active {
+        background-color: @primaryButtonActiveColor !important;
+        border-color: @primaryButtonActiveColor !important;
+    }
+
+    &:hover {
+        background-color: @primaryButtonHoverColor !important;
+        border-color: @primaryButtonHoverColor !important;
+    }
+
+    &:focus {
+        .box-shadow(~"0 0 0 0.2rem #dc3545 !important");
+    }
 }

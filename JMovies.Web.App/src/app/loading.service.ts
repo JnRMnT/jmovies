@@ -1,28 +1,30 @@
-import { Injectable, ChangeDetectorRef, Optional } from '@angular/core';
+import { Injectable } from '@angular/core';
+import * as _ from 'lodash';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoadingService {
     public active: boolean = false;
-    constructor(@Optional() private cdRef: ChangeDetectorRef) {
+    constructor() {
     }
 
     public activeLoading(): void {
+        var self = this;
         this.activeCalls++;
-        this.active = true;
-        if (this.cdRef) {
-            this.cdRef.detectChanges();
-        }
+        _.defer(function () {
+            self.active = true;
+        });
     }
 
     public attemptToDeactivate(): void {
+        var self = this;
         this.activeCalls--;
         if (this.activeCalls <= 0) {
             this.active = false;
-            if (this.cdRef) {
-                this.cdRef.detectChanges();
-            }
+            _.defer(function () {
+                self.active = false;
+            });
         }
     }
 

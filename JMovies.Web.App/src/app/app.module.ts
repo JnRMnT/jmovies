@@ -18,6 +18,12 @@ import { AppFooterComponent } from './app-footer/app-footer.component';
 import { MovieComponent } from './movie/movie.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { JmLinkComponent } from './jm-link/jm-link.component';
+import { JmButtonComponent } from './jm-button/jm-button.component';
+import { MovieNavigationComponent } from './movie-navigation/movie-navigation.component';
+import { MovieCastComponent } from './movie-cast/movie-cast.component';
+import { MovieService } from './movie.service';
+import { MovieCreditsComponent } from './movie-credits/movie-credits.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +33,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         AppFooterComponent,
         MovieComponent,
         PageNotFoundComponent,
-        DashboardComponent
+        DashboardComponent,
+        JmLinkComponent,
+        JmButtonComponent,
+        MovieNavigationComponent,
+        MovieCastComponent,
+        MovieCreditsComponent
     ],
     imports: [
         BrowserModule,
@@ -42,7 +53,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         BrowserAnimationsModule,
         AppInitializerModule
     ],
-    providers: [HttpService, LoadingService, TranslateService],
+    providers: [HttpService, LoadingService, TranslateService, MovieService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

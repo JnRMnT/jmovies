@@ -1,14 +1,18 @@
 ﻿import { ProductionTypeEnum } from "./production-type-enum";
+import { Credit } from "./credit";
+import { ActingCredit } from "./acting-credit";
 
 export class Movie {
-    imdbId: number;
+    imdbLink: string;
+    imDbID: number;
     title: string;
     originalTitle: string;
     plotSummary: string;
-    StoryLine: string;
-    // public Credit[] Credits { get; set; }
-    Year: number;
-    //public string[] TagLines { get; set; }
+    storyLine: string;
+    credits: Credit | ActingCredit[];
+    year: number;
+    tagLines: string[];
+
     //public Keyword[] Keywords { get; set; }
     //public Genre[] Genres { get; set; }
     //public OfficialSite[] OfficialSites { get; set; }
@@ -16,9 +20,9 @@ export class Movie {
     //public Language[] Languages { get; set; }
     //public ReleaseDate[] ReleaseDates { get; set; }
     //public AKA[] AKAs { get; set; }
-    FilmingLocations: string[];
+    filmingLocations: string[];
     //public Budget Budget { get; set; }
     //public Company[] ProductionCompanies { get; set; }
     //public TimeSpan Runtime { get; set; }
-    ProductonType: ProductionTypeEnum;
+    productonType: ProductionTypeEnum;
 }

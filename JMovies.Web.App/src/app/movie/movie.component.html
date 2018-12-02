@@ -1,16 +1,33 @@
-<div *ngIf="movie">
+<div>
+    <app-movie-navigation [current-page]="currentPage" [movie-id]="movie?.imDbID"></app-movie-navigation>
     <!--Summary-->
-    <div class="row jumbotron p-3 p-md-5 text-white rounded bg-dark">
-        <div class="col-md-3 px-0">
-            <img class="card-img-right flex-auto d-none d-lg-block" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20250%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1675216e66e%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1675216e66e%22%3E%3Crect%20width%3D%22200%22%20height%3D%22250%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2256.203125%22%20y%3D%22131%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+    <div class="row jumbotron p-3 p-md-5 text-white rounded bg-dark shadow">
+        <div class="col-3 px-0">
+            <img class="card-img-right flex-auto d-none d-lg-block shadow-lg border" src="assets/empty.jpg">
         </div>
-        <div class="col-md-9 px-0">
-            <h3 class="my-0 movie-title">
-                <i class="fas fa-film" *ngIf="movie.productonType == 1"></i>
-                <i class="fas fa-tv" *ngIf="movie.productonType == 2"></i>
-                {{movie.title}} ({{movie.year}}<span *ngIf="movie.EndYear"> - {{movie.endYear}}</span>)
-            </h3>
-            <h4 class="lead mb-0" *ngIf="movie.originalTitle">{{movie.originalTitle}}</h4>
+        <div class="col-9 px-0">
+            <div class="row">
+                <div class="col-md-9 col-sm-12">
+                    <h3 class="my-0 movie-title">
+                        <i class="fas fa-film" *ngIf="movie?.productonType == 1"></i>
+                        <i class="fas fa-tv" *ngIf="movie?.productonType == 2"></i>
+                        {{movie?.title}} <span *ngIf="movie">({{movie?.year}}<span *ngIf="movie?.EndYear"> - {{movie?.endYear}}</span>)</span>
+                        <jm-link *ngIf="movie" [url]="movie?.imdbLink" class="position-absolute ml-2 text-white" target="_blank"><i class="fab fa-imdb"></i></jm-link>
+                    </h3>
+                    <h4 class="lead mb-0" *ngIf="movie?.originalTitle">{{movie?.originalTitle}}</h4>
+                </div>
+                <div class="col-md-3 col-sm-12 main-actors">
+                    <div class="d-flex flex-column bd-highlight">
+                        <div class="p-2 bd-highlight">Flex item 1</div>
+                        <div class="p-2 bd-highlight">Flex item 2</div>
+                        <div class="p-2 bd-highlight">Flex item 3</div>
+                        <div class="p-2 bd-highlight">Flex item 4</div>
+                        <div class="p-2 bd-highlight">Flex item 5</div>
+                        <div class="p-2 bd-highlight">Flex item 6</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <app-movie-credits [credits]="summaryActingCredits"></app-movie-credits>
 </div>
