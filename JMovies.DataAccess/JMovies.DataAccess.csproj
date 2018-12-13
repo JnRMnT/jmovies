@@ -35,7 +35,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>jmovies_general.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -253,7 +254,6 @@
     <None Include="JMoviesDataEntities.edmx.diagram">
       <DependentUpon>JMoviesDataEntities.edmx</DependentUpon>
     </None>
-    <None Include="jmovies_general.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
