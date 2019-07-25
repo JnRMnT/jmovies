@@ -1,6 +1,6 @@
 ﻿import { Gulp } from "gulp";
 const { exec } = require('child_process');
-var runSequence = require('run-sequence');
+var runSequence = require('gulp4-run-sequence');
 
 var gulp: Gulp = require("gulp");
 var isDebug = true;
@@ -14,7 +14,7 @@ gulp.task('build-angular', function (cb) {
 });
 
 gulp.task('copy-contents', function (cb) {
-    gulp.src("dist/angular-app/**/*")
+    return gulp.src("dist/angular-app/**/*")
         .pipe(gulp.dest("../JMovies.Web.UI/App/"));
 });
 
