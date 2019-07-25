@@ -29,3 +29,10 @@ gulp.task('release-package', function (cb) {
         cb();
     });
 });
+gulp.task('run-servers', function (cb) {
+    exec('cd ../SolutionItems/BatchFiles && run-servers.bat', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
