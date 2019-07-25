@@ -6,10 +6,7 @@ using JMovies.Entities.Interfaces;
 using JMovies.Utilities.Providers;
 using JMovies.Utilities.Unity;
 using log4net.Config;
-using Microsoft.ApplicationInsights.Extensibility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using Unity;
 

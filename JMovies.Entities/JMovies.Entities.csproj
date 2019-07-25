@@ -33,7 +33,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>jmovies_general.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -93,9 +94,6 @@
     <Compile Include="Responses\BasicResolutionTestResponse.cs" />
     <Compile Include="Responses\GetMovieDetailsResponse.cs" />
     <Compile Include="Responses\StaticDataManagementResponse.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="jmovies_general.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
