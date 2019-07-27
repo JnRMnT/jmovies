@@ -31,5 +31,16 @@ namespace JMovies.Tests
             Assert.IsNotNull(movie);
             Assert.AreEqual(movieID, movie.IMDbID);
         }
+
+        [TestMethod]
+        public void PersonScraping()
+        {
+            long personID = 1297015;
+            UnityHelper.Initialize();
+            IIMDbDataProvider imdbDataProvider = SingletonUnity.Resolve<IIMDbDataProvider>();
+            Person person = imdbDataProvider.GetPerson(personID);
+            Assert.IsNotNull(person);
+            Assert.AreEqual(personID, person.IMDbID);
+        }
     }
 }

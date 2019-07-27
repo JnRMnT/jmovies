@@ -1,10 +1,10 @@
 <div class="row jumbotron p-3 p-md-5 text-white rounded bg-dark shadow">
     <div class="p-2 col-3" *ngFor="let credit of credits">
         <div class="card">
-            <img class="card-img-top flex-auto d-none d-lg-block shadow-lg border" src="assets/empty.jpg" [alt]="credit.person.fullName + ' Photo'">
+            <img class="card-img-top flex-auto d-none d-lg-block shadow-lg border" [src]="credit.person.primaryImage ? credit.person.primaryImage : 'assets/empty.jpg'" [alt]="credit.person.fullName + ' Photo'">
             <div class="card-body">
                 <h5 class="card-title"><jm-link [url]="'https://www.imdb.com/name/nm' + credit.person.imDbID" target="_blank">{{credit.person.fullName}}</jm-link></h5>
-                <h6 class="card-subtitle mb-2 text-muted">
+                <h6 class="card-subtitle mb-2">
                     <span *ngFor="let character of credit.characters;let i = index">
                         <span *ngIf="i != 0"> | </span>{{character.name}}
                     </span>

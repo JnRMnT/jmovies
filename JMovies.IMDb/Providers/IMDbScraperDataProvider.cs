@@ -12,6 +12,7 @@ using Fizzler.Systems.HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using JMovies.IMDb.Helpers;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace JMovies.IMDb.Providers
 {
@@ -19,7 +20,7 @@ namespace JMovies.IMDb.Providers
     {
         public Movie GetMovie(long id, bool fetchDetailedCast)
         {
-            if (id == default(long))
+            if (id == default)
             {
                 throw new JMException("IMDbIDEmpty");
             }
@@ -27,9 +28,7 @@ namespace JMovies.IMDb.Providers
             Movie movie = new Movie();
             string url = IMDbConstants.BaseURL + IMDbConstants.MoviesPath + IMDbConstants.MovieIDPrefix + id.ToString().PadLeft(IMDbConstants.IMDbIDLength, '0');
             HtmlDocument htmlDocument = GetNewHtmlDocument();
-
-            WebRequest webRequest = HttpWebRequest.Create(url);
-            webRequest.Headers["Accept-Language"] = IMDbConstants.DefaultScrapingCulture;
+            WebRequest webRequest = HttpHelper.InitializeWebRequest(url);
             using (Stream stream = webRequest.GetResponse().GetResponseStream())
             {
                 htmlDocument.Load(stream, Encoding.UTF8);
@@ -142,8 +141,8 @@ namespace JMovies.IMDb.Providers
             else
             {
                 //Fetch credits through full credits page
-                WebRequest fullCreditsPageRequest = HttpWebRequest.Create(url + "/" + IMDbConstants.FullCreditsPath);
-                fullCreditsPageRequest.Headers["Accept-Language"] = IMDbConstants.DefaultScrapingCulture;
+                string fullCreditsUrl = url + "/" + IMDbConstants.FullCreditsPath;
+                WebRequest fullCreditsPageRequest = HttpHelper.InitializeWebRequest(fullCreditsUrl);
                 HtmlDocument creditsPageDocument = GetNewHtmlDocument();
                 using (Stream stream = fullCreditsPageRequest.GetResponse().GetResponseStream())
                 {
@@ -154,6 +153,12 @@ namespace JMovies.IMDb.Providers
                 ParseCastList(movie, credits, fullCreditsPageCastListNode);
                 movie.Credits = credits.ToArray();
             }
+
+
+            Parallel.ForEach(movie.Credits, (Credit credit) =>
+            {
+                credit.Person = GetPerson(credit.Person.IMDbID, credit.Person);
+            });
 
             return movie;
         }
@@ -256,6 +261,63 @@ namespace JMovies.IMDb.Providers
             {
                 return null;
             }
+        }
+
+        public Person GetPerson(long id)
+        {
+            Person person = new Person();
+            return GetPerson(id, person);
+        }
+
+        public Person GetPerson(long id, Person person)
+        {
+            if (id == default)
+            {
+                throw new JMException("IMDbIDEmpty");
+            }
+
+            string url = IMDbConstants.BaseURL + IMDbConstants.PersonsPath + IMDbConstants.PersonIDPrefix + id.ToString().PadLeft(IMDbConstants.IMDbIDLength, '0');
+            HtmlDocument htmlDocument = GetNewHtmlDocument();
+
+            WebRequest webRequest = HttpHelper.InitializeWebRequest(url);
+            using (Stream stream = webRequest.GetResponse().GetResponseStream())
+            {
+                htmlDocument.Load(stream, Encoding.UTF8);
+            }
+            HtmlNode documentNode = htmlDocument.DocumentNode;
+
+            //Parse and verify IMDb ID Meta Tag
+            HtmlNode idMetaTag = documentNode.QuerySelector("meta[property='pageId']");
+            if (idMetaTag != null)
+            {
+                person.IMDbID = Regex.Replace(idMetaTag.Attributes["content"].Value, IMDbConstants.PersonIDPrefix, string.Empty).ToLong();
+            }
+            else
+            {
+                return null;
+            }
+
+            HtmlNode mainDetailsElement = documentNode.QuerySelector(".maindetails_center");
+            if (mainDetailsElement != null)
+            {
+                HtmlNode nameOverviewWidget = mainDetailsElement.QuerySelector(".name-overview-widget");
+                if (nameOverviewWidget != null)
+                {
+                    HtmlNode nameContainer = mainDetailsElement.QuerySelector("h1.header .itemprop");
+                    if (nameContainer != null)
+                    {
+                        person.FullName = nameContainer.InnerText;
+                    }
+
+                    HtmlNode primaryImageElement = mainDetailsElement.QuerySelector("#img_primary .image a img");
+                    if (primaryImageElement != null)
+                    {
+                        person.PrimaryImage = IMDBImageHelper.NormalizeImageUrl(primaryImageElement.Attributes["src"].Value);
+                    }
+                }
+            }
+
+            return person;
         }
     }
 }

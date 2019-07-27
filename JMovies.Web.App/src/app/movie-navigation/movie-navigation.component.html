@@ -1,6 +1,6 @@
 <div class="movie-navigation position-relative">
-    <div class="btn-group" role="group">
-        <button [routerLink]="['/app/movie', movieID]" type="button" [disabled]="currentPage == 'movie'" [ngClass]="{'active' : currentPage == 'movie', 'shadow btn btn-primary': true }">{{'Title.Movie' | translate}}</button>
-        <button [routerLink]="['/app/movie-cast', movieID]" type="button" [disabled]="currentPage == 'movie-cast'" [ngClass]="{'active' : currentPage == 'movie-cast', 'shadow btn btn-primary': true}">{{'Title.Actors' | translate}}</button>
-    </div>
+    <mat-button-toggle-group name="currentPage" [value]="currentPage" aria-label="Movie Section">
+        <mat-button-toggle [routerLink]="['/app/movie', movieID]" value="movie">{{'Title.Movie' | translate}}</mat-button-toggle>
+        <mat-button-toggle [routerLink]="['/app/movie-cast', movieID]" value="movie-cast">{{'Title.Actors' | translate}}</mat-button-toggle>
+    </mat-button-toggle-group>
 </div>

@@ -10,5 +10,6 @@ namespace JMovies.Entities.Interfaces
     public interface IIMDbDataProvider
     {
         Movie GetMovie(long id, bool fetchDetailedCast);
+        Person GetPerson(long id);
     }
 }

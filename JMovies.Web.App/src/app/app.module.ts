@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatButtonToggleModule } from '@angular/material';
 import 'hammerjs';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -53,7 +53,9 @@ import { MovieCreditsComponent } from './movie-credits/movie-credits.component';
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        AppInitializerModule
+        AppInitializerModule,
+        MatButtonToggleModule,
+        MatButtonModule
     ],
     providers: [HttpService, LoadingService, TranslateService, MovieService],
     bootstrap: [AppComponent]

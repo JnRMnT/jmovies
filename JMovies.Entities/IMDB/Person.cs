@@ -10,5 +10,6 @@ namespace JMovies.Entities.IMDB
     {
         public long IMDbID { get; set; }
         public string FullName { get; set; }
+        public string PrimaryImage { get; set; }
     }
 }

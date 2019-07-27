@@ -6,11 +6,12 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 </head>
 <body style="margin:0;" class="mat-app-background">
     <app-root>
         <ngx-loading [show]="loadingService.active"></ngx-loading>
-        <div class="loader-overlay text-center" style="text-align: center;padding: 0 !important;margin: 0 !important; width: 100%;position: absolute;z-index: 9999;color: white;width: 100%;height: 100%;">
+        <div class="loader-overlay text-center" style="text-align: center;padding: 0 !important;margin: 0 !important; min-height: 300px; width: 100%;position: absolute;z-index: 9999;color: white;width: 100%;height: 100%;">
             Loading...
         </div>
     </app-root>

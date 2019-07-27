@@ -3,25 +3,97 @@
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 
 
-body {
-    /*background-color: @bgColor !important;*/
-}
-
-.btn-primary {
-    background-color: @primaryButtonColor !important;
-    border-color: @primaryButtonColor !important;
+.btn-primary, .btn, .mat-button-toggle-button, .mat-button {
+    background-color: @secondaryColor !important;
+    border-color: @secondaryDarkColor !important;
+    color: @secondaryTextColor;
 
     &:active {
-        background-color: @primaryButtonActiveColor !important;
-        border-color: @primaryButtonActiveColor !important;
+        color: @primaryTextColor;
+        background-color: @primaryLightColor !important;
+        border-color: @primaryColor !important;
     }
 
     &:hover {
-        background-color: @primaryButtonHoverColor !important;
-        border-color: @primaryButtonHoverColor !important;
+        color: @primaryTextColor;
+        background-color: @primaryLightColor !important;
+        border-color: @secondaryDarkColor !important;
     }
 
     &:focus {
-        .box-shadow(~"0 0 0 0.2rem #dc3545 !important");
+        .box-shadow(~"0 0 0 0.2rem", @primaryLightColor);
     }
+}
+
+.mat-button-toggle-checked > .mat-button-toggle-button {
+    background-color: @secondaryLightColor !important;
+    border-color: @secondaryLightColor !important;
+    color: @secondaryTextColor;
+
+    &:active {
+        color: @primaryTextColor;
+        background-color: @primaryDarkColor !important;
+        border-color: @primaryColor !important;
+    }
+
+    &:hover {
+        color: @primaryTextColor;
+        background-color: @primaryDarkColor !important;
+        border-color: @secondaryLightColor !important;
+    }
+
+    &:focus {
+        .box-shadow(~"0 0 0 0.2rem", @primaryDarkColor);
+    }
+}
+
+.btn-secondary {
+    background-color: @primaryColor !important;
+    border-color: @primaryDarkColor !important;
+    color: @primaryTextColor;
+
+    &:active {
+        color: @secondaryTextColor;
+        background-color: @secondaryLightColor !important;
+        border-color: @secondaryColor !important;
+    }
+
+    &:hover {
+        color: @secondaryTextColor;
+        background-color: @secondaryLightColor !important;
+        border-color: @primaryDarkColor !important;
+    }
+
+    &:focus {
+        .box-shadow(~"0 0 0 0.2rem", @secondaryLightColor);
+    }
+}
+
+.text-dark {
+    color: darken(@primaryTextColor, 10%);
+}
+
+a {
+    color: darken(@primaryTextColor, 10%) !important;
+
+    &:hover, :active, :focus {
+        color: darken(@primaryTextColor, -10%) !important;
+    }
+}
+
+.bg-dark {
+    .card-body {
+        a {
+            color: @primaryDarkColor !important;
+
+            &:hover, :active, :focus {
+                color: @primaryLightColor !important;
+            }
+        }
+    }
+}
+
+.card {
+    padding: 5px;
+    background: @bgColor !important;
 }

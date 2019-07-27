@@ -163,6 +163,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\ScreenScrapingExtensions.cs" />
+    <Compile Include="Helpers\HttpHelper.cs" />
+    <Compile Include="Helpers\IMDBImageHelper.cs" />
     <Compile Include="Helpers\MoviePageDetailsHelper.cs" />
     <Compile Include="Helpers\SummaryCastHelper.cs" />
     <Compile Include="Helpers\SummaryStorylineHelper.cs" />
