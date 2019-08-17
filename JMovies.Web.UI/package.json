@@ -1,0 +1,18 @@
+{
+  "name": "jmovies.web.ui",
+  "version": "1.0.0",
+  "description": "Web UI Application of JMovies",
+  "main": "Gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JnRMnT",
+  "devDependencies": {
+    "@types/node": "^12.7.2",
+    "child_process": "^1.0.2",
+    "gulp": "^4.0.2",
+    "gulp4-run-sequence": "^0.4.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}

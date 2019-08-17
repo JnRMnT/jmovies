@@ -23,11 +23,11 @@ namespace JMovies.Configuration.FlowItems
             this.stopFlowOnException = stopFlowOnException;
         }
 
-        public void ExecuteFlow(ref BaseRequest request, ref BaseResponse response)
+        public void ExecuteFlow(IServiceProvider serviceProvider, ref object request, ref BaseResponse response)
         {
             try
             {
-                OnExecuteFlow(ref request, ref response);
+                OnExecuteFlow(serviceProvider, ref request, ref response);
             }
             catch (Exception e)
             {
@@ -40,7 +40,7 @@ namespace JMovies.Configuration.FlowItems
             }
         }
 
-        protected virtual void OnExecuteFlow(ref BaseRequest request, ref BaseResponse response)
+        protected virtual void OnExecuteFlow(IServiceProvider serviceProvider, ref object request, ref BaseResponse response)
         {
 
         }

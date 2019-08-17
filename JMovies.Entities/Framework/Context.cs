@@ -1,4 +1,5 @@
-﻿using JMovies.Entities.Framework;
+﻿using JM.Entities;
+using JMovies.Entities.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;

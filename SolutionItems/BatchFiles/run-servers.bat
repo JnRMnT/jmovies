@@ -1,1 +1,1 @@
-"C:\Program Files\IIS Express\iisexpress" /config:F:\Genel\Projeler\JMovies\.vs\config\applicationhost.config /apppool:Clr4IntegratedAppPool
+start /b "" "C:\Program Files\IIS Express\iisexpress" "/site:JMovies.App" "/config:..\..\.vs\JMovies\config\applicationhost.config" && start /b "" "C:\Program Files\IIS Express\iisexpress" "/site:JMovies" "/config:..\..\.vs\JMovies\config\applicationhost.config"

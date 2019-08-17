@@ -1,19 +1,24 @@
-﻿using JMovies.Common.Constants;
+﻿using JM.Entities.Framework;
+using JMovies.Common.Constants;
 using JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
-using JMovies.Utilities.Configuration;
-using JMovies.Utilities.Unity;
-using System;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JMovies.Utilities.Providers
 {
     public class JsonFileBasedFlowConfigurationProvider : IFlowConfigurationProvider
     {
+        private IPathProvider pathProvider;
+        private CustomConfiguration configuration;
+        public JsonFileBasedFlowConfigurationProvider(IPathProvider pathProvider, IOptions<CustomConfiguration> configuration)
+        {
+            this.pathProvider = pathProvider;
+            this.configuration = configuration.Value;
+            this.Initialize();
+        }
+
         private Dictionary<string, FlowConfiguration> flowConfigurations;
         public FlowConfiguration GetConfiguration(string name)
         {
@@ -36,9 +41,8 @@ namespace JMovies.Utilities.Providers
 
         public void Initialize()
         {
-            IPathProvider pathProvider = SingletonUnity.Resolve<IPathProvider>();
             flowConfigurations = new Dictionary<string, FlowConfiguration>();
-            string flowConfigsPath = pathProvider.GetCurrentPath() + ConfigReader.Get(ConfigurationConstants.ConfigurationFilesPathConfigKey) + "Flows/";
+            string flowConfigsPath = pathProvider.GetCurrentPath() + configuration.ConfigurationFilesPath + "Flows/";
             if (Directory.Exists(flowConfigsPath))
             {
                 foreach (string flowConfigPath in Directory.GetFiles(flowConfigsPath, "*.json"))

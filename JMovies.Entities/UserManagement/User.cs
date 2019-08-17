@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
 using System.Security.Claims;
-using Cosmonaut;
 using Newtonsoft.Json;
 
 namespace JMovies.Entities.UserManagement
 {
-    public class User: CosmosEntity
+    public class User
     {
         [JsonProperty("id")]
         public string ID;

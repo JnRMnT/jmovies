@@ -1,4 +1,5 @@
 ﻿using JMovies.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,23 @@ namespace JMovies.Web.Providers
 {
     public class SessionBasedContextProvider : IContextProvider
     {
+        private readonly IHttpContextAccessor httpContextAccessor;
         private Entities.Context temporaryContext;
-        public Entities.Context GetContext()
+
+        public SessionBasedContextProvider(IHttpContextAccessor httpContextAccessor)
         {
-            if (HttpContext.Current != null && HttpContext.Current.Session != null && HttpContext.Current.Session["Context"] != null)
+            this.httpContextAccessor = httpContextAccessor;
+        }
+
+        public Context GetContext()
+        {
+            if (httpContextAccessor.HttpContext != null && httpContextAccessor.HttpContext.Session != null && httpContextAccessor.HttpContext.Session.Keys.Any(e => e == "Context"))
             {
-                return HttpContext.Current.Session["Context"] as Entities.Context;
+                return httpContextAccessor.HttpContext.Session.GetObject<Context>("Context");
             }
-            else if (HttpContext.Current != null && HttpContext.Current.Items != null && HttpContext.Current.Items["Context"] != null)
+            else if (httpContextAccessor.HttpContext != null && httpContextAccessor.HttpContext.Items != null && httpContextAccessor.HttpContext.Items["Context"] != null)
             {
-                return HttpContext.Current.Items["Context"] as Entities.Context;
+                return httpContextAccessor.HttpContext.Items["Context"] as Entities.Context;
             }
             else
             {
@@ -29,13 +37,13 @@ namespace JMovies.Web.Providers
 
         public void SetContext(Entities.Context context)
         {
-            if (HttpContext.Current != null && HttpContext.Current.Session != null)
+            if (httpContextAccessor.HttpContext != null && httpContextAccessor.HttpContext.Session != null)
             {
-                HttpContext.Current.Session["Context"] = context;
+                httpContextAccessor.HttpContext.Session.SetObject("Context", context);
             }
-            else if (HttpContext.Current != null && HttpContext.Current.Items != null)
+            else if (httpContextAccessor.HttpContext != null && httpContextAccessor.HttpContext.Items != null)
             {
-                HttpContext.Current.Items["Context"] = context;
+                httpContextAccessor.HttpContext.Items["Context"] = context;
             }
             else
             {

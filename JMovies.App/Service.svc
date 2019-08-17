@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="JMovies.App.Service" CodeBehind="Service.svc.cs" %>

@@ -8,6 +8,6 @@ namespace JMovies.Entities.Interfaces
 {
     public interface IActionClass
     {
-        void ExecuteAction(ref BaseRequest request, ref BaseResponse response);
+        void ExecuteAction(IServiceProvider serviceProvider, ref object request, ref BaseResponse response);
     }
 }

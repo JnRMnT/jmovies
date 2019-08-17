@@ -1,17 +1,17 @@
-﻿using JMovies.Entities.IMDB;
-using JMovies.Entities.Interfaces;
-using JMovies.Entities.Responses;
-using JMovies.Web.Controllers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using System.Threading.Tasks;
+using JMovies.Entities.Responses;
+using JMovies.IMDb.Entities.Interfaces;
+using JMovies.Web.Controllers;
+using Microsoft.AspNetCore.Mvc;
 
-namespace JMovies.Web.UI.Controllers
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace JMovies.Controllers
 {
-    [RoutePrefix("api/movies")]
+    [Route("api/movies")]
     public class MoviesController : BaseApiController
     {
         private IIMDbDataProvider imdbDataProvider;
@@ -20,13 +20,12 @@ namespace JMovies.Web.UI.Controllers
             this.imdbDataProvider = imdbDataProvider;
         }
 
-        [HttpGet]
-        [Route("{id}")]
+        [HttpGet("{id}")]
         public GetMovieDetailsResponse Get(string id)
         {
             return new GetMovieDetailsResponse
             {
-                Movie = imdbDataProvider.GetMovie(id.ToLong(), false)
+                Movie = imdbDataProvider.GetMovie(id.ToLong(), true)
             };
         }
     }

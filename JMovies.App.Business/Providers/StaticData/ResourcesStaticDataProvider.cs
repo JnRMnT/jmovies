@@ -1,5 +1,4 @@
-﻿using JMovies.DataAccess;
-using JMovies.Entities.Framework;
+﻿using JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,6 +16,11 @@ namespace JMovies.App.Business.Providers.StaticData
             return resources;
         }
 
+        public ResourcesStaticDataProvider()
+        {
+
+        }
+
         public object GetData()
         {
             return resources;
@@ -24,26 +28,26 @@ namespace JMovies.App.Business.Providers.StaticData
 
         public void Initialize()
         {
-            using (JMoviesEntities entities = new JMoviesEntities())
-            {
+            //using (JMoviesEntities entities = new JMoviesEntities())
+            //{
                 List<Resource> resources = new List<Resource>();
-                foreach (JMResource resource in entities.JMResources)
-                {
-                    if (resource.JMResourceTranslations != null)
-                    {
-                        foreach (JMResourceTranslation resourceTranslation in resource.JMResourceTranslations)
-                        {
-                            resources.Add(new Resource
-                            {
-                                Key = resource.Key,
-                                Culture = resourceTranslation.Culture,
-                                Value = resourceTranslation.Value
-                            });
-                        }
-                    }
-                }
+                //foreach (JMResource resource in entities.JMResources)
+                //{
+                //    if (resource.JMResourceTranslations != null)
+                //    {
+                //        foreach (JMResourceTranslation resourceTranslation in resource.JMResourceTranslations)
+                //        {
+                //            resources.Add(new Resource
+                //            {
+                //                Key = resource.Key,
+                //                Culture = resourceTranslation.Culture,
+                //                Value = resourceTranslation.Value
+                //            });
+                //        }
+                //    }
+                //}
                 this.resources = resources.ToArray();
-            }
+            //}
         }
     }
 }

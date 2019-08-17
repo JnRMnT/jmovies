@@ -1,7 +1,0 @@
-﻿{
-  "$schema": "../schemas/flowconfiguration-schema.json#",
-  "Name": "StaticDataManagement",
-  "RequestIdentifier": "JMovies.Entities.Requests.StaticDataManagementRequest, JMovies.Entities",
-  "ResponseIdentifier": "JMovies.Entities.Responses.StaticDataManagementResponse, JMovies.Entities",
-  "ActionClassIdentifier": "JMovies.App.Business.Actions.StaticDataManagement, JMovies.App.Business"
-}

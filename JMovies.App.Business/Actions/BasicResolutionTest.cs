@@ -1,7 +1,7 @@
-﻿using JMovies.Entities;
+﻿using JM.Entities.Framework;
+using JMovies.Entities;
 using JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
-using JMovies.Utilities.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +12,19 @@ namespace JMovies.App.Business.Actions
 {
     public class BasicResolutionTest : IActionClass
     {
-        public void ExecuteAction(ref BaseRequest request, ref BaseResponse response)
+        public void ExecuteAction(IServiceProvider serviceProvider, ref object request, ref BaseResponse response)
         {
-            IContextProvider contextProvider = SingletonUnity.Resolve<IContextProvider>();
-            if(contextProvider == null || contextProvider.GetContext() == null)
+            if (serviceProvider == null)
             {
                 throw new JMException("ContextNotFound");
+            }
+            else
+            {
+                IContextProvider contextProvider = serviceProvider.GetService(typeof(IContextProvider)) as IContextProvider;
+                if (contextProvider == null || contextProvider.GetContext() == null)
+                {
+                    throw new JMException("ContextNotFound");
+                }
             }
         }
     }

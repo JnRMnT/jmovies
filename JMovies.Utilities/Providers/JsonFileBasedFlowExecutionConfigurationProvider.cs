@@ -1,20 +1,26 @@
-﻿using JMovies.Common.Constants;
+﻿using JM.Entities.Framework;
+using JMovies.Common.Constants;
 using JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
-using JMovies.Utilities.Configuration;
-using JMovies.Utilities.Unity;
-using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JMovies.Utilities.Providers
 {
     public class JsonFileBasedFlowExecutionConfigurationProvider : IFlowExecutionConfigurationProvider
     {
+        private IPathProvider pathProvider;
         private FlowExecutionConfiguration currentConfiguration;
+        private CustomConfiguration configuration;
+
+        public JsonFileBasedFlowExecutionConfigurationProvider(IPathProvider pathProvider, IOptions<CustomConfiguration> configuration)
+        {
+            this.pathProvider = pathProvider;
+            this.configuration = configuration.Value;
+            this.Initialize();
+        }
+
         public FlowExecutionConfiguration GetActiveConfiguration()
         {
             return currentConfiguration;
@@ -22,8 +28,7 @@ namespace JMovies.Utilities.Providers
 
         public void Initialize()
         {
-            IPathProvider pathProvider = SingletonUnity.Resolve<IPathProvider>();
-            string configPath = pathProvider.GetCurrentPath() + ConfigReader.Get(ConfigurationConstants.ConfigurationFilesPathConfigKey) + "FlowExecutionConfiguration.json";
+            string configPath = pathProvider.GetCurrentPath() + configuration.ConfigurationFilesPath + "FlowExecutionConfiguration.json";
             if (File.Exists(configPath))
             {
                 currentConfiguration = File.ReadAllText(configPath).FromJsonObject<FlowExecutionConfiguration>();

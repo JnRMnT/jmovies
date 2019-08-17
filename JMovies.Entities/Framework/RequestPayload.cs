@@ -9,7 +9,8 @@ namespace JMovies.Entities.Framework
     [Serializable]
     public class RequestPayload
     {
+        public string Action { get; set; }
         public Context Context { get; set; }
-        public BaseRequest Request { get; set; }
+        public object Request { get; set; }
     }
 }

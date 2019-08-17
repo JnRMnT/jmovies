@@ -1,32 +1,25 @@
 ﻿using JMovies.Entities.Interfaces;
-using JMovies.Utilities.Unity;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
-using Unity;
-using Unity.Lifetime;
-using Unity.Registration;
 
 namespace JMovies.Utilities.Providers
 {
     public class MainStaticDataProvider
     {
         private static List<Type> staticDataProviderTypes = new List<Type>();
-        public static void RegisterProvider<T, X>() where T : IStaticDataProvider
+        public static void RegisterProvider<TService, TImplementation>(IServiceCollection services) where TImplementation : class, TService
         {
-            staticDataProviderTypes.Add(typeof(T));
-            SingletonUnity.ActiveContainer.RegisterType(typeof(T), typeof(X), new ContainerControlledLifetimeManager());
-            SingletonUnity.ActiveContainer.RegisterInstance<X>(Activator.CreateInstance<X>());
+            staticDataProviderTypes.Add(typeof(TService));
+            services.AddSingleton(typeof(TService), typeof(TImplementation));
         }
 
-        public static void Initialize()
+        public static void Initialize(IServiceProvider serviceProvider)
         {
             Parallel.ForEach(staticDataProviderTypes, (staticDataProviderType) =>
             {
-                IStaticDataProvider staticDataProviderInstance = SingletonUnity.ActiveContainer.Resolve(staticDataProviderType) as IStaticDataProvider;
+                IStaticDataProvider staticDataProviderInstance = serviceProvider.GetRequiredService(staticDataProviderType) as IStaticDataProvider;
                 staticDataProviderInstance.Initialize();
             });
         }

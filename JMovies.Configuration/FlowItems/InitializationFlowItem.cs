@@ -9,7 +9,7 @@ namespace JMovies.Configuration.FlowItems
 {
     public class InitializationFlowItem : BaseFlowItem
     {
-        protected override void OnExecuteFlow(ref BaseRequest request, ref BaseResponse response)
+        protected override void OnExecuteFlow(IServiceProvider serviceProvider, ref object request, ref BaseResponse response)
         {
             if (response == null)
             {
