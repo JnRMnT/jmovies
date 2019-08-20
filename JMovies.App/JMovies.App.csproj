@@ -13,11 +13,16 @@
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.17" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore.Design" Version="8.0.17" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\JMovies.App.Business\JMovies.App.Business.csproj" />
     <ProjectReference Include="..\JMovies.Configuration\JMovies.Configuration.csproj" />
+    <ProjectReference Include="..\JMovies.DataAccess\JMovies.DataAccess.csproj" />
     <ProjectReference Include="..\JMovies.Utilities\JMovies.Utilities.csproj" />
   </ItemGroup>
 

@@ -10,6 +10,7 @@ using JMovies.App.Business.Providers;
 using JMovies.App.Business.Providers.StaticData;
 using JMovies.Common.Constants;
 using JMovies.Configuration.Flow;
+using JMovies.DataAccess;
 using JMovies.Entities;
 using JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
@@ -20,6 +21,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -50,6 +52,7 @@ namespace JMovies.App
             services.Configure<CustomConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));
             services.AddOptions();
             MainStaticDataProvider.RegisterProvider<IResourcesStaticDataProvider, ResourcesStaticDataProvider>(services);
+            services.AddDbContext<JMoviesEntities>(options => options.UseMySQL(Configuration.GetConnectionString("JMoviesDatabase")));
             serviceProvider = services.BuildServiceProvider();
         }
 
