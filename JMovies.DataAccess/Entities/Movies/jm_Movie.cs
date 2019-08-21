@@ -33,74 +33,74 @@ namespace JMovies.DataAccess.Entities.Movies
         /// Credits of the movie
         /// </summary>
         [ForeignKey("ProductionID")]
-        public jm_Credit[] Credits { get; set; }
+        public ICollection<jm_Credit> Credits { get; set; }
 
         /// <summary>
         /// Tag Lines of the movie
         /// </summary>
         [MaxLength(128)]
-        public string[] TagLines { get; set; }
+        public ICollection<string> TagLines { get; set; }
 
         /// <summary>
         /// Keywords of the movie
         /// </summary>
         [ForeignKey("ProductionID")]
-        public jm_Keyword[] Keywords { get; set; }
+        public ICollection<jm_Keyword> Keywords { get; set; }
 
         /// <summary>
         /// Genres of the movie
         /// </summary>
         [ForeignKey("ProductionID")]
-        public jm_Genre[] Genres { get; set; }
+        public ICollection<jm_Genre> Genres { get; set; }
 
         /// <summary>
         /// Official Sites of the movie
         /// </summary>
-        [MaxLength(256)]
-        public jm_OfficialSite[] OfficialSites { get; set; }
+        [MaxLength(512)]
+        public ICollection<jm_OfficialSite> OfficialSites { get; set; }
 
         /// <summary>
         /// Countries of the movie
         /// </summary>
         [ForeignKey("ProductionID")]
-        public jm_Country[] Countries { get; set; }
+        public ICollection<jm_Country> Countries { get; set; }
 
         /// <summary>
         /// Languages of the movie
         /// </summary>
         [ForeignKey("ProductionID")]
-        public jm_Language[] Languages { get; set; }
+        public ICollection<jm_Language> Languages { get; set; }
 
         /// <summary>
         /// Release dates of the movie
         /// </summary>
         [ForeignKey("ProductionID")]
-        public jm_ReleaseDate[] ReleaseDates { get; set; }
+        public ICollection<jm_ReleaseDate> ReleaseDates { get; set; }
 
         /// <summary>
         /// Alternative names of the movie
         /// </summary>
         [ForeignKey("ProductionID")]
-        public jm_AKA[] AKAs { get; set; }
+        public ICollection<jm_AKA> AKAs { get; set; }
 
         /// <summary>
         /// Filming Locations of the movie
         /// </summary>
         [ForeignKey("ProductionID")]
         [MaxLength(256)]
-        public string[] FilmingLocations { get; set; }
+        public ICollection<string> FilmingLocations { get; set; }
 
         /// <summary>
         /// Budget of the movie
         /// </summary>
-        [MaxLength(128)]
+        [MaxLength(256)]
         public jm_Budget Budget { get; set; }
 
         /// <summary>
         /// Production Companies of the movie
         /// </summary>
         [ForeignKey("ProductionID")]
-        public jm_Company[] ProductionCompanies { get; set; }
+        public ICollection<jm_Company> ProductionCompanies { get; set; }
 
         /// <summary>
         /// Length of the movie

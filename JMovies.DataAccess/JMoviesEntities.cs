@@ -4,6 +4,7 @@ using JMovies.DataAccess.Entities.Movies;
 using JMovies.DataAccess.Entities.People;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Collections.Generic;
 
 namespace JMovies.DataAccess
 {
@@ -28,10 +29,10 @@ namespace JMovies.DataAccess
         {
             LengthConverter lengthConverter = new LengthConverter();
             JsonConverter<jm_Image[]> imageConverter = new JsonConverter<jm_Image[]>();
-            JsonConverter<string[]> stringArrayConverter = new JsonConverter<string[]>();
-            JsonConverter<jm_CreditRoleType[]> creditRoleTypeConverter = new JsonConverter<jm_CreditRoleType[]>();
+            JsonConverter<ICollection<string>> stringArrayConverter = new JsonConverter<ICollection<string>>();
+            JsonConverter<ICollection<jm_CreditRoleType>> creditRoleTypeConverter = new JsonConverter<ICollection<jm_CreditRoleType>>();
             JsonConverter<jm_Budget> budgetConverter = new JsonConverter<jm_Budget>();
-            JsonConverter<jm_OfficialSite[]> officialSitesConverter = new JsonConverter<jm_OfficialSite[]>();
+            JsonConverter<ICollection<jm_OfficialSite>> officialSitesConverter = new JsonConverter<ICollection<jm_OfficialSite>>();
 
             modelBuilder.Entity<jm_Person>().Property(e => e.Height).HasConversion(lengthConverter);
             modelBuilder.Entity<jm_Person>().Property(e => e.Photos).HasConversion(imageConverter);

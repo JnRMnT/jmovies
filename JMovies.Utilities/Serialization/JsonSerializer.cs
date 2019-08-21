@@ -25,10 +25,18 @@ namespace JMovies.Utilities.Serialization
 
         public static T DeserializeObject<T>(string json)
         {
-            return JsonConvert.DeserializeObject<T>(json, Settings);
+            return DeserializeObject<T>(json, Settings);
+        }
+        public static T DeserializeObject<T>(string json, JsonSerializerSettings settings)
+        {
+            return JsonConvert.DeserializeObject<T>(json, settings);
+        }
+        public static string SerializeObject(object objectToSerialize)
+        {
+            return SerializeObject(objectToSerialize, Settings);
         }
 
-        public static string SerializeObject(object objectToSerialize)
+        public static string SerializeObject(object objectToSerialize, JsonSerializerSettings settings)
         {
             return JsonConvert.SerializeObject(objectToSerialize, Settings);
         }

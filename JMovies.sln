@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.App", "JMovies.App\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.App.Business", "JMovies.App.Business\JMovies.App.Business.csproj", "{DD22039A-775A-4228-A789-48DA8107828B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.DataAccess", "JMovies.DataAccess\JMovies.DataAccess.csproj", "{F298CE46-B67C-4677-A305-7FB914AC3F94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.DataAccess", "JMovies.DataAccess\JMovies.DataAccess.csproj", "{F298CE46-B67C-4677-A305-7FB914AC3F94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Tests", "JMovies.Tests\JMovies.Tests.csproj", "{8E2EF9E9-E792-41D3-8889-DE08EF324B98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{F298CE46-B67C-4677-A305-7FB914AC3F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F298CE46-B67C-4677-A305-7FB914AC3F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F298CE46-B67C-4677-A305-7FB914AC3F94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E2EF9E9-E792-41D3-8889-DE08EF324B98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E2EF9E9-E792-41D3-8889-DE08EF324B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E2EF9E9-E792-41D3-8889-DE08EF324B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2EF9E9-E792-41D3-8889-DE08EF324B98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,14 +5,16 @@ using JMovies.DataAccess.Entities.Movies;
 using JMovies.DataAccess.Entities.People;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JMovies.App.Migrations
 {
     [DbContext(typeof(JMoviesEntities))]
-    partial class JMoviesEntitiesModelSnapshot : ModelSnapshot
+    [Migration("20190821195209_ColumnLengthUpdate")]
+    partial class ColumnLengthUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

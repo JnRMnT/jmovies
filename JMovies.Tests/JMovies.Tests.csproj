@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JMovies.IMDb" Version="1.2.1" />
+    <PackageReference Include="JMovies.IMDb.Entities" Version="1.2.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JMovies.DataAccess\JMovies.DataAccess.csproj" />
+    <ProjectReference Include="..\JMovies.Web\JMovies.Web.csproj" />
+  </ItemGroup>
+
+</Project>

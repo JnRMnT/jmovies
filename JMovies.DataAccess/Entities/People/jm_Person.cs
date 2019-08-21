@@ -49,7 +49,7 @@ namespace JMovies.DataAccess.Entities.People
         /// Roles of the person
         /// </summary>
         [MaxLength(128)]
-        public jm_CreditRoleType[] Roles { get; set; }
+        public ICollection<jm_CreditRoleType> Roles { get; set; }
 
         /// <summary>
         /// Birth Date of the person
@@ -94,7 +94,7 @@ namespace JMovies.DataAccess.Entities.People
         /// Known credits of the person
         /// </summary>
         [ForeignKey("PersonID")]
-        public jm_ProductionCredit[] KnownFor { get; set; }
+        public ICollection<jm_ProductionCredit> KnownFor { get; set; }
 
         /// <summary>
         /// Gender of the person
