@@ -1,7 +1,8 @@
 ﻿using JMovies.DataAccess.Converters;
-using JMovies.DataAccess.Entities.Common;
-using JMovies.DataAccess.Entities.Movies;
-using JMovies.DataAccess.Entities.People;
+using JMovies.IMDb.Entities.Common;
+using JMovies.IMDb.Entities.Misc;
+using JMovies.IMDb.Entities.Movies;
+using JMovies.IMDb.Entities.People;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Collections.Generic;
@@ -28,55 +29,55 @@ namespace JMovies.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             LengthConverter lengthConverter = new LengthConverter();
-            JsonConverter<jm_Image[]> imageConverter = new JsonConverter<jm_Image[]>();
+            JsonConverter<Image[]> imageConverter = new JsonConverter<Image[]>();
             JsonConverter<ICollection<string>> stringArrayConverter = new JsonConverter<ICollection<string>>();
-            JsonConverter<ICollection<jm_CreditRoleType>> creditRoleTypeConverter = new JsonConverter<ICollection<jm_CreditRoleType>>();
-            JsonConverter<jm_Budget> budgetConverter = new JsonConverter<jm_Budget>();
-            JsonConverter<ICollection<jm_OfficialSite>> officialSitesConverter = new JsonConverter<ICollection<jm_OfficialSite>>();
+            JsonConverter<ICollection<CreditRoleType>> creditRoleTypeConverter = new JsonConverter<ICollection<CreditRoleType>>();
+            JsonConverter<Budget> budgetConverter = new JsonConverter<Budget>();
+            JsonConverter<ICollection<OfficialSite>> officialSitesConverter = new JsonConverter<ICollection<OfficialSite>>();
 
-            modelBuilder.Entity<jm_Person>().Property(e => e.Height).HasConversion(lengthConverter);
-            modelBuilder.Entity<jm_Person>().Property(e => e.Photos).HasConversion(imageConverter);
-            modelBuilder.Entity<jm_Movie>().Property(e => e.TagLines).HasConversion(stringArrayConverter);
-            modelBuilder.Entity<jm_Movie>().Property(e => e.FilmingLocations).HasConversion(stringArrayConverter);
-            modelBuilder.Entity<jm_Movie>().Property(e => e.Budget).HasConversion(budgetConverter);
-            modelBuilder.Entity<jm_Movie>().Property(e => e.OfficialSites).HasConversion(officialSitesConverter);
-            modelBuilder.Entity<jm_Person>().Property(e => e.Roles).HasConversion(creditRoleTypeConverter);
+            modelBuilder.Entity<Person>().Property(e => e.Height).HasConversion(lengthConverter);
+            modelBuilder.Entity<Person>().Property(e => e.Photos).HasConversion(imageConverter);
+            modelBuilder.Entity<Movie>().Property(e => e.TagLines).HasConversion(stringArrayConverter);
+            modelBuilder.Entity<Movie>().Property(e => e.FilmingLocations).HasConversion(stringArrayConverter);
+            modelBuilder.Entity<Movie>().Property(e => e.Budget).HasConversion(budgetConverter);
+            modelBuilder.Entity<Movie>().Property(e => e.OfficialSites).HasConversion(officialSitesConverter);
+            modelBuilder.Entity<Person>().Property(e => e.Roles).HasConversion(creditRoleTypeConverter);
 
-            modelBuilder.Entity<jm_Production>()
-         .HasDiscriminator<jm_ProductionTypeEnum>("ProductionType")
-         .HasValue<jm_Production>(jm_ProductionTypeEnum.Undefined)
-         .HasValue<jm_TVSeries>(jm_ProductionTypeEnum.TVSeries)
-         .HasValue<jm_Movie>(jm_ProductionTypeEnum.Movie);
+            modelBuilder.Entity<Production>()
+         .HasDiscriminator<ProductionTypeEnum>("ProductionType")
+         .HasValue<Production>(ProductionTypeEnum.Undefined)
+         .HasValue<TVSeries>(ProductionTypeEnum.TVSeries)
+         .HasValue<Movie>(ProductionTypeEnum.Movie);
 
 
-            modelBuilder.Entity<jm_Person>()
-         .HasDiscriminator<jm_PersonType>("PersonType")
-         .HasValue<jm_Person>(jm_PersonType.Undefined)
-         .HasValue<jm_Actor>(jm_PersonType.Actor);
+            modelBuilder.Entity<Person>()
+         .HasDiscriminator<PersonTypeEnum>("PersonType")
+         .HasValue<Person>(PersonTypeEnum.Undefined)
+         .HasValue<Actor>(PersonTypeEnum.Actor);
 
-            modelBuilder.Entity<jm_Character>()
-         .HasDiscriminator<jm_CharacterType>("CharacterType")
-         .HasValue<jm_Character>(jm_CharacterType.Character)
-         .HasValue<jm_TVCharacter>(jm_CharacterType.TVCharacter);
+            modelBuilder.Entity<Character>()
+         .HasDiscriminator<CharacterTypeEnum>("CharacterType")
+         .HasValue<Character>(CharacterTypeEnum.Character)
+         .HasValue<TVCharacter>(CharacterTypeEnum.TVCharacter);
 
             base.OnModelCreating(modelBuilder);
         }
 
 
         //Entities
-        public DbSet<jm_AKA> AKA { get; set; }
-        public DbSet<jm_Character> Character { get; set; }
-        public DbSet<jm_Company> Company { get; set; }
-        public DbSet<jm_Country> Country { get; set; }
-        public DbSet<jm_Credit> Credit { get; set; }
-        public DbSet<jm_DataSource> DataSource { get; set; }
-        public DbSet<jm_Genre> Genre { get; set; }
-        public DbSet<jm_Keyword> Keyword { get; set; }
-        public DbSet<jm_Language> Language { get; set; }
-        public DbSet<jm_Person> Person { get; set; }
-        public DbSet<jm_Production> Production { get; set; }
-        public DbSet<jm_ProductionCredit> ProductionCredit { get; set; }
-        public DbSet<jm_Rating> Rating { get; set; }
-        public DbSet<jm_ReleaseDate> ReleaseDate { get; set; }
+        public DbSet<AKA> AKA { get; set; }
+        public DbSet<Character> Character { get; set; }
+        public DbSet<Company> Company { get; set; }
+        public DbSet<Country> Country { get; set; }
+        public DbSet<Credit> Credit { get; set; }
+        public DbSet<DataSource> DataSource { get; set; }
+        public DbSet<Genre> Genre { get; set; }
+        public DbSet<Keyword> Keyword { get; set; }
+        public DbSet<Language> Language { get; set; }
+        public DbSet<Person> Person { get; set; }
+        public DbSet<Production> Production { get; set; }
+        public DbSet<ProductionCredit> ProductionCredit { get; set; }
+        public DbSet<Rating> Rating { get; set; }
+        public DbSet<ReleaseDate> ReleaseDate { get; set; }
     }
 }

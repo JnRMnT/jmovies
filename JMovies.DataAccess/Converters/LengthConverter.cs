@@ -1,5 +1,5 @@
 ﻿using JetBrains.Annotations;
-using JMovies.DataAccess.Entities.Common;
+using JMovies.IMDb.Entities.Common;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
@@ -8,14 +8,14 @@ using System.Text;
 
 namespace JMovies.DataAccess.Converters
 {
-    public class LengthConverter : ValueConverter<jm_Length, int>
+    public class LengthConverter : ValueConverter<Length, int>
     {
         public LengthConverter(ConverterMappingHints mappingHints = default)
         : base(ConvertTo, ConvertFrom, mappingHints)
         {
         }
 
-        static Expression<Func<jm_Length, int>> ConvertTo = x => x.Metric;
-        static Expression<Func<int, jm_Length>> ConvertFrom = x => new jm_Length(x);
+        static Expression<Func<Length, int>> ConvertTo = x => x.Metric;
+        static Expression<Func<int, Length>> ConvertFrom = x => new Length(x);
     }
 }

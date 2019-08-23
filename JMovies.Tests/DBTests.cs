@@ -1,5 +1,4 @@
 using JMovies.DataAccess;
-using JMovies.DataAccess.Entities.Movies;
 using JMovies.IMDb.Entities.Interfaces;
 using JMovies.Tests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,6 +6,9 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using JMovies.IMDb.Entities.Movies;
+using JMovies.IMDb.Entities.Common;
+using JMovies.IMDb.Entities.People;
+using JMovies.IMDb.Entities.Misc;
 
 namespace JMovies.Tests
 {
@@ -22,27 +24,26 @@ namespace JMovies.Tests
                 IServiceProvider serviceProvider = DIHelper.Initialize();
                 DBHelper.EmptyDB(entities);
 
-                jm_Movie movie = new jm_Movie();
-                movie.AKAs = new jm_AKA[] { new jm_AKA { Description = "Test2", Name = "Test2" } };
-                movie.Budget = new jm_Budget { Amount = new DataAccess.Entities.Common.jm_Amount { Currency = "$", Value = 50000 }, Description = "Test Budget" };
-                jm_Country turkey = new jm_Country { Identifier = "tr", Name = "Turkey" };
-                movie.Countries = new jm_Country[] { turkey };
-                movie.Credits = new jm_Credit[] { new jm_Credit { Person = new DataAccess.Entities.People.jm_Person
+                Movie movie = new Movie();
+                movie.AKAs = new AKA[] { new AKA { Description = "Test2", Name = "Test2" } };
+                movie.Budget = new Budget { Amount = new Amount { Currency = "$", Value = 50000 }, Description = "Test Budget" };
+                Country turkey = new Country { Identifier = "tr", Name = "Turkey" };
+                movie.Countries = new Country[] { turkey };
+                movie.Credits = new Credit[] { new Credit { Person = new Person
                 {
                     FullName = "Test Person"
-                }, RoleType = jm_CreditRoleType.Actor } };
+                }, RoleType = CreditRoleType.Actor } };
                 movie.FilmingLocations = new string[] { "Eskiþehir", "Ýstanbul", "Barcelona", "Hamburg" };
-                movie.Genres = new jm_Genre[] { new jm_Genre { Identifier = "action", Value = "Action" } };
+                movie.Genres = new Genre[] { new Genre { Identifier = "action", Value = "Action" } };
                 movie.IMDbID = 123;
-                movie.Keywords = new jm_Keyword[] { new jm_Keyword { Identifier = "punching", Value = "Punching" } };
-                movie.Languages = new jm_Language[] { new jm_Language { Identifier = "tr", Name = "Turkish" } };
-                movie.OfficialSites = new jm_OfficialSite[] { new jm_OfficialSite { Title = "Official Site", URL = "https://official.io" } };
+                movie.Keywords = new Keyword[] { new Keyword { Identifier = "punching", Value = "Punching" } };
+                movie.Languages = new Language[] { new Language { Identifier = "tr", Name = "Turkish" } };
+                movie.OfficialSites = new OfficialSite[] { new OfficialSite { Title = "Official Site", URL = "https://official.io" } };
                 movie.OriginalTitle = "Test Movie 2";
                 movie.PlotSummary = "This is a summary";
-                movie.ProductionCompanies = new jm_Company[] { new jm_Company { Name = "Test Company" } };
-                movie.ProductionType = jm_ProductionTypeEnum.Movie;
-                movie.Rating = new jm_Rating { DataSource = new DataAccess.Entities.Common.jm_DataSource(DataAccess.Entities.Common.jm_DataSourceType.IMDb), RateCount = 500, Value = 9.9 };
-                movie.ReleaseDates = new jm_ReleaseDate[] { new jm_ReleaseDate { Country = turkey, Date = DateTime.Now } };
+                movie.ProductionCompanies = new Company[] { new Company { Name = "Test Company" } };
+                movie.Rating = new Rating { DataSource = new DataSource(DataSourceTypeEnum.IMDb), RateCount = 500, Value = 9.9 };
+                movie.ReleaseDates = new ReleaseDate[] { new ReleaseDate { Country = turkey, Date = DateTime.Now } };
                 movie.Runtime = TimeSpan.FromMinutes(120);
                 movie.StoryLine = "Story line";
                 movie.TagLines = new string[] { "test", "line" };
@@ -52,7 +53,7 @@ namespace JMovies.Tests
                 entities.Production.Add(movie);
                 entities.SaveChanges();
 
-                jm_Movie savedMovie = entities.Production.FirstOrDefault(e => e.IMDbID == 123) as jm_Movie;
+                Movie savedMovie = entities.Production.FirstOrDefault(e => e.IMDbID == 123) as Movie;
                 Assert.IsNotNull(savedMovie);
                 Assert.AreEqual(movie.IMDbID, savedMovie.IMDbID);
                 Assert.AreEqual(movie.Title, savedMovie.Title);
@@ -71,6 +72,13 @@ namespace JMovies.Tests
                 IIMDbDataProvider iMDbDataProvider = serviceProvider.GetRequiredService<IIMDbDataProvider>();
                 Movie movie = iMDbDataProvider.GetMovie(2139881, false);
 
+                entities.Production.Add(movie);
+                entities.SaveChanges();
+
+                Movie savedMovie = entities.Production.FirstOrDefault(e => e.IMDbID == movie.IMDbID) as Movie;
+                Assert.IsNotNull(savedMovie);
+                Assert.AreEqual(movie.IMDbID, savedMovie.IMDbID);
+                Assert.AreEqual(movie.Title, savedMovie.Title);
             }
         }
     }
