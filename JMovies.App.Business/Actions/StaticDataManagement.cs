@@ -4,7 +4,7 @@ using JMovies.Entities.Interfaces;
 using JMovies.Entities.Requests;
 using JMovies.Entities.Responses;
 using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +18,7 @@ namespace JMovies.App.Business.Actions
             StaticDataManagementRequest requestMessage = request as StaticDataManagementRequest;
             StaticDataManagementResponse responseMessage = response as StaticDataManagementResponse;
 
-            IStaticDataProvider staticDataProvider = serviceProvider.GetService(requestMessage.StaticDataProviderType) as IStaticDataProvider;
+            IStaticDataProvider staticDataProvider = serviceProvider.GetRequiredService(requestMessage.StaticDataProviderType) as IStaticDataProvider;
             responseMessage.StaticData = staticDataProvider.GetData();
         }
     }

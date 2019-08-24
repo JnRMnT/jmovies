@@ -18,10 +18,12 @@ namespace JMovies.App.Controllers
     {
         private IContextProvider contextProvider;
         private IFlowProvider flowProvider;
-        public AppController(IContextProvider contextProvider, IFlowProvider flowProvider)
+        private IServiceProvider serviceProvider;
+        public AppController(IContextProvider contextProvider, IFlowProvider flowProvider, IServiceProvider serviceProvider)
         {
             this.contextProvider = contextProvider;
             this.flowProvider = flowProvider;
+            this.serviceProvider = serviceProvider;
         }
 
         [HttpGet]
@@ -36,7 +38,7 @@ namespace JMovies.App.Controllers
             try
             {
                 contextProvider.SetContext(requestMessage.Context);
-                BaseResponse response = flowProvider.ExecuteFlow(requestMessage.Action, requestMessage.Request);
+                BaseResponse response = flowProvider.ExecuteFlow(serviceProvider, requestMessage.Action, requestMessage.Request);
                 ResponsePayload responseMessage = new ResponsePayload
                 {
                     Context = contextProvider.GetContext(),

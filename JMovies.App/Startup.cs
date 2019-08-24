@@ -77,9 +77,6 @@ namespace JMovies.App
 
             app.UseHttpsRedirection();
             app.UseMvc();
-            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
-            MainStaticDataProvider.Initialize(serviceProvider);
         }
     }
 }

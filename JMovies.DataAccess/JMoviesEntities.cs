@@ -1,4 +1,5 @@
 ﻿using JMovies.DataAccess.Converters;
+using JMovies.DataAccess.Entities;
 using JMovies.IMDb.Entities.Common;
 using JMovies.IMDb.Entities.Misc;
 using JMovies.IMDb.Entities.Movies;
@@ -79,5 +80,7 @@ namespace JMovies.DataAccess
         public DbSet<ProductionCredit> ProductionCredit { get; set; }
         public DbSet<Rating> Rating { get; set; }
         public DbSet<ReleaseDate> ReleaseDate { get; set; }
+        public DbSet<Resource> Resource { get; set; }
+        public DbSet<ResourceTranslation> ResourceTranslation { get; set; }
     }
 }

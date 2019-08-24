@@ -114,10 +114,6 @@ namespace JMovies
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-            IContextProvider contextProvider = serviceProvider.GetRequiredService<IContextProvider>();
-            //Set Temporary Context
-            contextProvider.SetContext(new Context());
-            MainStaticDataProvider.Initialize(serviceProvider);
         }
     }
 }

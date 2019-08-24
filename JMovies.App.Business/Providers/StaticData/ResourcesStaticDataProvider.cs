@@ -1,4 +1,6 @@
-﻿using JMovies.Entities.Framework;
+﻿using JMovies.DataAccess;
+using JMovies.DataAccess.Entities;
+using FWEntities = JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,8 +12,8 @@ namespace JMovies.App.Business.Providers.StaticData
 {
     public class ResourcesStaticDataProvider : IResourcesStaticDataProvider
     {
-        private IEnumerable<Resource> resources = null;
-        public IEnumerable<Resource> GetResources()
+        private IEnumerable<FWEntities.Resource> resources = null;
+        public IEnumerable<FWEntities.Resource> GetResources()
         {
             return resources;
         }
@@ -28,26 +30,27 @@ namespace JMovies.App.Business.Providers.StaticData
 
         public void Initialize()
         {
-            //using (JMoviesEntities entities = new JMoviesEntities())
-            //{
-                List<Resource> resources = new List<Resource>();
-                //foreach (JMResource resource in entities.JMResources)
-                //{
-                //    if (resource.JMResourceTranslations != null)
-                //    {
-                //        foreach (JMResourceTranslation resourceTranslation in resource.JMResourceTranslations)
-                //        {
-                //            resources.Add(new Resource
-                //            {
-                //                Key = resource.Key,
-                //                Culture = resourceTranslation.Culture,
-                //                Value = resourceTranslation.Value
-                //            });
-                //        }
-                //    }
-                //}
+            using (JMoviesEntities entities = new JMoviesEntities())
+            {
+                List<FWEntities.Resource> resources = new List<FWEntities.Resource>();
+                foreach (Resource resource in entities.Resource)
+                {
+                    resource.Translations = entities.ResourceTranslation.Where(e => e.ResourceID == resource.ID).ToArray();
+                    if (resource.Translations != null)
+                    {
+                        foreach (ResourceTranslation resourceTranslation in resource.Translations)
+                        {
+                            resources.Add(new FWEntities.Resource
+                            {
+                                Key = resource.Key,
+                                Culture = resourceTranslation.Culture,
+                                Value = resourceTranslation.Value
+                            });
+                        }
+                    }
+                }
                 this.resources = resources.ToArray();
-            //}
+            }
         }
     }
 }

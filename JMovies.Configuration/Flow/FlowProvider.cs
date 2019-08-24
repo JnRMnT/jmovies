@@ -7,7 +7,7 @@ using System;
 
 namespace JMovies.Configuration.Flow
 {
-    public class FlowProvider: IFlowProvider
+    public class FlowProvider : IFlowProvider
     {
         private IFlowConfigurationProvider flowConfigurationProvider;
         private IFlowExecutionConfigurationProvider flowExecutionConfigurationProvider;
@@ -22,13 +22,7 @@ namespace JMovies.Configuration.Flow
             this.serviceProvider = serviceProvider;
         }
 
-        internal void Initialize()
-        {
-            flowConfigurationProvider.Initialize();
-            flowExecutionConfigurationProvider.Initialize();
-        }
-
-        public BaseResponse ExecuteFlow(string actionName, object request)
+        public BaseResponse ExecuteFlow(IServiceProvider serviceProvider, string actionName, object request)
         {
             FlowConfiguration flowConfiguration = flowConfigurationProvider.GetConfiguration(actionName);
             contextProvider.GetContext().ActiveFlowConfiguration = flowConfiguration;

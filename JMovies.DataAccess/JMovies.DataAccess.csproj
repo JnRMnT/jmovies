@@ -24,8 +24,4 @@
     <ProjectReference Include="..\JMovies.Utilities\JMovies.Utilities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
-
 </Project>

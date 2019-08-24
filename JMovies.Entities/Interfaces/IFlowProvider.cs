@@ -6,6 +6,6 @@ namespace JMovies.Entities.Interfaces
 {
     public interface IFlowProvider
     {
-        BaseResponse ExecuteFlow(string actionName, object request);
+        BaseResponse ExecuteFlow(IServiceProvider serviceProvider, string actionName, object request);
     }
 }
