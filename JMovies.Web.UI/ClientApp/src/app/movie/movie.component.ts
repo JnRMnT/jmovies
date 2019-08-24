@@ -18,9 +18,9 @@ import { CreditRoleType } from '../models/general-models/credit-role-type-enum';
 export class MovieComponent implements OnInit, OnDestroy {
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private movieService: MovieService) {
+        public route: ActivatedRoute,
+        public router: Router,
+        public movieService: MovieService) {
         this.boundResizeFunction = this.onResize.bind(this);
     }
 
@@ -70,7 +70,7 @@ export class MovieComponent implements OnInit, OnDestroy {
         }
     }
 
-    private movie: Movie;
-    private summaryActingCredits: ActingCredit[];
-    private currentPage = "movie";
+    public movie: Movie;
+    public summaryActingCredits: ActingCredit[];
+    public currentPage = "movie";
 }

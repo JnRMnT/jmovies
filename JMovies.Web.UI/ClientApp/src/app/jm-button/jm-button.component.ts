@@ -18,13 +18,13 @@ export class JmButtonComponent implements OnInit, OnChanges {
         this.setInternalClass(changes.class.currentValue);
     }
 
-    private onInternalClick($event: Event): void {
+    public onInternalClick($event: Event): void {
         if (this.onClick) {
             this.onClick($event);
         }
     }
 
-    private setInternalClass(classValue: string): void {
+    public setInternalClass(classValue: string): void {
         this.internalClass = "btn " + (this.buttonType ? this.buttonType : "btn-primary") + " " + classValue;
     }
 
@@ -32,5 +32,5 @@ export class JmButtonComponent implements OnInit, OnChanges {
     @Input() routerLink: string;
     @Input() onClick: Function;
     @Input() buttonType: string;
-    private internalClass: string;
+    public internalClass: string;
 }

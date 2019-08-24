@@ -14,7 +14,7 @@ import { ViewContainerRef, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
     constructor(httpService: HttpService,
-        private loadingService: LoadingService,
+        public loadingService: LoadingService,
         vcr: ViewContainerRef,
         public translateService: TranslateService) {
         loadingService.activeLoading();

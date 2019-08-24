@@ -26,38 +26,40 @@ import { MovieNavigationComponent } from './movie-navigation/movie-navigation.co
 import { MovieCastComponent } from './movie-cast/movie-cast.component';
 import { MovieService } from './movie.service';
 import { MovieCreditsComponent } from './movie-credits/movie-credits.component';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        TranslatePipe,
-        AppHeaderComponent,
-        AppFooterComponent,
-        MovieComponent,
-        PageNotFoundComponent,
-        DashboardComponent,
-        JmLinkComponent,
-        JmButtonComponent,
-        MovieNavigationComponent,
-        MovieCastComponent,
-        MovieCreditsComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        CommonModule,
-        NgxLoadingModule.forRoot({
-            fullScreenBackdrop: true
-        }),
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        AppInitializerModule,
-        MatButtonToggleModule,
-        MatButtonModule
-    ],
-    providers: [HttpService, LoadingService, TranslateService, MovieService],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    TranslatePipe,
+    AppHeaderComponent,
+    AppFooterComponent,
+    MovieComponent,
+    PageNotFoundComponent,
+    DashboardComponent,
+    JmLinkComponent,
+    JmButtonComponent,
+    MovieNavigationComponent,
+    MovieCastComponent,
+    MovieCreditsComponent,
+    NavMenuComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    CommonModule,
+    NgxLoadingModule.forRoot({
+      fullScreenBackdrop: true
+    }),
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    AppInitializerModule,
+    MatButtonToggleModule,
+    MatButtonModule
+  ],
+  providers: [HttpService, LoadingService, TranslateService, MovieService],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

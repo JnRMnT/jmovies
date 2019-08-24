@@ -15,7 +15,7 @@ export class JmLinkComponent implements OnInit {
         }
     }
 
-    private onInternalClick($event: Event): void {
+    public onInternalClick($event: Event): void {
         if (this.onClick) {
             this.onClick($event);
         }

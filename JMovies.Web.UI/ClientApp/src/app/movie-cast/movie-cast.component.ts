@@ -29,6 +29,6 @@ export class MovieCastComponent implements OnInit {
         });
     }
 
-    private movie: Movie;
-    private currentPage = "movie-cast";
+    public movie: Movie;
+    public currentPage = "movie-cast";
 }
