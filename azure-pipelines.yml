@@ -1,0 +1,54 @@
+# Build Definition
+# Build the complete solution and get ready for deployment
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: '4.7.1'
+  displayName: 'Use v4.7.1 of NuGet'
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+  displayName: 'Restore Nuget Packages'
+- task: MSBuild@1
+  inputs:
+    solution: '**/*.sln'
+    configuration: 'Release' 
+    msbuildArguments: /p:DeployOnBuild=true /p:PublishProfile="JMovies.App.Local.pubxml"
+  displayName: 'Build and Deploy Locally App Layer'
+- task: MSBuild@1
+  inputs:
+    solution: '**/*.sln'
+    configuration: 'Release' 
+    msbuildArguments: /p:DeployOnBuild=true /p:PublishProfile="JMovies.Web.UI.Local.pubxml"
+  displayName: 'Build and Deploy Locally Web Layer'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'JMovies.App/Release'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/app'
+  displayName: 'Add App Release Files to Artifacts'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'JMovies.Web.UI/Release'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/web'
+  displayName: 'Add Web Release Files to Artifacts'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+  displayName: 'Publish Artifacts'
