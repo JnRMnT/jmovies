@@ -248,19 +248,21 @@ namespace JMovies.App.Business.Managers
                     }
                     entities.SaveChanges();
 
-                    existingCredit = entities.Credit.FirstOrDefault(e => e.Person.IMDbID == credit.Person.IMDbID);
+                    existingCredit = entities.Credit.FirstOrDefault(e => e.Person.ID == credit.Person.ID && e.ProductionID == production.ID);
 
                     ICollection<Character> characters = null;
+
+                    credit.PersonID = credit.Person.ID;
+                    credit.Person = null;
+                    credit.ProductionID = production.ID;
+                    EntityEntry entry = null;
+
                     if (credit is ActingCredit)
                     {
                         characters = ((ActingCredit)credit).Characters;
                         ((ActingCredit)credit).Characters = null;
                     }
 
-                    credit.PersonID = credit.Person.ID;
-                    credit.Person = null;
-                    credit.ProductionID = production.ID;
-                    EntityEntry entry = null;
                     if (existingCredit != null)
                     {
                         credit.ID = existingCredit.ID;
@@ -272,12 +274,12 @@ namespace JMovies.App.Business.Managers
                         entry = entities.Credit.Add(credit);
                     }
 
+                    entities.SaveChanges();
+
                     if (characters != null)
                     {
                         ((ActingCredit)credit).Characters = characters;
                     }
-
-                    entities.SaveChanges();
                     DetachAllEntries(entities);
                 }
             }
@@ -400,11 +402,7 @@ namespace JMovies.App.Business.Managers
             EntityEntry entry = null;
             if (production.Rating != null)
             {
-                if (entities.DataSource.Any(e => e.DataSourceType == production.Rating.DataSource.DataSourceType))
-                {
-                    entry = MarkEntityAsUpdated(entities, production.Rating.DataSource);
-                }
-                else
+                if (entities.DataSource.FirstOrDefault(e => e.Identifier == production.Rating.DataSource.Identifier) == null)
                 {
                     entry = entities.DataSource.Add(production.Rating.DataSource);
                 }
@@ -513,7 +511,7 @@ namespace JMovies.App.Business.Managers
                             bool saved = false;
                             if (savedMovie != null)
                             {
-                                Character savedCharacter = FindCharacter(character.Name, savedMovie.Credits?.Where(e => e.RoleType == CreditRoleType.Acting), entities);
+                                Character savedCharacter = entities.Character.FirstOrDefault(e => FindCharacter(e, savedMovie, character));
                                 if (savedCharacter != null)
                                 {
                                     character.ID = savedCharacter.ID;
@@ -536,6 +534,11 @@ namespace JMovies.App.Business.Managers
             }
         }
 
+        private static bool FindCharacter(Character currentCharacter, Movie savedMovie, Character searchedCharacter)
+        {
+            return savedMovie.Credits?.Where(x => x.RoleType == CreditRoleType.Acting).Select(x => x.ID).ToArray().Contains(currentCharacter.CreditID) == true && currentCharacter.Name == searchedCharacter.Name && currentCharacter.IMDbID == searchedCharacter.IMDbID;
+        }
+
         private static void DetachAllEntries(JMoviesEntities entities)
         {
             var changedEntriesCopy = entities.ChangeTracker.Entries()
@@ -548,26 +551,6 @@ namespace JMovies.App.Business.Managers
             {
                 entry.State = EntityState.Detached;
             }
-        }
-
-        private static Character FindCharacter(string name, IEnumerable<Credit> credits, JMoviesEntities entities)
-        {
-            if (credits != null)
-            {
-                foreach (Credit credit in credits.ToArray())
-                {
-                    if (credit is ActingCredit)
-                    {
-                        Character character = (entities.Credit.Single(e => e.ID == credit.ID) as ActingCredit).Characters.FirstOrDefault(e => e.Name == name);
-                        if (character != null)
-                        {
-                            return character;
-                        }
-                    }
-                }
-            }
-
-            return null;
         }
 
         private static void HandleAKAs(JMoviesEntities entities, Production production, Production savedProduction)
