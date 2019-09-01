@@ -118,7 +118,7 @@ namespace JMovies.App.Migrations
                     ID = table.Column<long>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
                     DataSourceID = table.Column<int>(nullable: false),
-                    EntityType = table.Column<int>(nullable: false),
+                    EntityTypeID = table.Column<int>(maxLength: 4, nullable: false),
                     DataID = table.Column<long>(nullable: false),
                     ExecuteDate = table.Column<DateTime>(nullable: false),
                     IsSuccess = table.Column<short>(nullable: false),

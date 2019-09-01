@@ -46,7 +46,8 @@ namespace JMovies.DataAccess
             modelBuilder.Entity<Movie>().Property(e => e.Budget).HasConversion(budgetConverter);
             modelBuilder.Entity<Movie>().Property(e => e.OfficialSites).HasConversion(officialSitesConverter);
             modelBuilder.Entity<Person>().Property(e => e.Roles).HasConversion(creditRoleTypeConverter);
-            
+            modelBuilder.Entity<PersisterHistory>().Property(e => e.IsSuccess).HasConversion<short>();
+
             modelBuilder.Entity<Production>()
          .HasDiscriminator<ProductionTypeEnum>("ProductionType")
          .HasValue<Production>(ProductionTypeEnum.Undefined)

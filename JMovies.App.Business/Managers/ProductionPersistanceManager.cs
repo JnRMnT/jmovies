@@ -290,7 +290,7 @@ namespace JMovies.App.Business.Managers
             Movie movie = production as Movie;
             Movie savedMovie = savedProduction as Movie;
 
-            if (movie != null)
+            if (movie != null && movie.Languages != null)
             {
                 foreach (ProductionLanguage productionLanguage in movie.Languages.ToArray())
                 {
@@ -334,7 +334,7 @@ namespace JMovies.App.Business.Managers
         {
             Movie movie = production as Movie;
             Movie savedMovie = savedProduction as Movie;
-            if (movie != null)
+            if (movie != null && movie.Keywords != null)
             {
                 foreach (Keyword keyword in movie.Keywords.ToArray())
                 {
@@ -368,7 +368,7 @@ namespace JMovies.App.Business.Managers
         {
             Movie movie = production as Movie;
             Movie savedMovie = savedProduction as Movie;
-            if (movie != null)
+            if (movie != null && movie.Genres != null)
             {
                 foreach (Genre genre in movie.Genres.ToArray())
                 {
@@ -416,7 +416,7 @@ namespace JMovies.App.Business.Managers
             Movie movie = production as Movie;
             Movie savedMovie = savedProduction as Movie;
 
-            if (movie != null)
+            if (movie != null && movie.Countries != null)
             {
                 foreach (ProductionCountry productionCountry in movie.Countries.ToArray())
                 {
@@ -498,7 +498,7 @@ namespace JMovies.App.Business.Managers
             Movie movie = production as Movie;
             Movie savedMovie = savedProduction as Movie;
 
-            if (movie != null)
+            if (movie != null && movie.Credits != null)
             {
                 foreach (Credit credit in movie.Credits.ToArray())
                 {
@@ -558,7 +558,7 @@ namespace JMovies.App.Business.Managers
             Movie movie = production as Movie;
             Movie savedMovie = savedProduction as Movie;
 
-            if (movie != null)
+            if (movie != null && movie.AKAs != null)
             {
                 foreach (AKA aka in movie.AKAs.ToArray())
                 {

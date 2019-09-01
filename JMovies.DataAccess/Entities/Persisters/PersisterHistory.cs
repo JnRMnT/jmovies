@@ -3,6 +3,7 @@ using JMovies.IMDb.Entities.Misc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace JMovies.DataAccess.Entities.Persisters
@@ -24,8 +25,25 @@ namespace JMovies.DataAccess.Entities.Persisters
         /// <summary>
         /// Type of the entity that was persisted
         /// </summary>
-        [Required]
+        [NotMapped]
         public EntityTypeEnum EntityType { get; set; }
+
+        /// <summary>
+        /// Short wrapper for EntityTypeEnum
+        /// </summary>
+        [Required]
+        [MaxLength(4)]
+        public int EntityTypeID
+        {
+            get
+            {
+                return (short)EntityType;
+            }
+            set
+            {
+                EntityType = (EntityTypeEnum)value;
+            }
+        }
 
         /// <summary>
         /// ID of the data that was persisted

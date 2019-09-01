@@ -12,7 +12,9 @@ namespace JMovies.CronJobs.Common
     {
         public static long DetermineTheStartID(EntityTypeEnum entityType, DataSourceTypeEnum dataSourceType, JMoviesEntities entities)
         {
-            PersisterHistory persisterHistory = entities.PersisterHistory.Where(e => e.DataSource.DataSourceType == dataSourceType && e.EntityType == entityType).OrderByDescending(e => e.DataID).FirstOrDefault();
+            int entityTypeID = (int)entityType;
+            int dataSourceIdentifier = (int)dataSourceType;
+            PersisterHistory persisterHistory = entities.PersisterHistory.OrderByDescending(e=> e.DataID).FirstOrDefault(e => e.DataSource.Identifier == dataSourceIdentifier && e.EntityTypeID == entityTypeID);
             if (persisterHistory == null)
             {
                 return 1;
@@ -22,7 +24,7 @@ namespace JMovies.CronJobs.Common
                 long maxID = persisterHistory.DataID;
                 if (maxID + 1 > ConfigurationConstants.IMDBMaxID)
                 {
-                    PersisterHistory lastPersistance = entities.PersisterHistory.Where(e => e.DataSource.DataSourceType == dataSourceType && e.EntityType == entityType).OrderByDescending(e => e.ID).FirstOrDefault();
+                    PersisterHistory lastPersistance = entities.PersisterHistory.OrderByDescending(e => e.ID).FirstOrDefault(e => e.DataSource.Identifier == dataSourceIdentifier && e.EntityTypeID == entityTypeID);
                     if (lastPersistance.DataID + 1 > ConfigurationConstants.IMDBMaxID)
                     {
                         return 1;

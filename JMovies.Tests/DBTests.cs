@@ -11,6 +11,7 @@ using JMovies.IMDb.Entities.People;
 using JMovies.IMDb.Entities.Misc;
 using JMovies.App.Business.Managers;
 using System.Collections.Generic;
+using JMovies.IMDb.Entities.Settings;
 
 namespace JMovies.Tests
 {
@@ -68,12 +69,12 @@ namespace JMovies.Tests
         public void InsertScrapedMovieTest()
         {
             IServiceProvider serviceProvider = DIHelper.Initialize();
-
+            ProductionDataFetchSettings productionDataFetchSettings = new ProductionDataFetchSettings { FetchDetailedCast = true, FetchImageContents = true };
             using (JMoviesEntities entities = new JMoviesEntities())
             {
                 //DBHelper.EmptyDB(entities);
                 IIMDbDataProvider iMDbDataProvider = serviceProvider.GetRequiredService<IIMDbDataProvider>();
-                Movie movie = iMDbDataProvider.GetMovie(1477834, false);
+                Movie movie = iMDbDataProvider.GetMovie(1477834, productionDataFetchSettings);
 
                 ProductionPersistanceManager.Persist(entities, movie);
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JMovies.App.Migrations
 {
     [DbContext(typeof(JMoviesEntities))]
-    [Migration("20190901120439_Initial")]
+    [Migration("20190901192802_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,8 @@ namespace JMovies.App.Migrations
 
                     b.Property<int>("DataSourceID");
 
-                    b.Property<int>("EntityType");
+                    b.Property<int>("EntityTypeID")
+                        .HasMaxLength(4);
 
                     b.Property<string>("ErrorMessage");
 

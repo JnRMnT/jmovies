@@ -26,7 +26,8 @@ namespace JMovies.App.Migrations
 
                     b.Property<int>("DataSourceID");
 
-                    b.Property<int>("EntityType");
+                    b.Property<int>("EntityTypeID")
+                        .HasMaxLength(4);
 
                     b.Property<string>("ErrorMessage");
 

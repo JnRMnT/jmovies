@@ -9,6 +9,7 @@ using JMovies.IMDb.Entities.Movies;
 using JMovies.IMDb.Providers;
 using System;
 using JMovies.App.Business.Managers;
+using JMovies.IMDb.Entities.Settings;
 
 namespace JMovies.CronJobs.IMDB.ProductionPersister
 {
@@ -16,6 +17,7 @@ namespace JMovies.CronJobs.IMDB.ProductionPersister
     {
         private static readonly EntityTypeEnum EntityType = EntityTypeEnum.Production;
         private static readonly DataSourceTypeEnum DataSource = DataSourceTypeEnum.IMDb;
+        private static readonly ProductionDataFetchSettings ProductionDataFetchSettings = new ProductionDataFetchSettings { FetchDetailedCast = true, FetchImageContents = true };
 
         static void Main(string[] args)
         {
@@ -33,7 +35,7 @@ namespace JMovies.CronJobs.IMDB.ProductionPersister
 
                     try
                     {
-                        Production production = imdbDataProvider.GetProduction(dataID, true);
+                        Production production = imdbDataProvider.GetProduction(dataID, ProductionDataFetchSettings);
                         using (JMoviesEntities productionPersistanceEntities = new JMoviesEntities())
                         {
                             ProductionPersistanceManager.Persist(productionPersistanceEntities, production);
@@ -44,8 +46,8 @@ namespace JMovies.CronJobs.IMDB.ProductionPersister
                     {
                         PersisterHelper.SavePersisterHistory(entities, dataID, DataSource, EntityType, exception.ToString());
                     }
+                    entities.SaveChanges();
                 }
-                entities.SaveChanges();
             }
         }
     }
