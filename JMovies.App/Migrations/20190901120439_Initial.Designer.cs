@@ -2,7 +2,6 @@
 using System;
 using JMovies.DataAccess;
 using JMovies.IMDb.Entities.Movies;
-using JMovies.IMDb.Entities.People;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -11,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JMovies.App.Migrations
 {
     [DbContext(typeof(JMoviesEntities))]
-    [Migration("20190823210009_EntityNaming")]
-    partial class EntityNaming
+    [Migration("20190901120439_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,10 +19,71 @@ namespace JMovies.App.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
+            modelBuilder.Entity("JMovies.DataAccess.Entities.Persisters.PersisterHistory", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("DataID");
+
+                    b.Property<int>("DataSourceID");
+
+                    b.Property<int>("EntityType");
+
+                    b.Property<string>("ErrorMessage");
+
+                    b.Property<DateTime>("ExecuteDate");
+
+                    b.Property<bool>("IsSuccess");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("DataSourceID");
+
+                    b.ToTable("PersisterHistory");
+                });
+
+            modelBuilder.Entity("JMovies.DataAccess.Entities.Resource", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Resource");
+                });
+
+            modelBuilder.Entity("JMovies.DataAccess.Entities.ResourceTranslation", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Culture")
+                        .IsRequired()
+                        .HasMaxLength(8);
+
+                    b.Property<long>("ResourceID");
+
+                    b.Property<string>("Value")
+                        .IsRequired();
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ResourceID");
+
+                    b.ToTable("ResourceTranslation");
+                });
+
             modelBuilder.Entity("JMovies.IMDb.Entities.Misc.DataSource", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Identifier");
 
                     b.Property<string>("Name")
                         .HasMaxLength(32);
@@ -45,7 +105,7 @@ namespace JMovies.App.Migrations
                         .IsRequired()
                         .HasMaxLength(128);
 
-                    b.Property<long?>("ProductionID");
+                    b.Property<long>("ProductionID");
 
                     b.HasKey("ID");
 
@@ -62,6 +122,8 @@ namespace JMovies.App.Migrations
                     b.Property<int>("CharacterType")
                         .HasMaxLength(2);
 
+                    b.Property<long>("CreditID");
+
                     b.Property<long?>("IMDbID");
 
                     b.Property<string>("Name")
@@ -69,6 +131,8 @@ namespace JMovies.App.Migrations
                         .HasMaxLength(128);
 
                     b.HasKey("ID");
+
+                    b.HasIndex("CreditID");
 
                     b.ToTable("Character");
 
@@ -83,7 +147,7 @@ namespace JMovies.App.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(128);
 
-                    b.Property<long?>("ProductionID");
+                    b.Property<long>("ProductionID");
 
                     b.HasKey("ID");
 
@@ -103,11 +167,7 @@ namespace JMovies.App.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(128);
 
-                    b.Property<long?>("ProductionID");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("ProductionID");
 
                     b.ToTable("Country");
                 });
@@ -117,9 +177,9 @@ namespace JMovies.App.Migrations
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("PersonID");
+                    b.Property<long>("PersonID");
 
-                    b.Property<long?>("ProductionID");
+                    b.Property<long>("ProductionID");
 
                     b.Property<int>("RoleType")
                         .HasMaxLength(2);
@@ -131,6 +191,8 @@ namespace JMovies.App.Migrations
                     b.HasIndex("ProductionID");
 
                     b.ToTable("Credit");
+
+                    b.HasDiscriminator<int>("RoleType").HasValue(3);
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Genre", b =>
@@ -141,7 +203,7 @@ namespace JMovies.App.Migrations
                     b.Property<string>("Identifier")
                         .HasMaxLength(36);
 
-                    b.Property<long?>("ProductionID");
+                    b.Property<long>("ProductionID");
 
                     b.Property<string>("Value")
                         .HasColumnName("Name")
@@ -162,7 +224,7 @@ namespace JMovies.App.Migrations
                     b.Property<string>("Identifier")
                         .HasMaxLength(36);
 
-                    b.Property<long?>("ProductionID");
+                    b.Property<long>("ProductionID");
 
                     b.Property<string>("Value")
                         .HasColumnName("Name")
@@ -186,11 +248,7 @@ namespace JMovies.App.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(64);
 
-                    b.Property<long?>("ProductionID");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("ProductionID");
 
                     b.ToTable("Language");
                 });
@@ -201,8 +259,6 @@ namespace JMovies.App.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<long>("IMDbID");
-
-                    b.Property<long>("ProductionID");
 
                     b.Property<int>("ProductionType");
 
@@ -215,11 +271,45 @@ namespace JMovies.App.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ProductionID");
-
                     b.ToTable("Production");
 
                     b.HasDiscriminator<int>("ProductionType").HasValue(0);
+                });
+
+            modelBuilder.Entity("JMovies.IMDb.Entities.Movies.ProductionCountry", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("CountryID");
+
+                    b.Property<long>("ProductionID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CountryID");
+
+                    b.HasIndex("ProductionID");
+
+                    b.ToTable("ProductionCountry");
+                });
+
+            modelBuilder.Entity("JMovies.IMDb.Entities.Movies.ProductionLanguage", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("LanguageID");
+
+                    b.Property<long>("ProductionID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("LanguageID");
+
+                    b.HasIndex("ProductionID");
+
+                    b.ToTable("ProductionLanguage");
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Rating", b =>
@@ -227,7 +317,9 @@ namespace JMovies.App.Migrations
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("DataSourceID");
+                    b.Property<int>("DataSourceID");
+
+                    b.Property<long>("ProductionID");
 
                     b.Property<long>("RateCount");
 
@@ -237,6 +329,9 @@ namespace JMovies.App.Migrations
 
                     b.HasIndex("DataSourceID");
 
+                    b.HasIndex("ProductionID")
+                        .IsUnique();
+
                     b.ToTable("Rating");
                 });
 
@@ -245,11 +340,14 @@ namespace JMovies.App.Migrations
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("CountryID");
+                    b.Property<long>("CountryID");
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<long?>("ProductionID");
+                    b.Property<string>("Description")
+                        .HasMaxLength(64);
+
+                    b.Property<long>("ProductionID");
 
                     b.HasKey("ID");
 
@@ -290,9 +388,6 @@ namespace JMovies.App.Migrations
                     b.Property<string>("NickName")
                         .HasMaxLength(128);
 
-                    b.Property<int>("PersonType")
-                        .HasMaxLength(4);
-
                     b.Property<string>("Photos");
 
                     b.Property<string>("PrimaryImage")
@@ -304,8 +399,6 @@ namespace JMovies.App.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Person");
-
-                    b.HasDiscriminator<int>("PersonType").HasValue(0);
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.People.ProductionCredit", b =>
@@ -346,6 +439,15 @@ namespace JMovies.App.Migrations
                     b.HasDiscriminator().HasValue(1);
                 });
 
+            modelBuilder.Entity("JMovies.IMDb.Entities.Movies.ActingCredit", b =>
+                {
+                    b.HasBaseType("JMovies.IMDb.Entities.Movies.Credit");
+
+                    b.ToTable("Credit");
+
+                    b.HasDiscriminator().HasValue(2);
+                });
+
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Movie", b =>
                 {
                     b.HasBaseType("JMovies.IMDb.Entities.Movies.Production");
@@ -377,13 +479,6 @@ namespace JMovies.App.Migrations
                     b.HasDiscriminator().HasValue(1);
                 });
 
-            modelBuilder.Entity("JMovies.IMDb.Entities.People.Actor", b =>
-                {
-                    b.HasBaseType("JMovies.IMDb.Entities.People.Person");
-
-                    b.HasDiscriminator().HasValue(1);
-                });
-
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.TVSeries", b =>
                 {
                     b.HasBaseType("JMovies.IMDb.Entities.Movies.Movie");
@@ -396,64 +491,110 @@ namespace JMovies.App.Migrations
                     b.HasDiscriminator().HasValue(2);
                 });
 
+            modelBuilder.Entity("JMovies.DataAccess.Entities.Persisters.PersisterHistory", b =>
+                {
+                    b.HasOne("JMovies.IMDb.Entities.Misc.DataSource", "DataSource")
+                        .WithMany()
+                        .HasForeignKey("DataSourceID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("JMovies.DataAccess.Entities.ResourceTranslation", b =>
+                {
+                    b.HasOne("JMovies.DataAccess.Entities.Resource")
+                        .WithMany("Translations")
+                        .HasForeignKey("ResourceID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.AKA", b =>
                 {
                     b.HasOne("JMovies.IMDb.Entities.Movies.Movie")
                         .WithMany("AKAs")
-                        .HasForeignKey("ProductionID");
+                        .HasForeignKey("ProductionID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Character", b =>
+                {
+                    b.HasOne("JMovies.IMDb.Entities.Movies.ActingCredit")
+                        .WithMany("Characters")
+                        .HasForeignKey("CreditID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Company", b =>
                 {
                     b.HasOne("JMovies.IMDb.Entities.Movies.Movie")
                         .WithMany("ProductionCompanies")
-                        .HasForeignKey("ProductionID");
-                });
-
-            modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Country", b =>
-                {
-                    b.HasOne("JMovies.IMDb.Entities.Movies.Movie")
-                        .WithMany("Countries")
-                        .HasForeignKey("ProductionID");
+                        .HasForeignKey("ProductionID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Credit", b =>
                 {
                     b.HasOne("JMovies.IMDb.Entities.People.Person", "Person")
                         .WithMany()
-                        .HasForeignKey("PersonID");
+                        .HasForeignKey("PersonID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("JMovies.IMDb.Entities.Movies.Movie")
                         .WithMany("Credits")
-                        .HasForeignKey("ProductionID");
+                        .HasForeignKey("ProductionID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Genre", b =>
                 {
                     b.HasOne("JMovies.IMDb.Entities.Movies.Movie")
                         .WithMany("Genres")
-                        .HasForeignKey("ProductionID");
+                        .HasForeignKey("ProductionID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Keyword", b =>
                 {
                     b.HasOne("JMovies.IMDb.Entities.Movies.Movie")
                         .WithMany("Keywords")
-                        .HasForeignKey("ProductionID");
+                        .HasForeignKey("ProductionID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Language", b =>
+            modelBuilder.Entity("JMovies.IMDb.Entities.Movies.ProductionCountry", b =>
                 {
+                    b.HasOne("JMovies.IMDb.Entities.Movies.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("JMovies.IMDb.Entities.Movies.Movie")
-                        .WithMany("Languages")
-                        .HasForeignKey("ProductionID");
-                });
+                        .WithMany("Countries")
+                        .HasForeignKey("ProductionID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Production", b =>
-                {
-                    b.HasOne("JMovies.IMDb.Entities.Movies.Rating", "Rating")
+                    b.HasOne("JMovies.IMDb.Entities.Movies.Production", "Production")
                         .WithMany()
                         .HasForeignKey("ProductionID")
+                        .HasConstraintName("FK_ProductionCountry_Production_ProductionID1")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("JMovies.IMDb.Entities.Movies.ProductionLanguage", b =>
+                {
+                    b.HasOne("JMovies.IMDb.Entities.Movies.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("JMovies.IMDb.Entities.Movies.Movie")
+                        .WithMany("Languages")
+                        .HasForeignKey("ProductionID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("JMovies.IMDb.Entities.Movies.Production", "Production")
+                        .WithMany()
+                        .HasForeignKey("ProductionID")
+                        .HasConstraintName("FK_ProductionLanguage_Production_ProductionID1")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -461,18 +602,26 @@ namespace JMovies.App.Migrations
                 {
                     b.HasOne("JMovies.IMDb.Entities.Misc.DataSource", "DataSource")
                         .WithMany()
-                        .HasForeignKey("DataSourceID");
+                        .HasForeignKey("DataSourceID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("JMovies.IMDb.Entities.Movies.Production", "Production")
+                        .WithOne("Rating")
+                        .HasForeignKey("JMovies.IMDb.Entities.Movies.Rating", "ProductionID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.ReleaseDate", b =>
                 {
                     b.HasOne("JMovies.IMDb.Entities.Movies.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryID");
+                        .HasForeignKey("CountryID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("JMovies.IMDb.Entities.Movies.Movie")
                         .WithMany("ReleaseDates")
-                        .HasForeignKey("ProductionID");
+                        .HasForeignKey("ProductionID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.People.ProductionCredit", b =>

@@ -26,7 +26,7 @@ namespace JMovies.DataAccess.Entities
 
 
         [ForeignKey("ResourceID")]
-        public ICollection<ResourceTranslation> Translations { get; set; }
+        public virtual ICollection<ResourceTranslation> Translations { get; set; }
 
     }
 }

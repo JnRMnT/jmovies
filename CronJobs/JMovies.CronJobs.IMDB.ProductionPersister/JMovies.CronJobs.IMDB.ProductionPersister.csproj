@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JMovies.IMDb" Version="1.3.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\JMovies.App.Business\JMovies.App.Business.csproj" />
+    <ProjectReference Include="..\..\JMovies.DataAccess\JMovies.DataAccess.csproj" />
+    <ProjectReference Include="..\..\JMovies.Entities\JMovies.Entities.csproj" />
+    <ProjectReference Include="..\JMovies.CronJobs.Common\JMovies.CronJobs.Common.csproj" />
+  </ItemGroup>
+
+</Project>

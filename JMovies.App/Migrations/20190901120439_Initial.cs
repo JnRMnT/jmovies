@@ -3,26 +3,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JMovies.App.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Character",
+                name: "Country",
                 columns: table => new
                 {
                     ID = table.Column<long>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
-                    IMDbID = table.Column<long>(nullable: true),
-                    CharacterType = table.Column<int>(maxLength: 2, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
-                    EpisodeCount = table.Column<int>(maxLength: 4, nullable: true),
-                    StartYear = table.Column<int>(maxLength: 4, nullable: true),
-                    EndYear = table.Column<int>(maxLength: 4, nullable: true)
+                    Name = table.Column<string>(maxLength: 128, nullable: true),
+                    Identifier = table.Column<string>(maxLength: 64, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Character", x => x.ID);
+                    table.PrimaryKey("PK_Country", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -31,6 +27,7 @@ namespace JMovies.App.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
+                    Identifier = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 32, nullable: true)
                 },
                 constraints: table =>
@@ -39,12 +36,25 @@ namespace JMovies.App.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Language",
+                columns: table => new
+                {
+                    ID = table.Column<long>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    Name = table.Column<string>(maxLength: 64, nullable: true),
+                    Identifier = table.Column<string>(maxLength: 36, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Language", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Person",
                 columns: table => new
                 {
                     ID = table.Column<long>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
-                    PersonType = table.Column<int>(maxLength: 4, nullable: false),
                     IMDbID = table.Column<long>(nullable: false),
                     FullName = table.Column<string>(maxLength: 128, nullable: false),
                     PrimaryImage = table.Column<string>(maxLength: 255, nullable: true),
@@ -64,27 +74,6 @@ namespace JMovies.App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rating",
-                columns: table => new
-                {
-                    ID = table.Column<long>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
-                    Value = table.Column<double>(nullable: false),
-                    RateCount = table.Column<long>(nullable: false),
-                    DataSourceID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rating", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Rating_DataSource_DataSourceID",
-                        column: x => x.DataSourceID,
-                        principalTable: "DataSource",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Production",
                 columns: table => new
                 {
@@ -93,25 +82,55 @@ namespace JMovies.App.Migrations
                     IMDbID = table.Column<long>(nullable: false),
                     Title = table.Column<string>(maxLength: 128, nullable: false),
                     Year = table.Column<int>(maxLength: 4, nullable: false),
-                    ProductionID = table.Column<long>(nullable: false),
-                    ProductionType = table.Column<int>(maxLength: 4, nullable: false),
+                    ProductionType = table.Column<int>(nullable: false),
                     OriginalTitle = table.Column<string>(maxLength: 128, nullable: true),
                     PlotSummary = table.Column<string>(maxLength: 512, nullable: true),
                     StoryLine = table.Column<string>(nullable: true),
                     TagLines = table.Column<string>(maxLength: 128, nullable: true),
-                    OfficialSites = table.Column<string>(maxLength: 256, nullable: true),
+                    OfficialSites = table.Column<string>(maxLength: 512, nullable: true),
                     FilmingLocations = table.Column<string>(maxLength: 256, nullable: true),
-                    Budget = table.Column<string>(maxLength: 128, nullable: true),
+                    Budget = table.Column<string>(maxLength: 256, nullable: true),
                     Runtime = table.Column<TimeSpan>(nullable: true),
                     EndYear = table.Column<int>(maxLength: 4, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Production", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Resource",
+                columns: table => new
+                {
+                    ID = table.Column<long>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    Key = table.Column<string>(maxLength: 128, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Resource", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PersisterHistory",
+                columns: table => new
+                {
+                    ID = table.Column<long>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    DataSourceID = table.Column<int>(nullable: false),
+                    EntityType = table.Column<int>(nullable: false),
+                    DataID = table.Column<long>(nullable: false),
+                    ExecuteDate = table.Column<DateTime>(nullable: false),
+                    IsSuccess = table.Column<short>(nullable: false),
+                    ErrorMessage = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersisterHistory", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Production_Rating_ProductionID",
-                        column: x => x.ProductionID,
-                        principalTable: "Rating",
+                        name: "FK_PersisterHistory_DataSource_DataSourceID",
+                        column: x => x.DataSourceID,
+                        principalTable: "DataSource",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -123,8 +142,8 @@ namespace JMovies.App.Migrations
                     ID = table.Column<long>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
                     Description = table.Column<string>(maxLength: 64, nullable: true),
-                    Name = table.Column<string>(maxLength: 128, nullable: true),
-                    ProductionID = table.Column<long>(nullable: true)
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    ProductionID = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -134,7 +153,7 @@ namespace JMovies.App.Migrations
                         column: x => x.ProductionID,
                         principalTable: "Production",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -144,7 +163,7 @@ namespace JMovies.App.Migrations
                     ID = table.Column<long>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
                     Name = table.Column<string>(maxLength: 128, nullable: true),
-                    ProductionID = table.Column<long>(nullable: true)
+                    ProductionID = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -154,28 +173,7 @@ namespace JMovies.App.Migrations
                         column: x => x.ProductionID,
                         principalTable: "Production",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Country",
-                columns: table => new
-                {
-                    ID = table.Column<long>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
-                    Name = table.Column<string>(maxLength: 128, nullable: true),
-                    Identifier = table.Column<string>(maxLength: 64, nullable: true),
-                    ProductionID = table.Column<long>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Country", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Country_Production_ProductionID",
-                        column: x => x.ProductionID,
-                        principalTable: "Production",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,9 +182,9 @@ namespace JMovies.App.Migrations
                 {
                     ID = table.Column<long>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
-                    PersonID = table.Column<long>(nullable: true),
+                    PersonID = table.Column<long>(nullable: false),
                     RoleType = table.Column<int>(maxLength: 2, nullable: false),
-                    ProductionID = table.Column<long>(nullable: true)
+                    ProductionID = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -196,13 +194,13 @@ namespace JMovies.App.Migrations
                         column: x => x.PersonID,
                         principalTable: "Person",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Credit_Production_ProductionID",
                         column: x => x.ProductionID,
                         principalTable: "Production",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -213,7 +211,7 @@ namespace JMovies.App.Migrations
                         .Annotation("MySQL:AutoIncrement", true),
                     Name = table.Column<string>(maxLength: 64, nullable: true),
                     Identifier = table.Column<string>(maxLength: 36, nullable: true),
-                    ProductionID = table.Column<long>(nullable: true)
+                    ProductionID = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -223,7 +221,7 @@ namespace JMovies.App.Migrations
                         column: x => x.ProductionID,
                         principalTable: "Production",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -234,7 +232,7 @@ namespace JMovies.App.Migrations
                         .Annotation("MySQL:AutoIncrement", true),
                     Name = table.Column<string>(maxLength: 64, nullable: true),
                     Identifier = table.Column<string>(maxLength: 36, nullable: true),
-                    ProductionID = table.Column<long>(nullable: true)
+                    ProductionID = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -244,28 +242,99 @@ namespace JMovies.App.Migrations
                         column: x => x.ProductionID,
                         principalTable: "Production",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Language",
+                name: "ProductionCountry",
                 columns: table => new
                 {
                     ID = table.Column<long>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
-                    Name = table.Column<string>(maxLength: 64, nullable: true),
-                    Identifier = table.Column<string>(maxLength: 36, nullable: true),
-                    ProductionID = table.Column<long>(nullable: true)
+                    ProductionID = table.Column<long>(nullable: false),
+                    CountryID = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Language", x => x.ID);
+                    table.PrimaryKey("PK_ProductionCountry", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Language_Production_ProductionID",
+                        name: "FK_ProductionCountry_Country_CountryID",
+                        column: x => x.CountryID,
+                        principalTable: "Country",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductionCountry_Production_ProductionID",
                         column: x => x.ProductionID,
                         principalTable: "Production",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductionCountry_Production_ProductionID1",
+                        column: x => x.ProductionID,
+                        principalTable: "Production",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductionLanguage",
+                columns: table => new
+                {
+                    ID = table.Column<long>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    ProductionID = table.Column<long>(nullable: false),
+                    LanguageID = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductionLanguage", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ProductionLanguage_Language_LanguageID",
+                        column: x => x.LanguageID,
+                        principalTable: "Language",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductionLanguage_Production_ProductionID",
+                        column: x => x.ProductionID,
+                        principalTable: "Production",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductionLanguage_Production_ProductionID1",
+                        column: x => x.ProductionID,
+                        principalTable: "Production",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rating",
+                columns: table => new
+                {
+                    ID = table.Column<long>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    Value = table.Column<double>(nullable: false),
+                    RateCount = table.Column<long>(nullable: false),
+                    DataSourceID = table.Column<int>(nullable: false),
+                    ProductionID = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rating", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Rating_DataSource_DataSourceID",
+                        column: x => x.DataSourceID,
+                        principalTable: "DataSource",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Rating_Production_ProductionID",
+                        column: x => x.ProductionID,
+                        principalTable: "Production",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -275,8 +344,9 @@ namespace JMovies.App.Migrations
                     ID = table.Column<long>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
                     Date = table.Column<DateTime>(nullable: false),
-                    CountryID = table.Column<long>(nullable: true),
-                    ProductionID = table.Column<long>(nullable: true)
+                    CountryID = table.Column<long>(nullable: false),
+                    Description = table.Column<string>(maxLength: 64, nullable: true),
+                    ProductionID = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -286,13 +356,59 @@ namespace JMovies.App.Migrations
                         column: x => x.CountryID,
                         principalTable: "Country",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ReleaseDate_Production_ProductionID",
                         column: x => x.ProductionID,
                         principalTable: "Production",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ResourceTranslation",
+                columns: table => new
+                {
+                    ID = table.Column<long>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    ResourceID = table.Column<long>(nullable: false),
+                    Culture = table.Column<string>(maxLength: 8, nullable: false),
+                    Value = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ResourceTranslation", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ResourceTranslation_Resource_ResourceID",
+                        column: x => x.ResourceID,
+                        principalTable: "Resource",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Character",
+                columns: table => new
+                {
+                    ID = table.Column<long>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    CharacterType = table.Column<int>(maxLength: 2, nullable: false),
+                    IMDbID = table.Column<long>(nullable: true),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    CreditID = table.Column<long>(nullable: false),
+                    EpisodeCount = table.Column<int>(maxLength: 4, nullable: true),
+                    StartYear = table.Column<int>(maxLength: 4, nullable: true),
+                    EndYear = table.Column<int>(maxLength: 4, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Character", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Character_Credit_CreditID",
+                        column: x => x.CreditID,
+                        principalTable: "Credit",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -334,13 +450,13 @@ namespace JMovies.App.Migrations
                 column: "ProductionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Company_ProductionID",
-                table: "Company",
-                column: "ProductionID");
+                name: "IX_Character_CreditID",
+                table: "Character",
+                column: "CreditID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Country_ProductionID",
-                table: "Country",
+                name: "IX_Company_ProductionID",
+                table: "Company",
                 column: "ProductionID");
 
             migrationBuilder.CreateIndex(
@@ -364,13 +480,18 @@ namespace JMovies.App.Migrations
                 column: "ProductionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Language_ProductionID",
-                table: "Language",
-                column: "ProductionID");
+                name: "IX_PersisterHistory_DataSourceID",
+                table: "PersisterHistory",
+                column: "DataSourceID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Production_ProductionID",
-                table: "Production",
+                name: "IX_ProductionCountry_CountryID",
+                table: "ProductionCountry",
+                column: "CountryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductionCountry_ProductionID",
+                table: "ProductionCountry",
                 column: "ProductionID");
 
             migrationBuilder.CreateIndex(
@@ -389,9 +510,25 @@ namespace JMovies.App.Migrations
                 column: "ProductionID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductionLanguage_LanguageID",
+                table: "ProductionLanguage",
+                column: "LanguageID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductionLanguage_ProductionID",
+                table: "ProductionLanguage",
+                column: "ProductionID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rating_DataSourceID",
                 table: "Rating",
                 column: "DataSourceID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rating_ProductionID",
+                table: "Rating",
+                column: "ProductionID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReleaseDate_CountryID",
@@ -402,6 +539,11 @@ namespace JMovies.App.Migrations
                 name: "IX_ReleaseDate_ProductionID",
                 table: "ReleaseDate",
                 column: "ProductionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ResourceTranslation_ResourceID",
+                table: "ResourceTranslation",
+                column: "ResourceID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -422,31 +564,46 @@ namespace JMovies.App.Migrations
                 name: "Keyword");
 
             migrationBuilder.DropTable(
-                name: "Language");
+                name: "PersisterHistory");
+
+            migrationBuilder.DropTable(
+                name: "ProductionCountry");
 
             migrationBuilder.DropTable(
                 name: "ProductionCredit");
 
             migrationBuilder.DropTable(
+                name: "ProductionLanguage");
+
+            migrationBuilder.DropTable(
+                name: "Rating");
+
+            migrationBuilder.DropTable(
                 name: "ReleaseDate");
+
+            migrationBuilder.DropTable(
+                name: "ResourceTranslation");
 
             migrationBuilder.DropTable(
                 name: "Credit");
 
             migrationBuilder.DropTable(
+                name: "Language");
+
+            migrationBuilder.DropTable(
+                name: "DataSource");
+
+            migrationBuilder.DropTable(
                 name: "Country");
+
+            migrationBuilder.DropTable(
+                name: "Resource");
 
             migrationBuilder.DropTable(
                 name: "Person");
 
             migrationBuilder.DropTable(
                 name: "Production");
-
-            migrationBuilder.DropTable(
-                name: "Rating");
-
-            migrationBuilder.DropTable(
-                name: "DataSource");
         }
     }
 }

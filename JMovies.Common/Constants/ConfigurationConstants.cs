@@ -7,5 +7,8 @@ namespace JMovies.Common.Constants
     public class ConfigurationConstants
     {
         public static readonly string CustomConfigurationSectionName = "CustomConfigurations";
+
+        public static readonly int PersisterRecordCountPerRun = 500;
+        public static readonly long IMDBMaxID = 99999999;
     }
 }
