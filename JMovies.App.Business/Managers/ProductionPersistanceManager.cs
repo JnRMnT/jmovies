@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using JMovies.IMDb.Factories;
+using JMovies.IMDb.Entities.Common;
 
 namespace JMovies.App.Business.Managers
 {
@@ -32,6 +33,8 @@ namespace JMovies.App.Business.Managers
                     .Include(e => ((Movie)e).Languages)
                     .Include(e => ((Movie)e).ProductionCompanies)
                     .Include(e => ((Movie)e).ReleaseDates)
+                    .Include(e => ((Movie)e).Poster)
+                    .Include(e => ((Movie)e).MediaImages)
                     .FirstOrDefault(e => e.IMDbID == production.IMDbID);
 
                 bool saved = false;
@@ -61,6 +64,7 @@ namespace JMovies.App.Business.Managers
                 HandleCharacters(entities, production, savedProduction);
                 HandleRatings(entities, production, savedProduction);
                 HandleReleaseDates(entities, production, savedProduction);
+                HandleImages(entities, production, savedProduction);
                 MarkEntityAsUpdated(entities, trimmedProduction, new string[] { "ProductionType" }, true);
                 entities.SaveChanges();
                 scope.Complete();
@@ -77,6 +81,7 @@ namespace JMovies.App.Business.Managers
             trimmedProduction.Title = production.Title;
             trimmedProduction.Year = production.Year;
             trimmedProduction.ProductionType = production.ProductionType;
+            trimmedProduction.Poster = production.Poster;
 
             if (trimmedProduction is Movie)
             {
@@ -583,6 +588,26 @@ namespace JMovies.App.Business.Managers
                     }
                     entities.SaveChanges();
                     DetachAllEntries(entities);
+                }
+            }
+        }
+
+        private static void HandleImages(JMoviesEntities entities, Production production, Production savedProduction)
+        {
+            if (savedProduction != null && savedProduction.Poster != null)
+            {
+                entities.Remove(savedProduction.Poster);
+            }
+
+            if (production.MediaImages != null)
+            {
+                foreach (Image image in production.MediaImages)
+                {
+                    Image savedImage = entities.Image.FirstOrDefault(e => e.URL == image.URL);
+                    if (savedImage == null)
+                    {
+                        entities.Add(image);
+                    }
                 }
             }
         }

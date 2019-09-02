@@ -4,14 +4,16 @@ using JMovies.DataAccess;
 using JMovies.IMDb.Entities.Movies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JMovies.App.Migrations
 {
     [DbContext(typeof(JMoviesEntities))]
-    partial class JMoviesEntitiesModelSnapshot : ModelSnapshot
+    [Migration("20190902190109_PhotoSupportv2")]
+    partial class PhotoSupportv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,8 +84,7 @@ namespace JMovies.App.Migrations
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<byte[]>("Content")
-                        .HasColumnType("MEDIUMBLOB");
+                    b.Property<byte[]>("Content");
 
                     b.Property<long?>("PersonID");
 

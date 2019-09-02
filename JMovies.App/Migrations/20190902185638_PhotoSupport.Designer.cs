@@ -4,14 +4,16 @@ using JMovies.DataAccess;
 using JMovies.IMDb.Entities.Movies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JMovies.App.Migrations
 {
     [DbContext(typeof(JMoviesEntities))]
-    partial class JMoviesEntitiesModelSnapshot : ModelSnapshot
+    [Migration("20190902185638_PhotoSupport")]
+    partial class PhotoSupport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,12 +84,9 @@ namespace JMovies.App.Migrations
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<byte[]>("Content")
-                        .HasColumnType("MEDIUMBLOB");
+                    b.Property<byte[]>("Content");
 
                     b.Property<long?>("PersonID");
-
-                    b.Property<long?>("ProductionID");
 
                     b.Property<string>("Title")
                         .HasMaxLength(255);
@@ -99,8 +98,6 @@ namespace JMovies.App.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("PersonID");
-
-                    b.HasIndex("ProductionID");
 
                     b.ToTable("Image");
                 });
@@ -541,10 +538,6 @@ namespace JMovies.App.Migrations
                     b.HasOne("JMovies.IMDb.Entities.People.Person")
                         .WithMany("Photos")
                         .HasForeignKey("PersonID");
-
-                    b.HasOne("JMovies.IMDb.Entities.Movies.Production")
-                        .WithMany("MediaImages")
-                        .HasForeignKey("ProductionID");
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.AKA", b =>

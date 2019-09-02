@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JMovies.App.Migrations
 {
     [DbContext(typeof(JMoviesEntities))]
-    [Migration("20190901192802_Initial")]
+    [Migration("20190902185222_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,7 @@ namespace JMovies.App.Migrations
 
                     b.Property<DateTime>("ExecuteDate");
 
-                    b.Property<bool>("IsSuccess");
+                    b.Property<short>("IsSuccess");
 
                     b.HasKey("ID");
 
@@ -77,6 +77,25 @@ namespace JMovies.App.Migrations
                     b.HasIndex("ResourceID");
 
                     b.ToTable("ResourceTranslation");
+                });
+
+            modelBuilder.Entity("JMovies.IMDb.Entities.Common.Image", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<byte[]>("Content");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("URL")
+                        .HasColumnName("SourceURL")
+                        .HasMaxLength(255);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.Misc.DataSource", b =>
@@ -261,6 +280,8 @@ namespace JMovies.App.Migrations
 
                     b.Property<long>("IMDbID");
 
+                    b.Property<long?>("PosterID");
+
                     b.Property<int>("ProductionType");
 
                     b.Property<string>("Title")
@@ -271,6 +292,8 @@ namespace JMovies.App.Migrations
                         .HasMaxLength(4);
 
                     b.HasKey("ID");
+
+                    b.HasIndex("PosterID");
 
                     b.ToTable("Production");
 
@@ -559,6 +582,13 @@ namespace JMovies.App.Migrations
                         .WithMany("Keywords")
                         .HasForeignKey("ProductionID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("JMovies.IMDb.Entities.Movies.Production", b =>
+                {
+                    b.HasOne("JMovies.IMDb.Entities.Common.Image", "Poster")
+                        .WithMany()
+                        .HasForeignKey("PosterID");
                 });
 
             modelBuilder.Entity("JMovies.IMDb.Entities.Movies.ProductionCountry", b =>

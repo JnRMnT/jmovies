@@ -36,6 +36,8 @@ namespace JMovies.Tests.Helpers
             entities.SaveChanges();
             entities.Credit.RemoveRange(entities.Credit);
             entities.SaveChanges();
+            entities.Image.RemoveRange(entities.Image);
+            entities.SaveChanges();
             entities.Production.RemoveRange(entities.Production);
             entities.SaveChanges();
             entities.Person.RemoveRange(entities.Person);

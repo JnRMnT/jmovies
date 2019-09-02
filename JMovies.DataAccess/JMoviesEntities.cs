@@ -33,26 +33,25 @@ namespace JMovies.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             LengthConverter lengthConverter = new LengthConverter();
-            JsonConverter<ICollection<Image>> imageConverter = new JsonConverter<ICollection<Image>>();
             JsonConverter<ICollection<string>> stringArrayConverter = new JsonConverter<ICollection<string>>();
             JsonConverter<ICollection<CreditRoleType>> creditRoleTypeConverter = new JsonConverter<ICollection<CreditRoleType>>();
             JsonConverter<Budget> budgetConverter = new JsonConverter<Budget>();
             JsonConverter<ICollection<OfficialSite>> officialSitesConverter = new JsonConverter<ICollection<OfficialSite>>();
 
             modelBuilder.Entity<Person>().Property(e => e.Height).HasConversion(lengthConverter);
-            modelBuilder.Entity<Person>().Property(e => e.Photos).HasConversion(imageConverter);
             modelBuilder.Entity<Movie>().Property(e => e.TagLines).HasConversion(stringArrayConverter);
             modelBuilder.Entity<Movie>().Property(e => e.FilmingLocations).HasConversion(stringArrayConverter);
             modelBuilder.Entity<Movie>().Property(e => e.Budget).HasConversion(budgetConverter);
             modelBuilder.Entity<Movie>().Property(e => e.OfficialSites).HasConversion(officialSitesConverter);
             modelBuilder.Entity<Person>().Property(e => e.Roles).HasConversion(creditRoleTypeConverter);
             modelBuilder.Entity<PersisterHistory>().Property(e => e.IsSuccess).HasConversion<short>();
+            modelBuilder.Entity<Image>().Property(e => e.Content).HasColumnType("MEDIUMBLOB");
 
             modelBuilder.Entity<Production>()
-         .HasDiscriminator<ProductionTypeEnum>("ProductionType")
-         .HasValue<Production>(ProductionTypeEnum.Undefined)
-         .HasValue<TVSeries>(ProductionTypeEnum.TVSeries)
-         .HasValue<Movie>(ProductionTypeEnum.Movie);
+             .HasDiscriminator<ProductionTypeEnum>("ProductionType")
+             .HasValue<Production>(ProductionTypeEnum.Undefined)
+             .HasValue<TVSeries>(ProductionTypeEnum.TVSeries)
+             .HasValue<Movie>(ProductionTypeEnum.Movie);
 
             modelBuilder.Entity<Credit>()
          .HasDiscriminator<CreditRoleType>("RoleType")
@@ -84,6 +83,7 @@ namespace JMovies.DataAccess
         public DbSet<Credit> Credit { get; set; }
         public DbSet<DataSource> DataSource { get; set; }
         public DbSet<Genre> Genre { get; set; }
+        public DbSet<Image> Image { get; set; }
         public DbSet<Keyword> Keyword { get; set; }
         public DbSet<Language> Language { get; set; }
         public DbSet<Person> Person { get; set; }

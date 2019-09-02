@@ -10,6 +10,9 @@ using JMovies.IMDb.Providers;
 using System;
 using JMovies.App.Business.Managers;
 using JMovies.IMDb.Entities.Settings;
+using JMovies.IMDb.Entities.Settings.Presets;
+using Microsoft.Extensions.Configuration;
+using JMovies.CronJobs.Common.Configuration;
 
 namespace JMovies.CronJobs.IMDB.ProductionPersister
 {
@@ -17,17 +20,32 @@ namespace JMovies.CronJobs.IMDB.ProductionPersister
     {
         private static readonly EntityTypeEnum EntityType = EntityTypeEnum.Production;
         private static readonly DataSourceTypeEnum DataSource = DataSourceTypeEnum.IMDb;
-        private static readonly ProductionDataFetchSettings ProductionDataFetchSettings = new ProductionDataFetchSettings { FetchDetailedCast = true, FetchImageContents = true };
+        private static readonly ProductionDataFetchSettings ProductionDataFetchSettings = new FullProductionDataFetchSettings();
 
         static void Main(string[] args)
         {
+            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var builder = new ConfigurationBuilder()
+             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+             .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
+             .AddCommandLine(args);
+
+            BaseJobConfiguration configuration = builder.Build().Get<BaseJobConfiguration>();
+            if (configuration.MaxRecordCount == default(int))
+            {
+                configuration.MaxRecordCount = ConfigurationConstants.PersisterRecordCountPerRun;
+            }
+
             using (JMoviesEntities entities = new JMoviesEntities())
             {
                 IIMDbDataProvider imdbDataProvider = new IMDbScraperDataProvider();
-                long startID = PersisterHelper.DetermineTheStartID(EntityType, DataSource, entities);
-                for (int i = 0; i < ConfigurationConstants.PersisterRecordCountPerRun; i++)
+                if (configuration.StartRecordID == default(long))
                 {
-                    long dataID = startID + i;
+                    configuration.StartRecordID = PersisterHelper.DetermineTheStartID(EntityType, DataSource, entities);
+                }
+                for (int i = 0; i < configuration.MaxRecordCount; i++)
+                {
+                    long dataID = configuration.StartRecordID + i;
                     if (dataID > ConfigurationConstants.IMDBMaxID)
                     {
                         dataID = 1;
