@@ -12,6 +12,8 @@
   <ItemGroup>
     <PackageReference Include="JMovies.IMDb" Version="1.4.1" />
     <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.10.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.7.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.Log4NetAppender" Version="2.10.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
