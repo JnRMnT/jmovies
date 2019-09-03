@@ -7,6 +7,7 @@ using JMovies.IMDb.Entities.Misc;
 using JMovies.IMDb.Entities.Movies;
 using JMovies.IMDb.Entities.People;
 using JMovies.Utilities.Common;
+using JMovies.Utilities.Logging;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace JMovies.DataAccess
             }
             else
             {
-                optionsBuilder.UseMySQL(ConfigurationConstants.ConnectionStringEnvironmentName);
+                optionsBuilder.UseMySQL(Environment.GetEnvironmentVariable(ConfigurationConstants.ConnectionStringEnvironmentName));
             }
         }
 
