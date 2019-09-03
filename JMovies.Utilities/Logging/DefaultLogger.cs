@@ -12,6 +12,21 @@ namespace JMovies.Utilities.Logging
     {
         private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        public static void Debug(string message)
+        {
+            logger.Debug(message);
+        }
+
+        public static void Warn(string message)
+        {
+            logger.Warn(message);
+        }
+
+        public static void Info(string message)
+        {
+            logger.Info(message);
+        }
+
         public static void Error(Exception e)
         {
             logger.Error(e);

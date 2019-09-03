@@ -53,7 +53,7 @@ namespace JMovies.App
             services.Configure<CustomConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));
             services.AddOptions();
             MainStaticDataProvider.RegisterProvider<IResourcesStaticDataProvider, ResourcesStaticDataProvider>(services);
-            services.AddDbContext<JMoviesEntities>(options => options.UseMySQL(Configuration.GetConnectionString("JMoviesDatabase")));
+            services.AddDbContext<JMoviesEntities>();
             serviceProvider = services.BuildServiceProvider();
         }
 
