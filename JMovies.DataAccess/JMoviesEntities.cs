@@ -1,11 +1,14 @@
-﻿using JMovies.DataAccess.Converters;
+﻿using JMovies.Common.Constants;
+using JMovies.DataAccess.Converters;
 using JMovies.DataAccess.Entities;
 using JMovies.DataAccess.Entities.Persisters;
 using JMovies.IMDb.Entities.Common;
 using JMovies.IMDb.Entities.Misc;
 using JMovies.IMDb.Entities.Movies;
 using JMovies.IMDb.Entities.People;
+using JMovies.Utilities.Common;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace JMovies.DataAccess
@@ -27,7 +30,15 @@ namespace JMovies.DataAccess
             optionsBuilder.UseLazyLoadingProxies();
             optionsBuilder.EnableDetailedErrors();
             optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseMySQL("server=remotemysql.com;port=3306;database=3HOGbi1TUW;user=3HOGbi1TUW;password=wUu4OBDGA8", b => b.MigrationsAssembly("JMovies.App"));
+
+            if (!EnvironmentUtilities.IsProduction())
+            {
+                optionsBuilder.UseMySQL("server=remotemysql.com;port=3306;database=3HOGbi1TUW;user=3HOGbi1TUW;password=wUu4OBDGA8", b => b.MigrationsAssembly("JMovies.App"));
+            }
+            else
+            {
+                optionsBuilder.UseMySQL(ConfigurationConstants.ConnectionStringEnvironmentName);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

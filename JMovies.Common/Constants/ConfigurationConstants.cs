@@ -10,5 +10,8 @@ namespace JMovies.Common.Constants
 
         public static readonly int PersisterRecordCountPerRun = 500;
         public static readonly long IMDBMaxID = 99999999;
+
+        public static readonly string ProductionEnvironmentName = "Production";
+        public static readonly string ConnectionStringEnvironmentName = "JMoviesConnectionString";
     }
 }

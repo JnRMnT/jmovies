@@ -13,6 +13,7 @@ using JMovies.IMDb.Entities.Settings;
 using JMovies.IMDb.Entities.Settings.Presets;
 using Microsoft.Extensions.Configuration;
 using JMovies.CronJobs.Common.Configuration;
+using JMovies.Utilities.Common;
 
 namespace JMovies.CronJobs.IMDB.ProductionPersister
 {
@@ -24,10 +25,10 @@ namespace JMovies.CronJobs.IMDB.ProductionPersister
 
         static void Main(string[] args)
         {
-            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var builder = new ConfigurationBuilder()
              .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-             .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
+             .AddJsonFile($"appsettings.{EnvironmentUtilities.GetEnvironmentName()}.json", optional: true, reloadOnChange: true)
+             .AddEnvironmentVariables()
              .AddCommandLine(args);
 
             BaseJobConfiguration configuration = builder.Build().Get<BaseJobConfiguration>();
