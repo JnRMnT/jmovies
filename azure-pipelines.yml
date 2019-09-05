@@ -38,7 +38,7 @@ steps:
   inputs:
     solution: '**/*.sln'
     configuration: 'Release' 
-    msbuildArguments: Publish /p:PublishProfile="JMovies.CronJobs.IMDB.ProductionPersister.Local.pubxml"
+    msbuildArguments: CronJobs/JMovies.CronJobs.IMDB.ProductionPersister/JMovies.CronJobs.IMDB.ProductionPersister.csproj Publish /p:PublishProfile="JMovies.CronJobs.IMDB.ProductionPersister.Local.pubxml"
   displayName: 'Build and Deploy Locally IMDB Production Persister'
 - task: CopyFiles@2
   inputs:
