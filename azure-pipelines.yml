@@ -38,7 +38,7 @@ steps:
   inputs:
     solution: '**/*.sln'
     configuration: 'Release' 
-    msbuildArguments: /p:DeployOnBuild=true /p:PublishProfile="JMovies.CronJobs.IMDB.ProductionPersister.Local.pubxml"
+    msbuildArguments: Publish /p:PublishProfile="JMovies.CronJobs.IMDB.ProductionPersister.Local.pubxml"
   displayName: 'Build and Deploy Locally IMDB Production Persister'
 - task: CopyFiles@2
   inputs:
@@ -54,7 +54,7 @@ steps:
   displayName: 'Add Web Release Files to Artifacts'
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'CronJobs/JMovies.CronJobs.IMDB.ProductionPersister/bin/Release/netcoreapp2.2/'
+    SourceFolder: 'CronJobs/JMovies.CronJobs.IMDB.ProductionPersister/Release/'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/CronJobs/imdbProductionPersister'
   displayName: 'Add IMDB Production Persister Release Files to Artifacts'
