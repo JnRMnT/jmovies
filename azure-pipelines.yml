@@ -32,13 +32,13 @@ steps:
   inputs:
     solution: '**/*.sln'
     configuration: 'Release' 
-    msbuildArguments: JMovies.Web.UI/JMovies.Web.UI.csproj Publish /p:Configuration=Release /p:PublishProfile="JMovies.Web.UI.Local.pubxml"
+    msbuildArguments: JMovies.Web.UI/JMovies.Web.UI.csproj Publish /p:Configuration=Release  /p:PublishDir="Release" /p:PublishProfile="JMovies.Web.UI.Local.pubxml"
   displayName: 'Build and Deploy Locally Web Layer'
 - task: MSBuild@1
   inputs:
     solution: '**/*.sln'
     configuration: 'Release' 
-    msbuildArguments: CronJobs/JMovies.CronJobs.IMDB.ProductionPersister/JMovies.CronJobs.IMDB.ProductionPersister.csproj Publish /p:Configuration=Release /p:PublishProfile="JMovies.CronJobs.IMDB.ProductionPersister.Local.pubxml"
+    msbuildArguments: CronJobs/JMovies.CronJobs.IMDB.ProductionPersister/JMovies.CronJobs.IMDB.ProductionPersister.csproj Publish /p:PublishDir="Release" /p:Configuration=Release /p:PublishProfile="JMovies.CronJobs.IMDB.ProductionPersister.Local.pubxml"
   displayName: 'Build and Deploy Locally IMDB Production Persister'
 - task: CopyFiles@2
   inputs:
