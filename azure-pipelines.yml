@@ -24,21 +24,21 @@ steps:
   displayName: 'Restore Nuget Packages'
 - task: MSBuild@1
   inputs:
-    solution: '**/*.sln'
+    solution: 'JMovies.sln'
     configuration: 'Release' 
     msbuildArguments: /p:DeployOnBuild=true /p:PublishProfile="JMovies.App.Local.pubxml"
   displayName: 'Build and Deploy Locally App Layer'
 - task: MSBuild@1
   inputs:
-    solution: '**/*.sln'
+    solution: 'JMovies.Web.UI/JMovies.Web.UI.csproj'
     configuration: 'Release' 
-    msbuildArguments: /p:DeployOnBuild=true /p:PublishProfile="JMovies.Web.UI.Local.pubxml"
+    msbuildArguments: '/p:Configuration=Release  /t:publish /p:PublishDir="Release" /p:PublishProfile="JMovies.Web.UI.Local.pubxml"'
   displayName: 'Build and Deploy Locally Web Layer'
 - task: MSBuild@1
   inputs:
-    solution: '**/*.sln'
+    solution: 'CronJobs/JMovies.CronJobs.IMDB.ProductionPersister/JMovies.CronJobs.IMDB.ProductionPersister.csproj'
     configuration: 'Release' 
-    msbuildArguments: /p:DeployOnBuild=true /p:PublishProfile="JMovies.CronJobs.IMDB.ProductionPersister.Local.pubxml"
+    msbuildArguments: '/p:PublishDir="Release"  /t:publish /p:Configuration=Release /p:PublishProfile="JMovies.CronJobs.IMDB.ProductionPersister.Local.pubxml"'
   displayName: 'Build and Deploy Locally IMDB Production Persister'
 - task: CopyFiles@2
   inputs:
@@ -54,7 +54,7 @@ steps:
   displayName: 'Add Web Release Files to Artifacts'
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'CronJobs/JMovies.CronJobs.IMDB.ProductionPersister/bin/Release/netcoreapp2.2/'
+    SourceFolder: 'CronJobs/JMovies.CronJobs.IMDB.ProductionPersister/Release/'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/CronJobs/imdbProductionPersister'
   displayName: 'Add IMDB Production Persister Release Files to Artifacts'
