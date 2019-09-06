@@ -20,7 +20,13 @@ namespace JMovies.DataAccess.Entities.Persisters
         /// Source of the persistence
         /// </summary>
         [Required]
+        [ForeignKey("DataSourceID")]
         public virtual DataSource DataSource { get; set; }
+
+        /// <summary>
+        /// Reference id of the data source
+        /// </summary>
+        public int DataSourceID;
 
         /// <summary>
         /// Type of the entity that was persisted

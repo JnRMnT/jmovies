@@ -14,7 +14,7 @@ namespace JMovies.CronJobs.Common
         {
             int entityTypeID = (int)entityType;
             int dataSourceIdentifier = (int)dataSourceType;
-            PersisterHistory persisterHistory = entities.PersisterHistory.OrderByDescending(e=> e.DataID).FirstOrDefault(e => e.DataSource.Identifier == dataSourceIdentifier && e.EntityTypeID == entityTypeID);
+            PersisterHistory persisterHistory = entities.PersisterHistory.OrderByDescending(e => e.DataID).FirstOrDefault(e => e.DataSource.Identifier == dataSourceIdentifier && e.EntityTypeID == entityTypeID);
             if (persisterHistory == null)
             {
                 return 1;
@@ -46,6 +46,14 @@ namespace JMovies.CronJobs.Common
             PersisterHistory persisterHistory = new PersisterHistory();
             persisterHistory.DataID = dataID;
             persisterHistory.DataSource = new DataSource(dataSourceTypeEnum);
+
+            DataSource existingDataSource = entities.DataSource.FirstOrDefault(e => e.Identifier == persisterHistory.DataSource.Identifier);
+            if (existingDataSource != null)
+            {
+                persisterHistory.DataSourceID = existingDataSource.ID;
+                persisterHistory.DataSource = null;
+            }
+
             persisterHistory.EntityType = entityType;
             persisterHistory.ErrorMessage = errorMessage;
             persisterHistory.IsSuccess = string.IsNullOrEmpty(errorMessage);
