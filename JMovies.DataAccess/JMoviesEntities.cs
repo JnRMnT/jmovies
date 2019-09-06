@@ -107,5 +107,6 @@ namespace JMovies.DataAccess
         public DbSet<PersisterHistory> PersisterHistory { get; set; }
         public DbSet<ProductionCountry> ProductionCountry { get; set; }
         public DbSet<ProductionLanguage> ProductionLanguage { get; set; }
+        public DbSet<TagLine> TagLine { get; set; }
     }
 }

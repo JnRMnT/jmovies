@@ -78,9 +78,9 @@ namespace JMovies.App.Business.Managers
             Movie movie = production as Movie;
             Movie savedMovie = savedProduction as Movie;
 
-            if (movie != null)
+            if (savedMovie != null)
             {
-
+                entities.TagLine.RemoveRange(savedMovie.TagLines);
             }
         }
 

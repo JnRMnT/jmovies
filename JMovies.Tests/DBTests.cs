@@ -50,7 +50,7 @@ namespace JMovies.Tests
                 movie.ReleaseDates = new List<ReleaseDate> { new ReleaseDate { Country = turkey, Date = DateTime.Now } };
                 movie.Runtime = TimeSpan.FromMinutes(120);
                 movie.StoryLine = "Story line";
-                movie.TagLines = new List<string> { "test", "line" };
+                movie.TagLines = new List<TagLine> { new TagLine { Content = "test" }, new TagLine { Content = "line" } };
                 movie.Title = "Test Movie";
                 movie.Year = 2019;
 
