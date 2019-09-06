@@ -17,9 +17,9 @@
 
   <ItemGroup>
     <PackageReference Include="JM.Framework" Version="1.0.4" />
-    <PackageReference Include="JMovies.IMDb" Version="1.4.1" />
+    <PackageReference Include="JMovies.IMDb" Version="1.4.2" />
     <PackageReference Include="JMovies.IMDb.Common" Version="1.4.1" />
-    <PackageReference Include="JMovies.IMDb.Entities" Version="1.4.1" />
+    <PackageReference Include="JMovies.IMDb.Entities" Version="1.4.3" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.7.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.Log4NetAppender" Version="2.10.0" />
