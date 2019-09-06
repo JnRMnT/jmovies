@@ -35,6 +35,7 @@ namespace JMovies.App.Business.Managers
                     .Include(e => ((Movie)e).ReleaseDates)
                     .Include(e => ((Movie)e).Poster)
                     .Include(e => ((Movie)e).MediaImages)
+                    .Include(e => ((Movie)e).TagLines)
                     .FirstOrDefault(e => e.IMDbID == production.IMDbID);
 
                 bool saved = false;
@@ -65,9 +66,21 @@ namespace JMovies.App.Business.Managers
                 HandleRatings(entities, production, savedProduction);
                 HandleReleaseDates(entities, production, savedProduction);
                 HandleImages(entities, production, savedProduction);
+                HandleTagLines(entities, production, savedProduction);
                 MarkEntityAsUpdated(entities, trimmedProduction, new string[] { "ProductionType" }, true);
                 entities.SaveChanges();
                 scope.Complete();
+            }
+        }
+
+        private static void HandleTagLines(JMoviesEntities entities, Production production, Production savedProduction)
+        {
+            Movie movie = production as Movie;
+            Movie savedMovie = savedProduction as Movie;
+
+            if (movie != null)
+            {
+
             }
         }
 

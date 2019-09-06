@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "JMovies.CronJobs.IMDB.ProductionPersister": {
+    "JMovies.Jobs.IMDB.ProductionPersister": {
       "commandName": "Project",
       "commandLineArgs": "MaxRecordCount=1"
     }

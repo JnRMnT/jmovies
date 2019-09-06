@@ -51,7 +51,6 @@ namespace JMovies.DataAccess
             JsonConverter<ICollection<OfficialSite>> officialSitesConverter = new JsonConverter<ICollection<OfficialSite>>();
 
             modelBuilder.Entity<Person>().Property(e => e.Height).HasConversion(lengthConverter);
-            modelBuilder.Entity<Movie>().Property(e => e.TagLines).HasConversion(stringArrayConverter);
             modelBuilder.Entity<Movie>().Property(e => e.FilmingLocations).HasConversion(stringArrayConverter);
             modelBuilder.Entity<Movie>().Property(e => e.Budget).HasConversion(budgetConverter);
             modelBuilder.Entity<Movie>().Property(e => e.OfficialSites).HasConversion(officialSitesConverter);

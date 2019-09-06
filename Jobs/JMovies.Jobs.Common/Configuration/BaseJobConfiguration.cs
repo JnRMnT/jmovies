@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace JMovies.CronJobs.Common.Configuration
+namespace JMovies.Jobs.Common.Configuration
 {
     /// <summary>
     /// Holds base configuration of a cron job

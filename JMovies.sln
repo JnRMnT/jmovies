@@ -23,11 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.DataAccess", "JMovi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.Tests", "JMovies.Tests\JMovies.Tests.csproj", "{8E2EF9E9-E792-41D3-8889-DE08EF324B98}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CronJobs", "CronJobs", "{842053A4-193C-468F-B979-E0C6F55BBB48}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jobs", "Jobs", "{842053A4-193C-468F-B979-E0C6F55BBB48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.CronJobs.IMDB.ProductionPersister", "CronJobs\JMovies.CronJobs.IMDB.ProductionPersister\JMovies.CronJobs.IMDB.ProductionPersister.csproj", "{F85067B8-0C2C-41DD-AAC8-93DB8D106303}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.Jobs.IMDB.ProductionPersister", "Jobs\JMovies.Jobs.IMDB.ProductionPersister\JMovies.Jobs.IMDB.ProductionPersister.csproj", "{F85067B8-0C2C-41DD-AAC8-93DB8D106303}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.CronJobs.Common", "CronJobs\JMovies.CronJobs.Common\JMovies.CronJobs.Common.csproj", "{E49DEB63-A714-409B-9DA7-39791F6FA50B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.Jobs.Common", "Jobs\JMovies.Jobs.Common\JMovies.Jobs.Common.csproj", "{E49DEB63-A714-409B-9DA7-39791F6FA50B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,5 @@
 ﻿using JMovies.Common.Constants;
-using JMovies.CronJobs.Common;
+using JMovies.Jobs.Common;
 using JMovies.DataAccess;
 using JMovies.DataAccess.Entities.Enums;
 using System.Linq;
@@ -12,10 +12,10 @@ using JMovies.App.Business.Managers;
 using JMovies.IMDb.Entities.Settings;
 using JMovies.IMDb.Entities.Settings.Presets;
 using Microsoft.Extensions.Configuration;
-using JMovies.CronJobs.Common.Configuration;
+using JMovies.Jobs.Common.Configuration;
 using JMovies.Utilities.Common;
 
-namespace JMovies.CronJobs.IMDB.ProductionPersister
+namespace JMovies.Jobs.IMDB.ProductionPersister
 {
     class Program
     {

@@ -6,7 +6,7 @@ using JMovies.IMDb.Entities.Misc;
 using System;
 using System.Linq;
 
-namespace JMovies.CronJobs.Common
+namespace JMovies.Jobs.Common
 {
     public class PersisterHelper
     {
