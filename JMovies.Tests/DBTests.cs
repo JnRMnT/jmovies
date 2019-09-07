@@ -73,16 +73,20 @@ namespace JMovies.Tests
             ProductionDataFetchSettings productionDataFetchSettings = new FullProductionDataFetchSettings();
             using (JMoviesEntities entities = new JMoviesEntities())
             {
-                //DBHelper.EmptyDB(entities);
-                IIMDbDataProvider iMDbDataProvider = serviceProvider.GetRequiredService<IIMDbDataProvider>();
-                Movie movie = iMDbDataProvider.GetMovie(1477834, productionDataFetchSettings);
+                long[] imdbIDs = new long[] { 6958, 1477834 };
+                foreach (long imdbID in imdbIDs)
+                {
+                    //DBHelper.EmptyDB(entities);
+                    IIMDbDataProvider iMDbDataProvider = serviceProvider.GetRequiredService<IIMDbDataProvider>();
+                    Movie movie = iMDbDataProvider.GetMovie(imdbID, productionDataFetchSettings);
 
-                ProductionPersistanceManager.Persist(entities, movie);
+                    ProductionPersistanceManager.Persist(entities, movie);
 
-                Movie savedMovie = entities.Production.SingleOrDefault(e => e.IMDbID == movie.IMDbID) as Movie;
-                Assert.IsNotNull(savedMovie);
-                Assert.AreEqual(movie.IMDbID, savedMovie.IMDbID);
-                Assert.AreEqual(movie.Title, savedMovie.Title);
+                    Movie savedMovie = entities.Production.SingleOrDefault(e => e.IMDbID == movie.IMDbID) as Movie;
+                    Assert.IsNotNull(savedMovie);
+                    Assert.AreEqual(movie.IMDbID, savedMovie.IMDbID);
+                    Assert.AreEqual(movie.Title, savedMovie.Title);
+                }
             }
         }
 

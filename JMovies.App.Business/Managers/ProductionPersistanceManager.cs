@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using JMovies.IMDb.Factories;
 using JMovies.IMDb.Entities.Common;
+using JMovies.IMDb.Entities.Misc;
 
 namespace JMovies.App.Business.Managers
 {
@@ -221,25 +222,28 @@ namespace JMovies.App.Business.Managers
 
         private static void HandleRatings(JMoviesEntities entities, Production production, Production savedProduction)
         {
-            EntityEntry entry = null;
-
-            production.Rating.DataSourceID = entities.DataSource.FirstOrDefault(e => e.DataSourceType == production.Rating.DataSource.DataSourceType).ID;
-            production.Rating.DataSource = null;
-
-            production.Rating.ProductionID = production.Rating.Production.ID;
-            production.Rating.Production = null;
-            if (savedProduction != null && savedProduction.Rating != null)
+            if (production.Rating != null)
             {
-                production.Rating.ID = savedProduction.Rating.ID;
-                entry = MarkEntityAsUpdated(entities, production.Rating);
+                EntityEntry entry = null;
+
+                production.Rating.DataSourceID = entities.DataSource.FirstOrDefault(e => e.DataSourceType == production.Rating.DataSource.DataSourceType).ID;
+                production.Rating.DataSource = null;
+
+                production.Rating.ProductionID = production.Rating.Production.ID;
+                production.Rating.Production = null;
+                if (savedProduction != null && savedProduction.Rating != null)
+                {
+                    production.Rating.ID = savedProduction.Rating.ID;
+                    entry = MarkEntityAsUpdated(entities, production.Rating);
+                }
+                else
+                {
+                    production.Rating.ID = GetNewID<Rating>(entities, e => e.ID);
+                    entry = entities.Rating.Add(production.Rating);
+                }
+                entities.SaveChanges();
+                DetachAllEntries(entities);
             }
-            else
-            {
-                production.Rating.ID = GetNewID<Rating>(entities, e => e.ID);
-                entry = entities.Rating.Add(production.Rating);
-            }
-            entities.SaveChanges();
-            DetachAllEntries(entities);
         }
 
         private static void HandlePersons(JMoviesEntities entities, Production production, Production savedProduction)
@@ -609,8 +613,12 @@ namespace JMovies.App.Business.Managers
         {
             if (savedProduction != null && savedProduction.Poster != null)
             {
-                entities.Remove(savedProduction.Poster);
+                Image oldPoster = savedProduction.Poster;
+                entities.Production.FirstOrDefault(e => e.ID == production.ID).Poster = null;
+                entities.Image.Remove(oldPoster);
             }
+            DetachAllEntries(entities);
+            entities.SaveChanges();
 
             if (production.MediaImages != null)
             {
@@ -619,8 +627,11 @@ namespace JMovies.App.Business.Managers
                     Image savedImage = entities.Image.FirstOrDefault(e => e.URL == image.URL);
                     if (savedImage == null)
                     {
+                        image.ID = GetNewID<Image>(entities, e => e.ID);
                         entities.Add(image);
                     }
+                    entities.SaveChanges();
+                    DetachAllEntries(entities);
                 }
             }
         }
