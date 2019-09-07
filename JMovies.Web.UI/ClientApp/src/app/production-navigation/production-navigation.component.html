@@ -1,0 +1,6 @@
+<div class="production-navigation position-relative">
+    <mat-button-toggle-group name="currentPage" [value]="currentPage" aria-label="Production Section">
+        <mat-button-toggle [routerLink]="['/app/production', productionID]" value="production">{{'Title.Movie' | translate}}</mat-button-toggle>
+        <mat-button-toggle [routerLink]="['/app/production-cast', productionID]" value="production-cast">{{'Title.Actors' | translate}}</mat-button-toggle>
+    </mat-button-toggle-group>
+</div>

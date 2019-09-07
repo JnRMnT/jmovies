@@ -26,10 +26,6 @@ namespace JMovies.Configuration.Flow
         {
             FlowConfiguration flowConfiguration = flowConfigurationProvider.GetConfiguration(actionName);
             contextProvider.GetContext().ActiveFlowConfiguration = flowConfiguration;
-            Type requestsType = Type.GetType(flowConfiguration.RequestIdentifier);
-            JObject jRequest = request as JObject;
-            object flowRequest = jRequest.ToObject(requestsType);
-
             Type responseType = Type.GetType(flowConfiguration.ResponseIdentifier);
             BaseResponse response = Activator.CreateInstance(responseType) as BaseResponse;
 
@@ -37,7 +33,7 @@ namespace JMovies.Configuration.Flow
             {
                 Type flowItemType = Type.GetType(flowItem.TypeIdentifier);
                 BaseFlowItem flowItemInstance = Activator.CreateInstance(flowItemType) as BaseFlowItem;
-                flowItemInstance.ExecuteFlow(serviceProvider, ref flowRequest, ref response);
+                flowItemInstance.ExecuteFlow(serviceProvider, ref request, ref response);
             }
 
             return response;

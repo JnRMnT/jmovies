@@ -1,0 +1,33 @@
+<div>
+    <app-production-navigation [current-page]="currentPage" [production-id]="production?.imDbID"></app-production-navigation>
+    <!--Summary-->
+    <div class="row jumbotron p-3 p-md-5 text-white rounded bg-dark shadow">
+        <div class="col-3 px-0">
+            <img class="card-img-right flex-auto d-none d-lg-block shadow-lg border" src="assets/empty.jpg">
+        </div>
+        <div class="col-9 px-0">
+            <div class="row">
+                <div class="col-md-9 col-sm-12">
+                    <h3 class="my-0 production-title">
+                        <i class="fas fa-film" *ngIf="production?.productonType == 1"></i>
+                        <i class="fas fa-tv" *ngIf="production?.productonType == 2"></i>
+                        {{production?.title}} <span *ngIf="production">({{production?.year}}<span *ngIf="production?.EndYear"> - {{production?.endYear}}</span>)</span>
+                        <jm-link *ngIf="production" [url]="production?.imdbLink" class="position-absolute ml-2 text-white" target="_blank"><i class="fab fa-imdb"></i></jm-link>
+                    </h3>
+                    <h4 class="lead mb-0" *ngIf="production?.originalTitle">{{production?.originalTitle}}</h4>
+                </div>
+                <div class="col-md-3 col-sm-12 main-actors">
+                    <div class="d-flex flex-column bd-highlight">
+                        <div class="p-2 bd-highlight">Flex item 1</div>
+                        <div class="p-2 bd-highlight">Flex item 2</div>
+                        <div class="p-2 bd-highlight">Flex item 3</div>
+                        <div class="p-2 bd-highlight">Flex item 4</div>
+                        <div class="p-2 bd-highlight">Flex item 5</div>
+                        <div class="p-2 bd-highlight">Flex item 6</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-production-credits [credits]="summaryActingCredits"></app-production-credits>
+</div>

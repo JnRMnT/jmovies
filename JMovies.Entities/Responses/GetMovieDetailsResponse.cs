@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace JMovies.Entities.Responses
 {
-    public class GetMovieDetailsResponse: BaseResponse
+    public class GetProductionDetailsResponse: BaseResponse
     {
-        public Movie Movie { get; set; }
+        public Production Production { get; set; }
     }
 }

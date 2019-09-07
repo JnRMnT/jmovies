@@ -1,0 +1,25 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "JSON Schema for flow configurations",
+
+  "type": "object",
+
+  "properties": {
+    "Name": {
+      "type": "string",
+      "description": "Represents the name of the flow."
+    },
+    "ActionClassIdentifier": {
+      "type": "string",
+      "description": "Action class fully qualified identifier."
+    },
+    "RequestIdentifier": {
+      "type": "string",
+      "description": "Request Type fully qualified identifier."
+    },
+    "ResponseIdentifier": {
+      "type": "string",
+      "description": "Response Type fully qualified identifier."
+    }
+  }
+}

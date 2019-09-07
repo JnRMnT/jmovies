@@ -1,0 +1,7 @@
+{
+  "$schema": "../schemas/flowconfiguration-schema.json#",
+  "Name": "GetProductionDetails",
+  "RequestIdentifier": "JMovies.Entities.Requests.GetProductionDetailsRequest, JMovies.Entities",
+  "ResponseIdentifier": "JMovies.Entities.Responses.GetProductionDetailsResponse, JMovies.Entities",
+  "ActionClassIdentifier": "JMovies.App.Business.Actions.GetProductionDetails, JMovies.App.Business"
+}

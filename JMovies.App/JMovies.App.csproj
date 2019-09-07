@@ -37,6 +37,12 @@
     <Content Update="ConfigurationFiles\Flows\BasicResolutionTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Update="ConfigurationFiles\Flows\GetPersonDetails.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="ConfigurationFiles\Flows\GetProductionDetails.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Update="ConfigurationFiles\Flows\StaticDataManagement.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

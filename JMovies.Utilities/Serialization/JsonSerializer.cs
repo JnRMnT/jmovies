@@ -9,19 +9,25 @@ namespace JMovies.Utilities.Serialization
 {
     public class JsonSerializer
     {
-        private static JsonSerializerSettings settings;
+        private static JsonSerializerSettings settings = null;
         public static JsonSerializerSettings Settings
         {
             get
             {
-                if(settings == null)
+                if (settings == null)
                 {
-                    settings = new JsonSerializerSettings();
-                    settings.TypeNameHandling = TypeNameHandling.All;
-                    settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    settings = GetDefaultSettings();
                 }
                 return settings;
             }
+        }
+
+        public static JsonSerializerSettings GetDefaultSettings()
+        {
+            JsonSerializerSettings defaultSettings = new JsonSerializerSettings();
+            defaultSettings.TypeNameHandling = TypeNameHandling.All;
+            defaultSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            return defaultSettings;
         }
 
         public static T DeserializeObject<T>(string json)
@@ -47,7 +53,7 @@ namespace JMovies.Utilities.Serialization
 
         public static string SerializeObject(object objectToSerialize, JsonSerializerSettings settings)
         {
-            return JsonConvert.SerializeObject(objectToSerialize, Settings);
+            return JsonConvert.SerializeObject(objectToSerialize, settings);
         }
     }
 }

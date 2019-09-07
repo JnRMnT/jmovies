@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using System;
 
 namespace JMovies
@@ -35,7 +36,11 @@ namespace JMovies
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationInsightsTelemetry();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.TypeNameHandling = Utilities.Serialization.JsonSerializer.Settings.TypeNameHandling;
+                options.SerializerSettings.ReferenceLoopHandling = Utilities.Serialization.JsonSerializer.Settings.ReferenceLoopHandling;
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -60,7 +65,7 @@ namespace JMovies
             services.AddSingleton<IJMAppClientProvider, JMAppClientProvider>();
             services.AddSingleton<IFlowConfigurationProvider, JsonFileBasedFlowConfigurationProvider>();
             services.AddSingleton<IFlowExecutionConfigurationProvider, JsonFileBasedFlowExecutionConfigurationProvider>();
-            services.AddSingleton<IIMDbDataProvider, IMDbScraperDataProvider>();
+            services.AddSingleton<IIMDbDataProvider, ActionBasedIMDbDataProvider>();
             services.AddSingleton<IResourcesStaticDataProvider, ResourcesStaticDataProvider>();
             MainStaticDataProvider.RegisterProvider<IResourcesStaticDataProvider, ResourcesStaticDataProvider>(services);
             this.serviceProvider = services.BuildServiceProvider();

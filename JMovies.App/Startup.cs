@@ -14,6 +14,7 @@ using JMovies.DataAccess;
 using JMovies.Entities;
 using JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
+using JMovies.IMDb.Entities.Interfaces;
 using JMovies.Utilities.Providers;
 using log4net;
 using log4net.Config;
@@ -24,6 +25,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace JMovies.App
 {
@@ -40,14 +42,20 @@ namespace JMovies.App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddApplicationInsightsTelemetry();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.TypeNameHandling = Utilities.Serialization.JsonSerializer.Settings.TypeNameHandling;
+                options.SerializerSettings.ReferenceLoopHandling = Utilities.Serialization.JsonSerializer.Settings.ReferenceLoopHandling;
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IPathProvider, PathProvider>();
             services.AddSingleton<IContextProvider, ContextProvider>();
             services.AddSingleton<IFlowConfigurationProvider, JsonFileBasedFlowConfigurationProvider>();
             services.AddSingleton<IFlowExecutionConfigurationProvider, JsonFileBasedFlowExecutionConfigurationProvider>();
             services.AddSingleton<IFlowProvider, FlowProvider>();
+            services.AddSingleton<IIMDbDataProvider, DBBasedIMDbDataProvider>();
             // Add our Config object so it can be injected
             services.Configure<AppConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));
             services.Configure<CustomConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));

@@ -9,6 +9,7 @@ using JMovies.IMDb.Entities.People;
 using JMovies.Utilities.Common;
 using JMovies.Utilities.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Proxies.Internal;
 using System;
 using System.Collections.Generic;
 
@@ -28,7 +29,11 @@ namespace JMovies.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLazyLoadingProxies();
+            ProxiesOptionsExtension proxiesOptionsExtension = optionsBuilder.Options?.FindExtension<ProxiesOptionsExtension>();
+            if (proxiesOptionsExtension == null)
+            {
+                optionsBuilder.UseLazyLoadingProxies();
+            }
             optionsBuilder.EnableDetailedErrors();
             optionsBuilder.EnableSensitiveDataLogging();
 

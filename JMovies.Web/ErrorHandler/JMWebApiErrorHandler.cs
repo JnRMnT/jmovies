@@ -1,4 +1,5 @@
 ﻿using JM.Entities.Framework;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Net;
@@ -42,8 +43,8 @@ namespace JMovies.Web.UI.ErrorHandler
                 // handle logging here
             }
 
-            // always return a JSON result
-            //context.Result = new JsonResult(customException);
+            //always return a JSON result
+            context.Result = new JsonResult(customException);
             base.OnException(context);
         }
     }

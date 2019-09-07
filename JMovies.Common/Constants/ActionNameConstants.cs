@@ -10,5 +10,7 @@ namespace JMovies.Common.Constants
     {
         public static readonly string BasicResolutionTest = "BasicResolutionTest";
         public static readonly string StaticDataManagement = "StaticDataManagement";
+        public static readonly string GetProductionDetails = "GetProductionDetails";
+        public static readonly string GetPersonDetails = "GetPersonDetails";
     }
 }

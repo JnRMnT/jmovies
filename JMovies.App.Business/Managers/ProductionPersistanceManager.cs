@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using JMovies.IMDb.Factories;
 using JMovies.IMDb.Entities.Common;
 using JMovies.IMDb.Entities.Misc;
+using JMovies.DataAccess.Helpers;
 
 namespace JMovies.App.Business.Managers
 {
@@ -23,21 +24,7 @@ namespace JMovies.App.Business.Managers
         {
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
             {
-                Production savedProduction = entities.Production
-                    .Include(e => e.Rating).ThenInclude(e => e.DataSource)
-                    .Include(e => ((Movie)e).ReleaseDates)
-                    .Include(e => ((Movie)e).AKAs)
-                    .Include(e => ((Movie)e).Countries)
-                    .Include(e => ((Movie)e).Credits)
-                    .Include(e => ((Movie)e).Genres)
-                    .Include(e => ((Movie)e).Keywords)
-                    .Include(e => ((Movie)e).Languages)
-                    .Include(e => ((Movie)e).ProductionCompanies)
-                    .Include(e => ((Movie)e).ReleaseDates)
-                    .Include(e => ((Movie)e).Poster)
-                    .Include(e => ((Movie)e).MediaImages)
-                    .Include(e => ((Movie)e).TagLines)
-                    .FirstOrDefault(e => e.IMDbID == production.IMDbID);
+                Production savedProduction = ProductionQueryHelper.GetResolvedProductionQuery(entities).FirstOrDefault(e => e.IMDbID == production.IMDbID);
 
                 bool saved = false;
                 if (savedProduction != null)

@@ -17,15 +17,15 @@ import { TranslateService } from './translate.service';
 import { LoadingService } from './loading.service';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppFooterComponent } from './app-footer/app-footer.component';
-import { MovieComponent } from './movie/movie.component';
+import { ProductionComponent } from './production/production.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { JmLinkComponent } from './jm-link/jm-link.component';
 import { JmButtonComponent } from './jm-button/jm-button.component';
-import { MovieNavigationComponent } from './movie-navigation/movie-navigation.component';
-import { MovieCastComponent } from './movie-cast/movie-cast.component';
-import { MovieService } from './movie.service';
-import { MovieCreditsComponent } from './movie-credits/movie-credits.component';
+import { ProductionNavigationComponent } from './production-navigation/production-navigation.component';
+import { ProductionCastComponent } from './production-cast/production-cast.component';
+import { ProductionService } from './production.service';
+import { ProductionCreditsComponent } from './production-credits/production-credits.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
 @NgModule({
@@ -34,14 +34,14 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     TranslatePipe,
     AppHeaderComponent,
     AppFooterComponent,
-    MovieComponent,
+    ProductionComponent,
     PageNotFoundComponent,
     DashboardComponent,
     JmLinkComponent,
     JmButtonComponent,
-    MovieNavigationComponent,
-    MovieCastComponent,
-    MovieCreditsComponent,
+    ProductionNavigationComponent,
+    ProductionCastComponent,
+    ProductionCreditsComponent,
     NavMenuComponent
   ],
   imports: [
@@ -59,7 +59,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     MatButtonToggleModule,
     MatButtonModule
   ],
-  providers: [HttpService, LoadingService, TranslateService, MovieService],
+  providers: [HttpService, LoadingService, TranslateService, ProductionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

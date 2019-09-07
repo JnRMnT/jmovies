@@ -13,7 +13,7 @@ namespace JMovies.DataAccess.Converters
         {
             get
             {
-                Newtonsoft.Json.JsonSerializerSettings settings = JsonSerializer.Settings;
+                Newtonsoft.Json.JsonSerializerSettings settings = JsonSerializer.GetDefaultSettings();
                 settings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.None;
                 return settings;
             }
