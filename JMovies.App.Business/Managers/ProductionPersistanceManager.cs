@@ -258,6 +258,7 @@ namespace JMovies.App.Business.Managers
                     entities.SaveChanges();
 
                     existingCredit = entities.Credit.FirstOrDefault(e => e.Person.ID == credit.Person.ID && e.ProductionID == production.ID);
+                    DetachAllEntries(entities);
 
                     ICollection<Character> characters = null;
 
