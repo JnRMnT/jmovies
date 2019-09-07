@@ -27,6 +27,8 @@ import { ProductionCastComponent } from './production-cast/production-cast.compo
 import { ProductionService } from './production.service';
 import { ProductionCreditsComponent } from './production-credits/production-credits.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { ToMoviePipe } from './to-movie.pipe';
+import { ToTVSeriesPipe } from './to-tvseries.pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     ProductionNavigationComponent,
     ProductionCastComponent,
     ProductionCreditsComponent,
-    NavMenuComponent
+    NavMenuComponent,
+    ToMoviePipe,
+    ToTVSeriesPipe
   ],
   imports: [
     BrowserModule,

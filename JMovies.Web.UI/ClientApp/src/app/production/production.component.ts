@@ -76,7 +76,7 @@ export class ProductionComponent implements OnInit, OnDestroy {
     }
   }
 
-  public production: Production | Movie | TVSeries;
+  public production: Production;
   public summaryActingCredits: ActingCredit[];
   public currentPage = "production";
 }

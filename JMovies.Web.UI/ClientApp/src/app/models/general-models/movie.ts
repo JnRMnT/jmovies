@@ -1,9 +1,9 @@
 import { Credit } from "./credit";
 import { ActingCredit } from "./acting-credit";
-import { Production } from './production';
+import { BaseProduction } from './production';
 import { TagLine } from './tag-line';
 
-export class Movie extends Production {
+export class Movie extends BaseProduction {
     originalTitle: string;
     plotSummary: string;
     storyLine: string;

@@ -14,5 +14,5 @@ export class ProductionNavigationComponent implements OnInit {
   }
 
     @Input("current-page") currentPage: string;
-    @Input("production-id") movieID: string;
+    @Input("production-id") productionID: string;
 }

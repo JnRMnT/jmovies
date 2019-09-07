@@ -14,7 +14,7 @@
                         {{production?.title}} <span *ngIf="production">({{production?.year}}<span *ngIf="production?.EndYear"> - {{production?.endYear}}</span>)</span>
                         <jm-link *ngIf="production" [url]="production?.imdbLink" class="position-absolute ml-2 text-white" target="_blank"><i class="fab fa-imdb"></i></jm-link>
                     </h3>
-                    <h4 class="lead mb-0" *ngIf="production?.originalTitle">{{production?.originalTitle}}</h4>
+                    <h4 class="lead mb-0" *ngIf="(production | toMovie)?.originalTitle">{{(production | toMovie)?.originalTitle}}</h4>
                 </div>
                 <div class="col-md-3 col-sm-12 main-actors">
                     <div class="d-flex flex-column bd-highlight">

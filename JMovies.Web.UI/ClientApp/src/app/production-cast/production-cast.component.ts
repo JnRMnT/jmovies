@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Movie } from '../models/general-models/movie';
 import { TVSeries } from '../models/general-models/tv-series';
-import { Production } from '../models/general-models/production';
+import { BaseProduction } from '../models/general-models/production';
 
 @Component({
   selector: 'app-production-cast',
@@ -23,7 +23,7 @@ export class ProductionCastComponent implements OnInit {
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         vm.productionService.getProductionDetails(params.get('id')))
-    ).subscribe((production: Production) => {
+    ).subscribe((production: BaseProduction) => {
       vm.production = <Movie | TVSeries>production;
     }, (error) => {
       console.error(error);
