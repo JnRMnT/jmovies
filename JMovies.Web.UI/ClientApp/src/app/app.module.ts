@@ -29,6 +29,7 @@ import { ProductionCreditsComponent } from './production-credits/production-cred
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { ToMoviePipe } from './to-movie.pipe';
 import { ToTVSeriesPipe } from './to-tvseries.pipe';
+import { ToBase64Pipe } from './to-base64.pipe';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ToTVSeriesPipe } from './to-tvseries.pipe';
     ProductionCreditsComponent,
     NavMenuComponent,
     ToMoviePipe,
-    ToTVSeriesPipe
+    ToTVSeriesPipe,
+    ToBase64Pipe
   ],
   imports: [
     BrowserModule,

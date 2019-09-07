@@ -1,13 +1,15 @@
 import { ProductionTypeEnum } from "./production-type-enum";
 import { TVSeries } from './tv-series';
 import { Movie } from './movie';
+import { Image } from './image';
 
 export class BaseProduction {
-    imdbLink: string;
-    imDbID: number;
-    title: string;
-    year: number;
-    productonType: ProductionTypeEnum;
+  imdbLink: string;
+  imDbID: number;
+  title: string;
+  year: number;
+  productonType: ProductionTypeEnum;
+  poster: Image;
 }
 
 export type Production = TVSeries | Movie | BaseProduction;
