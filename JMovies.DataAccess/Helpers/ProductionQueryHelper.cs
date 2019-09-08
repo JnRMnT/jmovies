@@ -16,7 +16,7 @@ namespace JMovies.DataAccess.Helpers
                                 .Include(e => ((Movie)e).ReleaseDates)
                                 .Include(e => ((Movie)e).AKAs)
                                 .Include(e => ((Movie)e).Countries)
-                                .Include(e => ((Movie)e).Credits).ThenInclude(e => ((ActingCredit)e).Person)
+                                .Include(e => ((Movie)e).Credits).ThenInclude(e => ((ActingCredit)e).Person).ThenInclude(e => e.PrimaryImage)
                                 .Include(e => ((Movie)e).Credits).ThenInclude(e => ((ActingCredit)e).Characters)
                                 .Include(e => ((Movie)e).Genres)
                                 .Include(e => ((Movie)e).Keywords)

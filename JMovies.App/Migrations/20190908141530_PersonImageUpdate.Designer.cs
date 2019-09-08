@@ -4,14 +4,16 @@ using JMovies.DataAccess;
 using JMovies.IMDb.Entities.Movies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JMovies.App.Migrations
 {
     [DbContext(typeof(JMoviesEntities))]
-    partial class JMoviesEntitiesModelSnapshot : ModelSnapshot
+    [Migration("20190908141530_PersonImageUpdate")]
+    partial class PersonImageUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -19,6 +19,7 @@ namespace JMovies.Tests
     [TestClass]
     public class DBTests
     {
+        private static readonly long[] personIDsToTest = new long[] { 3614913, 5253, 1297015, 3614913, 1877 };
 
         [TestMethod]
         public void InsertMovieTest()
@@ -91,6 +92,28 @@ namespace JMovies.Tests
         }
 
 
+        [TestMethod]
+        public void InsertScrapedPersonTest()
+        {
+            IServiceProvider serviceProvider = DIHelper.Initialize();
+            PersonDataFetchSettings personDataFetchSettings = new FullPersonDataFetchSettings();
+            using (JMoviesEntities entities = new JMoviesEntities())
+            {
+                foreach (long imdbID in personIDsToTest)
+                {
+                    //DBHelper.EmptyDB(entities);
+                    IIMDbDataProvider iMDbDataProvider = serviceProvider.GetRequiredService<IIMDbDataProvider>();
+                    Person person = iMDbDataProvider.GetPerson(imdbID, personDataFetchSettings);
+
+                    PersonPersistanceManager.Persist(entities, person);
+
+                    Person savedPerson = entities.Person.SingleOrDefault(e => e.IMDbID == person.IMDbID);
+                    Assert.IsNotNull(savedPerson);
+                    Assert.AreEqual(person.IMDbID, savedPerson.IMDbID);
+                    Assert.AreEqual(person.FullName, savedPerson.FullName);
+                }
+            }
+        }
 
         [TestMethod]
         public void EmptyDBTest()

@@ -34,7 +34,7 @@ namespace JMovies.App.Business.Managers
                 }
                 else
                 {
-                    production.ID = GetNewID<Production>(entities, e => e.ID);
+                    production.ID = CommonDBHelper.GetNewID<Production>(entities, e => e.ID);
                 }
 
                 Production trimmedProduction = GetTrimmedProduction(production);
@@ -55,7 +55,7 @@ namespace JMovies.App.Business.Managers
                 HandleReleaseDates(entities, production, savedProduction);
                 HandleImages(entities, production, savedProduction);
                 HandleTagLines(entities, production, savedProduction);
-                MarkEntityAsUpdated(entities, trimmedProduction, new string[] { "ProductionType" }, true);
+                CommonDBHelper.MarkEntityAsUpdated(entities, trimmedProduction, new string[] { "ProductionType" }, true);
                 entities.SaveChanges();
                 scope.Complete();
             }
@@ -107,65 +107,6 @@ namespace JMovies.App.Business.Managers
             return trimmedProduction;
         }
 
-        private static long GetNewID<T>(JMoviesEntities entities, Func<T, long> keySelector) where T : class
-        {
-            long lastIndex = entities.Set<T>().OrderByDescending(keySelector).Select(keySelector).FirstOrDefault();
-            if (lastIndex == default(long))
-            {
-                lastIndex = 0;
-            }
-            return lastIndex + 1;
-        }
-
-        private static EntityEntry MarkEntityAsUpdated(JMoviesEntities entities, object objectToMark, string[] excludedProperties = null, bool ignoreNulls = false)
-        {
-            PropertyInfo[] properties = objectToMark.GetType().GetProperties();
-            PropertyInfo idProperty = properties.FirstOrDefault(e => e.GetCustomAttribute<KeyAttribute>() != null);
-            EntityEntry entry = AttachEntity(entities, objectToMark, idProperty);
-
-            foreach (PropertyInfo property in properties)
-            {
-                if (property.GetCustomAttribute<NotMappedAttribute>() == null && property.GetCustomAttribute<ForeignKeyAttribute>() == null
-                    && (excludedProperties == null || !excludedProperties.Contains(property.Name)))
-                {
-                    bool isModified = ignoreNulls || property.GetValue(objectToMark) != null;
-                    if (property.Name != idProperty.Name)
-                    {
-                        GetPropertyAccessor(entry, property).IsModified = isModified;
-                    }
-                    else
-                    {
-                        GetPropertyAccessor(entry, property).IsModified = false;
-                    }
-                }
-            }
-
-            return entry;
-        }
-
-        private static EntityEntry AttachEntity(JMoviesEntities entities, object objectToMark, PropertyInfo idProperty)
-        {
-            EntityEntry entry = entities.ChangeTracker.Entries().FirstOrDefault(e => e.Metadata.Name == objectToMark.GetType().FullName && idProperty.GetValue(e.Entity).Equals(idProperty.GetValue(objectToMark)));
-            if (entry != null)
-            {
-                entry.State = EntityState.Detached;
-            }
-            entry = entities.Attach(objectToMark);
-            return entry;
-        }
-
-        private static MemberEntry GetPropertyAccessor(EntityEntry entry, PropertyInfo property)
-        {
-            if (entry.Navigations.Any(e => e.Metadata.Name == property.Name))
-            {
-                return entry.Reference(property.Name);
-            }
-            else
-            {
-                return entry.Property(property.Name);
-            }
-        }
-
         private static void HandleReleaseDates(JMoviesEntities entities, Production production, Production savedProduction)
         {
             Movie savedMovie = savedProduction as Movie;
@@ -186,11 +127,11 @@ namespace JMovies.App.Business.Managers
                         if (existingCountry != null)
                         {
                             releaseDate.Country.ID = existingCountry.ID;
-                            entry = MarkEntityAsUpdated(entities, releaseDate.Country);
+                            entry = CommonDBHelper.MarkEntityAsUpdated(entities, releaseDate.Country);
                         }
                         else
                         {
-                            releaseDate.Country.ID = GetNewID<Country>(entities, e => e.ID);
+                            releaseDate.Country.ID = CommonDBHelper.GetNewID<Country>(entities, e => e.ID);
                             entry = entities.Country.Add(releaseDate.Country);
                         }
                     }
@@ -198,11 +139,11 @@ namespace JMovies.App.Business.Managers
                     releaseDate.CountryID = releaseDate.Country.ID;
                     releaseDate.Country = null;
                     releaseDate.ProductionID = production.ID;
-                    releaseDate.ID = GetNewID<ReleaseDate>(entities, e => e.ID);
+                    releaseDate.ID = CommonDBHelper.GetNewID<ReleaseDate>(entities, e => e.ID);
                     entities.ReleaseDate.Add(releaseDate);
 
                     entities.SaveChanges();
-                    DetachAllEntries(entities);
+                    CommonDBHelper.DetachAllEntries(entities);
                 }
             }
         }
@@ -221,15 +162,15 @@ namespace JMovies.App.Business.Managers
                 if (savedProduction != null && savedProduction.Rating != null)
                 {
                     production.Rating.ID = savedProduction.Rating.ID;
-                    entry = MarkEntityAsUpdated(entities, production.Rating);
+                    entry = CommonDBHelper.MarkEntityAsUpdated(entities, production.Rating);
                 }
                 else
                 {
-                    production.Rating.ID = GetNewID<Rating>(entities, e => e.ID);
+                    production.Rating.ID = CommonDBHelper.GetNewID<Rating>(entities, e => e.ID);
                     entry = entities.Rating.Add(production.Rating);
                 }
                 entities.SaveChanges();
-                DetachAllEntries(entities);
+                CommonDBHelper.DetachAllEntries(entities);
             }
         }
 
@@ -248,17 +189,17 @@ namespace JMovies.App.Business.Managers
                     if (existingPerson != null)
                     {
                         credit.Person.ID = existingPerson.ID;
-                        //personEntry = MarkEntityAsUpdated(entities, credit.Person, new string[] { "PersonType" });
+                        //personEntry = CommonDBHelper.MarkEntityAsUpdated(entities, credit.Person, new string[] { "PersonType" });
                     }
                     else
                     {
-                        credit.Person.ID = GetNewID<Person>(entities, e => e.ID);
+                        credit.Person.ID = CommonDBHelper.GetNewID<Person>(entities, e => e.ID);
                         personEntry = entities.Person.Add(credit.Person);
                     }
                     entities.SaveChanges();
 
                     existingCredit = entities.Credit.FirstOrDefault(e => e.Person.ID == credit.Person.ID && e.ProductionID == production.ID);
-                    DetachAllEntries(entities);
+                    CommonDBHelper.DetachAllEntries(entities);
 
                     ICollection<Character> characters = null;
 
@@ -276,11 +217,11 @@ namespace JMovies.App.Business.Managers
                     if (existingCredit != null)
                     {
                         credit.ID = existingCredit.ID;
-                        entry = MarkEntityAsUpdated(entities, credit, new string[] { "RoleType", "Characters", "Person" });
+                        entry = CommonDBHelper.MarkEntityAsUpdated(entities, credit, new string[] { "RoleType", "Characters", "Person" });
                     }
                     else
                     {
-                        //credit.ID = GetNewID<Credit>(entities, e => e.ID);
+                        //credit.ID = CommonDBHelper.GetNewID<Credit>(entities, e => e.ID);
                         entry = entities.Credit.Add(credit);
                     }
 
@@ -290,7 +231,7 @@ namespace JMovies.App.Business.Managers
                     {
                         ((ActingCredit)credit).Characters = characters;
                     }
-                    DetachAllEntries(entities);
+                    CommonDBHelper.DetachAllEntries(entities);
                 }
             }
         }
@@ -310,11 +251,11 @@ namespace JMovies.App.Business.Managers
                     if (existingLanguage != null)
                     {
                         productionLanguage.Language.ID = existingLanguage.ID;
-                        languageEntry = MarkEntityAsUpdated(entities, productionLanguage.Language);
+                        languageEntry = CommonDBHelper.MarkEntityAsUpdated(entities, productionLanguage.Language);
                     }
                     else
                     {
-                        productionLanguage.Language.ID = GetNewID<Language>(entities, e => e.ID);
+                        productionLanguage.Language.ID = CommonDBHelper.GetNewID<Language>(entities, e => e.ID);
                         languageEntry = entities.Language.Add(productionLanguage.Language);
                     }
 
@@ -327,15 +268,15 @@ namespace JMovies.App.Business.Managers
                     if (existingProductionLanguage != null)
                     {
                         productionLanguage.ID = existingProductionLanguage.ID;
-                        entry = MarkEntityAsUpdated(entities, productionLanguage);
+                        entry = CommonDBHelper.MarkEntityAsUpdated(entities, productionLanguage);
                     }
                     else
                     {
-                        productionLanguage.ID = GetNewID<ProductionLanguage>(entities, e => e.ID);
+                        productionLanguage.ID = CommonDBHelper.GetNewID<ProductionLanguage>(entities, e => e.ID);
                         entry = entities.ProductionLanguage.Add(productionLanguage);
                     }
                     entities.SaveChanges();
-                    DetachAllEntries(entities);
+                    CommonDBHelper.DetachAllEntries(entities);
                 }
             }
         }
@@ -356,7 +297,7 @@ namespace JMovies.App.Business.Managers
                         if (savedKeyword != null)
                         {
                             keyword.ID = savedKeyword.ID;
-                            entry = MarkEntityAsUpdated(entities, keyword);
+                            entry = CommonDBHelper.MarkEntityAsUpdated(entities, keyword);
                             saved = true;
                         }
                     }
@@ -364,12 +305,12 @@ namespace JMovies.App.Business.Managers
                     keyword.ProductionID = production.ID;
                     if (!saved)
                     {
-                        keyword.ID = GetNewID<Keyword>(entities, e => e.ID);
+                        keyword.ID = CommonDBHelper.GetNewID<Keyword>(entities, e => e.ID);
                         entry = entities.Keyword.Add(keyword);
                     }
 
                     entities.SaveChanges();
-                    DetachAllEntries(entities);
+                    CommonDBHelper.DetachAllEntries(entities);
                 }
             }
         }
@@ -390,7 +331,7 @@ namespace JMovies.App.Business.Managers
                         if (savedGenre != null)
                         {
                             genre.ID = savedGenre.ID;
-                            entry = MarkEntityAsUpdated(entities, genre);
+                            entry = CommonDBHelper.MarkEntityAsUpdated(entities, genre);
                             saved = true;
                         }
                     }
@@ -398,11 +339,11 @@ namespace JMovies.App.Business.Managers
                     genre.ProductionID = production.ID;
                     if (!saved)
                     {
-                        genre.ID = GetNewID<Genre>(entities, e => e.ID);
+                        genre.ID = CommonDBHelper.GetNewID<Genre>(entities, e => e.ID);
                         entry = entities.Genre.Add(genre);
                     }
                     entities.SaveChanges();
-                    DetachAllEntries(entities);
+                    CommonDBHelper.DetachAllEntries(entities);
                 }
             }
         }
@@ -418,7 +359,7 @@ namespace JMovies.App.Business.Managers
                 }
             }
             entities.SaveChanges();
-            DetachAllEntries(entities);
+            CommonDBHelper.DetachAllEntries(entities);
         }
 
         private static void HandleCountries(JMoviesEntities entities, Production production, Production savedProduction)
@@ -436,11 +377,11 @@ namespace JMovies.App.Business.Managers
                     if (savedCountry != null)
                     {
                         productionCountry.Country.ID = savedCountry.ID;
-                        countryEntry = MarkEntityAsUpdated(entities, productionCountry.Country);
+                        countryEntry = CommonDBHelper.MarkEntityAsUpdated(entities, productionCountry.Country);
                     }
                     else
                     {
-                        productionCountry.Country.ID = GetNewID<Country>(entities, e => e.ID);
+                        productionCountry.Country.ID = CommonDBHelper.GetNewID<Country>(entities, e => e.ID);
                         countryEntry = entities.Country.Add(productionCountry.Country);
                     }
                     entities.SaveChanges();
@@ -453,17 +394,17 @@ namespace JMovies.App.Business.Managers
                     if (savedProductionCountry != null)
                     {
                         productionCountry.ID = savedProductionCountry.ID;
-                        entry = MarkEntityAsUpdated(entities, productionCountry);
+                        entry = CommonDBHelper.MarkEntityAsUpdated(entities, productionCountry);
                     }
                     else
                     {
-                        DetachAllEntries(entities);
-                        productionCountry.ID = GetNewID<ProductionCountry>(entities, e => e.ID);
+                        CommonDBHelper.DetachAllEntries(entities);
+                        productionCountry.ID = CommonDBHelper.GetNewID<ProductionCountry>(entities, e => e.ID);
                         entry = entities.ProductionCountry.Add(productionCountry);
                     }
 
                     entities.SaveChanges();
-                    DetachAllEntries(entities);
+                    CommonDBHelper.DetachAllEntries(entities);
                 }
             }
         }
@@ -485,7 +426,7 @@ namespace JMovies.App.Business.Managers
                         if (savedCompany != null)
                         {
                             company.ID = savedCompany.ID;
-                            entry = MarkEntityAsUpdated(entities, company);
+                            entry = CommonDBHelper.MarkEntityAsUpdated(entities, company);
                             saved = true;
                         }
                     }
@@ -493,11 +434,11 @@ namespace JMovies.App.Business.Managers
                     company.ProductionID = production.ID;
                     if (!saved)
                     {
-                        company.ID = GetNewID<Company>(entities, e => e.ID);
+                        company.ID = CommonDBHelper.GetNewID<Company>(entities, e => e.ID);
                         entry = entities.Company.Add(company);
                     }
                     entities.SaveChanges();
-                    DetachAllEntries(entities);
+                    CommonDBHelper.DetachAllEntries(entities);
                 }
                 movie.ProductionCompanies = null;
             }
@@ -525,7 +466,7 @@ namespace JMovies.App.Business.Managers
                                 if (savedCharacter != null)
                                 {
                                     character.ID = savedCharacter.ID;
-                                    entry = MarkEntityAsUpdated(entities, character, new string[] { "CharacterType" });
+                                    entry = CommonDBHelper.MarkEntityAsUpdated(entities, character, new string[] { "CharacterType" });
                                     saved = true;
                                 }
                             }
@@ -533,11 +474,11 @@ namespace JMovies.App.Business.Managers
                             character.CreditID = actingCredit.ID;
                             if (!saved)
                             {
-                                character.ID = GetNewID<Character>(entities, e => e.ID);
+                                character.ID = CommonDBHelper.GetNewID<Character>(entities, e => e.ID);
                                 entry = entities.Character.Add(character);
                             }
                             entities.SaveChanges();
-                            DetachAllEntries(entities);
+                            CommonDBHelper.DetachAllEntries(entities);
                         }
                     }
                 }
@@ -547,20 +488,6 @@ namespace JMovies.App.Business.Managers
         private static bool FindCharacter(Character currentCharacter, Movie savedMovie, Character searchedCharacter)
         {
             return savedMovie.Credits?.Where(x => x.RoleType == CreditRoleType.Acting).Select(x => x.ID).ToArray().Contains(currentCharacter.CreditID) == true && currentCharacter.Name == searchedCharacter.Name && currentCharacter.IMDbID == searchedCharacter.IMDbID;
-        }
-
-        private static void DetachAllEntries(JMoviesEntities entities)
-        {
-            var changedEntriesCopy = entities.ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Added ||
-               e.State == EntityState.Modified ||
-               e.State == EntityState.Unchanged ||
-               e.State == EntityState.Deleted).ToList();
-
-            foreach (var entry in changedEntriesCopy)
-            {
-                entry.State = EntityState.Detached;
-            }
         }
 
         private static void HandleAKAs(JMoviesEntities entities, Production production, Production savedProduction)
@@ -580,7 +507,7 @@ namespace JMovies.App.Business.Managers
                         if (savedAKA != null)
                         {
                             aka.ID = savedAKA.ID;
-                            entry = MarkEntityAsUpdated(entities, aka);
+                            entry = CommonDBHelper.MarkEntityAsUpdated(entities, aka);
                             saved = true;
                         }
                     }
@@ -588,11 +515,11 @@ namespace JMovies.App.Business.Managers
                     aka.ProductionID = production.ID;
                     if (!saved)
                     {
-                        aka.ID = GetNewID<AKA>(entities, e => e.ID);
+                        aka.ID = CommonDBHelper.GetNewID<AKA>(entities, e => e.ID);
                         entry = entities.AKA.Add(aka);
                     }
                     entities.SaveChanges();
-                    DetachAllEntries(entities);
+                    CommonDBHelper.DetachAllEntries(entities);
                 }
             }
         }
@@ -605,7 +532,7 @@ namespace JMovies.App.Business.Managers
                 entities.Production.FirstOrDefault(e => e.ID == production.ID).Poster = null;
                 entities.Image.Remove(oldPoster);
             }
-            DetachAllEntries(entities);
+            CommonDBHelper.DetachAllEntries(entities);
             entities.SaveChanges();
 
             if (production.MediaImages != null)
@@ -615,11 +542,11 @@ namespace JMovies.App.Business.Managers
                     Image savedImage = entities.Image.FirstOrDefault(e => e.URL == image.URL);
                     if (savedImage == null)
                     {
-                        image.ID = GetNewID<Image>(entities, e => e.ID);
+                        image.ID = CommonDBHelper.GetNewID<Image>(entities, e => e.ID);
                         entities.Add(image);
                     }
                     entities.SaveChanges();
-                    DetachAllEntries(entities);
+                    CommonDBHelper.DetachAllEntries(entities);
                 }
             }
         }

@@ -32,14 +32,20 @@ steps:
   inputs:
     solution: 'JMovies.Web.UI/JMovies.Web.UI.csproj'
     configuration: 'Release' 
-    msbuildArguments: '/p:Configuration=Release  /t:publish /p:PublishDir="Release" /p:PublishProfile="JMovies.Web.UI.Local.pubxml"'
-  displayName: 'Build and Deploy Locally Web Layer'
+    msbuildArguments: '/p:Configuration=Release /t:publish /p:PublishDir="Release" /p:PublishProfile="JMovies.Web.UI.Local.pubxml"'
+  displayName: 'Deploy Locally Web Layer'
 - task: MSBuild@1
   inputs:
     solution: 'Jobs/JMovies.Jobs.IMDB.ProductionPersister/JMovies.Jobs.IMDB.ProductionPersister.csproj'
     configuration: 'Release' 
-    msbuildArguments: '/p:PublishDir="Release"  /t:publish /p:Configuration=Release /p:PublishProfile="JMovies.Jobs.IMDB.ProductionPersister.Local.pubxml"'
-  displayName: 'Build and Deploy Locally IMDB Production Persister'
+    msbuildArguments: '/p:PublishDir="Release" /t:publish /p:Configuration=Release /p:PublishProfile="JMovies.Jobs.IMDB.ProductionPersister.Local.pubxml"'
+  displayName: 'Deploy Locally IMDB Production Persister'
+- task: MSBuild@1
+  inputs:
+    solution: 'Jobs/JMovies.Jobs.IMDB.PersonPersister/JMovies.Jobs.IMDB.PersonPersister.csproj'
+    configuration: 'Release' 
+    msbuildArguments: '/p:PublishDir="Release" /t:publish /p:Configuration=Release /p:PublishProfile="JMovies.Jobs.IMDB.PersonPersister.Local.pubxml"'
+  displayName: 'Deploy Locally IMDB Person Persister'
 - task: CopyFiles@2
   inputs:
     SourceFolder: 'JMovies.App/Release'
@@ -58,6 +64,12 @@ steps:
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/Jobs/imdbProductionPersister'
   displayName: 'Add IMDB Production Persister Release Files to Artifacts'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'Jobs/JMovies.Jobs.IMDB.PersonPersister/Release/'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/Jobs/imdbProductionPersister'
+  displayName: 'Add IMDB Person Persister Release Files to Artifacts'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'

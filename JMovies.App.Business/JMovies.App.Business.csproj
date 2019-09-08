@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JMovies.IMDb" Version="1.4.2" />
-    <PackageReference Include="JMovies.IMDb.Common" Version="1.4.1" />
-    <PackageReference Include="JMovies.IMDb.Entities" Version="1.4.3" />
+    <PackageReference Include="JMovies.IMDb" Version="1.4.3" />
+    <PackageReference Include="JMovies.IMDb.Common" Version="1.4.2" />
+    <PackageReference Include="JMovies.IMDb.Entities" Version="1.4.5" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -16,20 +16,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BouncyCastle.NetCore" Version="1.8.5" />
     <PackageReference Include="JMovies.IMDb" Version="1.4.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.17" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\JMovies.App.Business\JMovies.App.Business.csproj" />
-    <ProjectReference Include="..\..\JMovies.DataAccess\JMovies.DataAccess.csproj" />
-    <ProjectReference Include="..\..\JMovies.Entities\JMovies.Entities.csproj" />
-    <ProjectReference Include="..\JMovies.Jobs.Common\JMovies.Jobs.Common.csproj" />
+    <ProjectReference Include="..\JMovies.App.Business\JMovies.App.Business.csproj" />
+    <ProjectReference Include="..\JMovies.DataAccess\JMovies.DataAccess.csproj" />
+    <ProjectReference Include="..\JMovies.Entities\JMovies.Entities.csproj" />
+    <ProjectReference Include="..\Jobs\JMovies.Jobs.Common\JMovies.Jobs.Common.csproj" />
   </ItemGroup>
 
 </Project>
