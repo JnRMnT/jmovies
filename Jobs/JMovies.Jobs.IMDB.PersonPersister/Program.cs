@@ -18,7 +18,7 @@ namespace JMovies.Jobs.IMDB.PersonPersister
 {
     class Program
     {
-        private static readonly EntityTypeEnum EntityType = EntityTypeEnum.Production;
+        private static readonly EntityTypeEnum EntityType = EntityTypeEnum.Person;
         private static readonly DataSourceTypeEnum DataSource = DataSourceTypeEnum.IMDb;
         private static readonly PersonDataFetchSettings PersonDataFetchSettings = new FullPersonDataFetchSettings();
 
