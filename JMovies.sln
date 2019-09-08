@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.Jobs.IMDB.Productio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.Jobs.Common", "Jobs\JMovies.Jobs.Common\JMovies.Jobs.Common.csproj", "{E49DEB63-A714-409B-9DA7-39791F6FA50B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Jobs.IMDB.PersonPersister", "JMovies.Jobs.IMDB.PersonPersister\JMovies.Jobs.IMDB.PersonPersister.csproj", "{AD0F7257-0A32-4D39-A9BC-1D05A6CA083D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Jobs.IMDB.PersonPersister", "Jobs\JMovies.Jobs.IMDB.PersonPersister\JMovies.Jobs.IMDB.PersonPersister.csproj", "{AD0F7257-0A32-4D39-A9BC-1D05A6CA083D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

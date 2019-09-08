@@ -157,7 +157,7 @@ namespace JMovies.App.Business.Managers
                 production.Rating.DataSourceID = entities.DataSource.FirstOrDefault(e => e.DataSourceType == production.Rating.DataSource.DataSourceType).ID;
                 production.Rating.DataSource = null;
 
-                production.Rating.ProductionID = production.Rating.Production.ID;
+                production.Rating.ProductionID = production.ID;
                 production.Rating.Production = null;
                 if (savedProduction != null && savedProduction.Rating != null)
                 {
@@ -532,8 +532,8 @@ namespace JMovies.App.Business.Managers
                 entities.Production.FirstOrDefault(e => e.ID == production.ID).Poster = null;
                 entities.Image.Remove(oldPoster);
             }
-            CommonDBHelper.DetachAllEntries(entities);
             entities.SaveChanges();
+            CommonDBHelper.DetachAllEntries(entities);
 
             if (production.MediaImages != null)
             {

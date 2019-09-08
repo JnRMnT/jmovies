@@ -2,6 +2,7 @@
 using JMovies.DataAccess.Helpers;
 using JMovies.IMDb.Entities.Common;
 using JMovies.IMDb.Entities.People;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Linq;
 using System.Transactions;
@@ -30,8 +31,9 @@ namespace JMovies.App.Business.Managers
                 Person trimmedPerson = GetTrimmedPerson(person);
                 if (!saved)
                 {
-                    entities.Person.Add(trimmedPerson);
+                    EntityEntry entry = entities.Person.Add(trimmedPerson);
                 }
+                entities.SaveChanges();
                 HandleImages(entities, person, savedPerson);
                 CommonDBHelper.DetachAllEntries(entities);
                 CommonDBHelper.MarkEntityAsUpdated(entities, trimmedPerson, new string[] { "PersonType" }, true);
@@ -45,11 +47,11 @@ namespace JMovies.App.Business.Managers
             if (savedPerson != null && savedPerson.PrimaryImage != null)
             {
                 Image oldPrimaryImage = savedPerson.PrimaryImage;
-                entities.Production.FirstOrDefault(e => e.ID == person.ID).Poster = null;
+                entities.Person.FirstOrDefault(e => e.ID == person.ID).PrimaryImage = null;
                 entities.Image.Remove(oldPrimaryImage);
             }
-            CommonDBHelper.DetachAllEntries(entities);
             entities.SaveChanges();
+            CommonDBHelper.DetachAllEntries(entities);
 
             if (person.Photos != null)
             {
@@ -70,7 +72,6 @@ namespace JMovies.App.Business.Managers
         private static Person GetTrimmedPerson(Person person)
         {
             Person trimmedPerson = new Person();
-
             trimmedPerson.BirthDate = person.BirthDate;
             trimmedPerson.BirthName = person.BirthName;
             trimmedPerson.BirthPlace = person.BirthPlace;
