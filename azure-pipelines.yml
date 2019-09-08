@@ -68,7 +68,7 @@ steps:
   inputs:
     SourceFolder: 'Jobs/JMovies.Jobs.IMDB.PersonPersister/Release/'
     Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/Jobs/imdbProductionPersister'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/Jobs/imdbPersonPersister'
   displayName: 'Add IMDB Person Persister Release Files to Artifacts'
 - task: PublishBuildArtifacts@1
   inputs:
