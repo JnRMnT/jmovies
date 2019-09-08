@@ -12,8 +12,8 @@
             <div class="row">
                 <div class="col-md-9 col-sm-12">
                     <h3 class="my-0 production-title">
-                        <i class="fas fa-film" *ngIf="production?.productonType == 1"></i>
-                        <i class="fas fa-tv" *ngIf="production?.productonType == 2"></i>
+                        <i class="fas fa-film" *ngIf="production?.productionType == 1"></i>
+                        <i class="fas fa-tv" *ngIf="production?.productionType == 2"></i>
                         {{production?.title}} <span *ngIf="production">({{production?.year}}<span *ngIf="production?.EndYear"> - {{production?.endYear}}</span>)</span>
                         <jm-link *ngIf="production" [url]="production?.imdbLink" class="position-absolute ml-2 text-white" target="_blank"><i class="fab fa-imdb"></i></jm-link>
                     </h3>

@@ -4,6 +4,7 @@ import { Movie } from './movie';
 import { Image } from './image';
 
 export class BaseProduction {
+  id: number;
   imdbLink: string;
   imDbID: number;
   title: string;
