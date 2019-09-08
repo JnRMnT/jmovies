@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -23,10 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JMovies.App.Business\JMovies.App.Business.csproj" />
-    <ProjectReference Include="..\JMovies.DataAccess\JMovies.DataAccess.csproj" />
-    <ProjectReference Include="..\JMovies.Entities\JMovies.Entities.csproj" />
-    <ProjectReference Include="..\Jobs\JMovies.Jobs.Common\JMovies.Jobs.Common.csproj" />
+    <ProjectReference Include="..\..\JMovies.App.Business\JMovies.App.Business.csproj" />
+    <ProjectReference Include="..\..\JMovies.DataAccess\JMovies.DataAccess.csproj" />
+    <ProjectReference Include="..\..\JMovies.Entities\JMovies.Entities.csproj" />
+    <ProjectReference Include="..\..\Jobs\JMovies.Jobs.Common\JMovies.Jobs.Common.csproj" />
   </ItemGroup>
 
 </Project>
