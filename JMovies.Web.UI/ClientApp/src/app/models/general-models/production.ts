@@ -8,8 +8,8 @@ export class BaseProduction {
   imDbID: number;
   title: string;
   year: number;
-  productonType: ProductionTypeEnum;
+  productionType: ProductionTypeEnum;
   poster: Image;
-}
+} 
 
 export type Production = TVSeries | Movie | BaseProduction;

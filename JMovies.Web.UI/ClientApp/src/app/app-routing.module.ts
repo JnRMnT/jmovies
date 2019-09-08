@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'app/movie/:id', component: ProductionComponent },
   { path: 'app/tvseries/:id', component: ProductionComponent },
   { path: 'app/production/:id', component: ProductionComponent },
+  { path: 'app/production-cast/:id', component: ProductionCastComponent },
   { path: 'app/movie-cast/:id', component: ProductionCastComponent },
   { path: 'app/tv-series-cast/:id', component: ProductionCastComponent },
   { path: 'app/dashboard', component: DashboardComponent },

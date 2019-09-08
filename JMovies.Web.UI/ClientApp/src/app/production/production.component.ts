@@ -36,16 +36,18 @@ export class ProductionComponent implements OnInit, OnDestroy {
       vm.production = production;
       if (JM.isDefined(vm.production)) {
         let summaryCount = 0;
-        if (vm.production.productonType == ProductionTypeEnum.Movie) {
+        if (vm.production.productionType == ProductionTypeEnum.Movie) {
           var movie = <Movie>vm.production;
-          vm.summaryActingCredits = _.filter(<ActingCredit[]>movie.credits, (credit: ActingCredit): boolean => {
-            if (credit.roleType == CreditRoleType.Acting && summaryCount < 5) {
-              summaryCount++;
-              return true;
-            } else {
-              return false;
-            }
-          });
+          if (JM.isDefined(movie.credits)) {
+            vm.summaryActingCredits = _.filter(<ActingCredit[]>movie.credits.$values, (credit: ActingCredit): boolean => {
+              if (credit.roleType == CreditRoleType.Acting && summaryCount < 5) {
+                summaryCount++;
+                return true;
+              } else {
+                return false;
+              }
+            });
+          }
         }
       }
       $(window).on("resize", vm.boundResizeFunction);

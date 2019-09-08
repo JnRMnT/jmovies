@@ -4,8 +4,8 @@
             <img class="card-img-top flex-auto d-none d-lg-block shadow-lg border" [src]="credit.person.primaryImage ? credit.person.primaryImage : 'assets/empty.jpg'" [alt]="credit.person.fullName + ' Photo'">
             <div class="card-body">
                 <h5 class="card-title"><jm-link [url]="'https://www.imdb.com/name/nm' + credit.person.imDbID" target="_blank">{{credit.person.fullName}}</jm-link></h5>
-                <h6 class="card-subtitle mb-2">
-                    <span *ngFor="let character of credit.characters;let i = index">
+                <h6 class="card-subtitle mb-2" *ngIf="credit.characters">
+                    <span *ngFor="let character of credit.characters.$values;let i = index">
                         <span *ngIf="i != 0"> | </span>{{character.name}}
                     </span>
                 </h6>
