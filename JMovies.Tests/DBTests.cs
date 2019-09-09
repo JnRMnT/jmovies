@@ -19,7 +19,7 @@ namespace JMovies.Tests
     [TestClass]
     public class DBTests
     {
-        private static readonly long[] personIDsToTest = new long[] { 3614913, 5253, 1297015, 3614913, 1877 };
+        private static readonly long[] personIDsToTest = new long[] { 1785, 3614913, 5253, 1297015, 3614913, 1877 };
 
         [TestMethod]
         public void InsertMovieTest()
@@ -74,7 +74,7 @@ namespace JMovies.Tests
             ProductionDataFetchSettings productionDataFetchSettings = new FullProductionDataFetchSettings();
             using (JMoviesEntities entities = new JMoviesEntities())
             {
-                long[] imdbIDs = new long[] { 8269, 6958, 1477834 };
+                long[] imdbIDs = new long[] { 16624, 8269, 6958, 1477834 };
                 foreach (long imdbID in imdbIDs)
                 {
                     //DBHelper.EmptyDB(entities);
