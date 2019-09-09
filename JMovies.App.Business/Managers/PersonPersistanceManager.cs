@@ -13,7 +13,10 @@ namespace JMovies.App.Business.Managers
     {
         public static void Persist(JMoviesEntities entities, Person person)
         {
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
+            TransactionOptions options = new TransactionOptions();
+            options.IsolationLevel = IsolationLevel.ReadCommitted;
+            options.Timeout = new TimeSpan(0, 5, 0);
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, options))
             {
                 Person savedPerson = PersonQueryHelper.GetResolvedPersonQuery(entities).FirstOrDefault(e => e.IMDbID == person.IMDbID);
 
