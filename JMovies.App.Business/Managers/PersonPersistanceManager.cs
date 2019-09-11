@@ -53,7 +53,10 @@ namespace JMovies.App.Business.Managers
                 entities.Person.FirstOrDefault(e => e.ID == person.ID).PrimaryImage = null;
                 entities.Image.Remove(oldPrimaryImage);
             }
-            entities.Image.Add(person.PrimaryImage);
+            if (person.PrimaryImage != null)
+            {
+                entities.Image.Add(person.PrimaryImage);
+            }
             entities.SaveChanges();
             CommonDBHelper.DetachAllEntries(entities);
 

@@ -534,7 +534,10 @@ namespace JMovies.App.Business.Managers
                 entities.Production.FirstOrDefault(e => e.ID == production.ID).Poster = null;
                 entities.Image.Remove(oldPoster);
             }
-            entities.Image.Add(production.Poster);
+            if (production.Poster != null)
+            {
+                entities.Image.Add(production.Poster);
+            }
             entities.SaveChanges();
             CommonDBHelper.DetachAllEntries(entities);
 
