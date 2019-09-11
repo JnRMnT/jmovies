@@ -74,7 +74,7 @@ namespace JMovies.Tests
             ProductionDataFetchSettings productionDataFetchSettings = new FullProductionDataFetchSettings();
             using (JMoviesEntities entities = new JMoviesEntities())
             {
-                long[] imdbIDs = new long[] { 16624, 8269, 6958, 1477834 };
+                long[] imdbIDs = new long[] { 18652, 16624, 8269, 6958, 1477834 };
                 foreach (long imdbID in imdbIDs)
                 {
                     //DBHelper.EmptyDB(entities);

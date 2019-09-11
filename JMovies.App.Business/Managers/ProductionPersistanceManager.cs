@@ -85,7 +85,6 @@ namespace JMovies.App.Business.Managers
             trimmedProduction.Title = production.Title;
             trimmedProduction.Year = production.Year;
             trimmedProduction.ProductionType = production.ProductionType;
-            trimmedProduction.Poster = production.Poster;
 
             if (trimmedProduction is Movie)
             {
@@ -535,6 +534,7 @@ namespace JMovies.App.Business.Managers
                 entities.Production.FirstOrDefault(e => e.ID == production.ID).Poster = null;
                 entities.Image.Remove(oldPoster);
             }
+            entities.Image.Add(production.Poster);
             entities.SaveChanges();
             CommonDBHelper.DetachAllEntries(entities);
 

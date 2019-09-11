@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="JM.Framework" Version="1.0.4" />
-    <PackageReference Include="JMovies.IMDb" Version="1.4.4" />
+    <PackageReference Include="JMovies.IMDb" Version="1.4.5" />
     <PackageReference Include="JMovies.IMDb.Common" Version="1.4.3" />
     <PackageReference Include="JMovies.IMDb.Entities" Version="1.4.5" />
     <PackageReference Include="log4net" Version="2.0.8" />

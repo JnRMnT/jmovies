@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JMovies.IMDb" Version="1.4.4" />
+    <PackageReference Include="JMovies.IMDb" Version="1.4.5" />
     <PackageReference Include="JMovies.IMDb.Entities" Version="1.4.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />

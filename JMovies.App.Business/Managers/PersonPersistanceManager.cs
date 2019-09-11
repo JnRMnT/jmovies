@@ -53,6 +53,7 @@ namespace JMovies.App.Business.Managers
                 entities.Person.FirstOrDefault(e => e.ID == person.ID).PrimaryImage = null;
                 entities.Image.Remove(oldPrimaryImage);
             }
+            entities.Image.Add(person.PrimaryImage);
             entities.SaveChanges();
             CommonDBHelper.DetachAllEntries(entities);
 
@@ -86,7 +87,6 @@ namespace JMovies.App.Business.Managers
             trimmedPerson.MiniBiography = person.MiniBiography;
             trimmedPerson.NickName = person.NickName;
             trimmedPerson.PersonType = person.PersonType;
-            trimmedPerson.PrimaryImage = person.PrimaryImage;
             trimmedPerson.Roles = person.Roles;
 
             return trimmedPerson;
