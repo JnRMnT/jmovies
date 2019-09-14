@@ -39,32 +39,40 @@ namespace JMovies.Jobs.IMDB.PersonPersister
             using (JMoviesEntities entities = new JMoviesEntities())
             {
                 IIMDbDataProvider imdbDataProvider = new IMDbScraperDataProvider();
-                if (configuration.StartRecordID == default(long))
+                if (configuration.StartRecordID == default(long) || configuration.WorkingType == PersisterWorkingTypeEnum.UpdateInternalData)
                 {
-                    configuration.StartRecordID = PersisterHelper.DetermineTheStartID(EntityType, DataSource, entities);
+                    configuration.StartRecordID = PersisterHelper.DetermineTheStartID(EntityType, DataSource, configuration.WorkingType, configuration.StartRecordID, entities);
                 }
+                long dataID = configuration.StartRecordID;
                 for (int i = 0; i < configuration.MaxRecordCount; i++)
                 {
-                    long dataID = configuration.StartRecordID + i;
-                    if (dataID > ConfigurationConstants.IMDBMaxID)
+                    if (i != 0)
                     {
-                        dataID = 1;
+                        dataID = PersisterHelper.GetNextID(EntityType, DataSource, configuration.WorkingType, entities, dataID);
                     }
 
-                    try
+                    if (dataID != default(long))
                     {
-                        Person person = imdbDataProvider.GetPerson(dataID, PersonDataFetchSettings);
-                        using (JMoviesEntities productionPersistanceEntities = new JMoviesEntities())
+                        if (dataID > ConfigurationConstants.IMDBMaxID)
                         {
-                            PersonPersistanceManager.Persist(productionPersistanceEntities, person);
+                            dataID = 1;
                         }
-                        PersisterHelper.SavePersisterHistory(entities, dataID, DataSource, EntityType, string.Empty);
+
+                        try
+                        {
+                            Person person = imdbDataProvider.GetPerson(dataID, PersonDataFetchSettings);
+                            using (JMoviesEntities productionPersistanceEntities = new JMoviesEntities())
+                            {
+                                PersonPersistanceManager.Persist(productionPersistanceEntities, person);
+                            }
+                            PersisterHelper.SavePersisterHistory(entities, dataID, DataSource, EntityType, string.Empty);
+                        }
+                        catch (Exception exception)
+                        {
+                            PersisterHelper.SavePersisterHistory(entities, dataID, DataSource, EntityType, exception.ToString());
+                        }
+                        entities.SaveChanges();
                     }
-                    catch (Exception exception)
-                    {
-                        PersisterHelper.SavePersisterHistory(entities, dataID, DataSource, EntityType, exception.ToString());
-                    }
-                    entities.SaveChanges();
                 }
             }
         }

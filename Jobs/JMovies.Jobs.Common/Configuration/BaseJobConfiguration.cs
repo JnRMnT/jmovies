@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JMovies.DataAccess.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,5 +19,11 @@ namespace JMovies.Jobs.Common.Configuration
         /// ID of the start record
         /// </summary>
         public long StartRecordID { get; set; }
+
+
+        /// <summary>
+        /// Working type of the job
+        /// </summary>
+        public PersisterWorkingTypeEnum WorkingType { get; set; }
     }
 }

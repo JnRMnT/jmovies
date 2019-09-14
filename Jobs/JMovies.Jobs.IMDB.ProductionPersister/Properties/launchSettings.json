@@ -2,7 +2,7 @@
   "profiles": {
     "JMovies.Jobs.IMDB.ProductionPersister": {
       "commandName": "Project",
-      "commandLineArgs": "MaxRecordCount=1"
+      "commandLineArgs": "MaxRecordCount=1 WorkingType=0"
     }
   }
 }

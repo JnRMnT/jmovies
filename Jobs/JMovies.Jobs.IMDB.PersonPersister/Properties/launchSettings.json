@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "JMovies.Jobs.IMDB.PersonPersister": {
+      "commandName": "Project",
+      "commandLineArgs": "MaxRecordCount=50 WorkingType=1"
+    }
+  }
+}
