@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using JMovies.DataAccess.Helpers;
+using JMovies.IMDb.Entities.Common;
 
 namespace JMovies.App.Business.Providers
 {
@@ -23,11 +24,32 @@ namespace JMovies.App.Business.Providers
         /// <returns>Person instance containing retreived information</returns>
         public Person GetPerson(long id, Person person, PersonDataFetchSettings settings)
         {
-            DbContextOptionsBuilder<JMoviesEntities> dbContextOptionsBuilder = new DbContextOptionsBuilder<JMoviesEntities>();
-            dbContextOptionsBuilder.UseLazyLoadingProxies(false);
-            using (JMoviesEntities entities = new JMoviesEntities(dbContextOptionsBuilder.Options))
+            using (JMoviesEntities entities = new JMoviesEntities())
             {
-                return entities.Person.FirstOrDefault(e => e.ID == id);
+                person = entities.Person.FirstOrDefault(e => e.ID == id);
+                if (!settings.FetchImageContents && person != null)
+                {
+                    RemoveImageContentsFromPerson(person);
+                }
+                return person;
+            }
+        }
+
+        private static void RemoveImageContentsFromPerson(Person person)
+        {
+            if (person != null)
+            {
+                if (person.PrimaryImage != null)
+                {
+                    person.PrimaryImage.Content = null;
+                }
+                if (person.Photos != null)
+                {
+                    foreach (Image image in person.Photos)
+                    {
+                        image.Content = null;
+                    }
+                }
             }
         }
 
@@ -39,11 +61,35 @@ namespace JMovies.App.Business.Providers
         /// <returns>Production instance containing retreived information</returns>
         public Production GetProduction(long id, ProductionDataFetchSettings settings)
         {
-            DbContextOptionsBuilder<JMoviesEntities> dbContextOptionsBuilder = new DbContextOptionsBuilder<JMoviesEntities>();
-            dbContextOptionsBuilder.UseLazyLoadingProxies(false);
-            using (JMoviesEntities entities = new JMoviesEntities(dbContextOptionsBuilder.Options))
+            using (JMoviesEntities entities = new JMoviesEntities())
             {
-                return ProductionQueryHelper.GetResolvedProductionQuery(entities).FirstOrDefault(e => e.ID == id);
+                Production production = ProductionQueryHelper.GetResolvedProductionQuery(entities).FirstOrDefault(e => e.ID == id);
+                if (!settings.FetchImageContents && production != null)
+                {
+                    if (production.Poster != null)
+                    {
+                        production.Poster.Content = null;
+                    }
+                    if (production.MediaImages != null)
+                    {
+                        foreach (Image image in production.MediaImages)
+                        {
+                            image.Content = null;
+                        }
+                    }
+                    if (production is Movie)
+                    {
+                        Movie movie = (Movie)production;
+                        if (movie.Credits != null)
+                        {
+                            foreach (Credit credit in movie.Credits)
+                            {
+                                RemoveImageContentsFromPerson(credit.Person);
+                            }
+                        }
+                    }
+                }
+                return production;
             }
         }
 

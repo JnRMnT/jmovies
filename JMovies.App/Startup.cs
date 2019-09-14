@@ -49,6 +49,7 @@ namespace JMovies.App
                 options.SerializerSettings.TypeNameHandling = Utilities.Serialization.JsonSerializer.Settings.TypeNameHandling;
                 options.SerializerSettings.ReferenceLoopHandling = Utilities.Serialization.JsonSerializer.Settings.ReferenceLoopHandling;
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddResponseCompression();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IPathProvider, PathProvider>();
             services.AddSingleton<IContextProvider, ContextProvider>();
@@ -86,6 +87,7 @@ namespace JMovies.App
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseResponseCompression();
         }
     }
 }

@@ -20,6 +20,8 @@ namespace JMovies.Web.Providers
             this.jmAppClientProvider = jmAppClientProvider;
         }
 
+        private static readonly PersonDataFetchSettings defaultPersonDataFetchSettings = new PersonDataFetchSettings { FetchBioPage = true, FetchImageContents = false, MediaImagesFetchCount = 10 };
+        private static readonly ProductionDataFetchSettings defaultProductionDataFetchSettings = new ProductionDataFetchSettings { FetchDetailedCast = true, FetchImageContents = false, MediaImagesFetchCount = 10 };
 
         /// <summary>
         /// Gets Person information
@@ -89,7 +91,7 @@ namespace JMovies.Web.Providers
         /// <returns>Production instance containing retreived information</returns>
         public Production GetProduction(long id)
         {
-            return GetProduction(id, new ProductionDataFetchSettings());
+            return GetProduction(id, defaultProductionDataFetchSettings);
         }
 
         /// <summary>
@@ -99,7 +101,7 @@ namespace JMovies.Web.Providers
         /// <returns>Movie instance containing retreived information</returns>
         public Movie GetMovie(long id)
         {
-            return GetMovie(id, new ProductionDataFetchSettings());
+            return GetMovie(id, defaultProductionDataFetchSettings);
         }
 
         /// <summary>
@@ -109,7 +111,7 @@ namespace JMovies.Web.Providers
         /// <returns>TV Series instance containing retreived information</returns>
         public TVSeries GetTvSeries(long id)
         {
-            return GetTvSeries(id, new ProductionDataFetchSettings());
+            return GetTvSeries(id, defaultProductionDataFetchSettings);
         }
 
         /// <summary>
@@ -119,7 +121,7 @@ namespace JMovies.Web.Providers
         /// <returns>Person instance containing retreived information</returns>
         public Person GetPerson(long id)
         {
-            return GetPerson(id, new PersonDataFetchSettings());
+            return GetPerson(id, defaultPersonDataFetchSettings);
         }
     }
 }

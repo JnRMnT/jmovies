@@ -13,6 +13,7 @@ using JMovies.App.Business.Managers;
 using System.Collections.Generic;
 using JMovies.IMDb.Entities.Settings;
 using JMovies.IMDb.Entities.Settings.Presets;
+using Microsoft.EntityFrameworkCore;
 
 namespace JMovies.Tests
 {
@@ -24,7 +25,9 @@ namespace JMovies.Tests
         [TestMethod]
         public void InsertMovieTest()
         {
-            using (JMoviesEntities entities = new JMoviesEntities())
+            DbContextOptionsBuilder<JMoviesEntities> dbContextOptionsBuilder = new DbContextOptionsBuilder<JMoviesEntities>();
+            dbContextOptionsBuilder.UseLazyLoadingProxies(true);
+            using (JMoviesEntities entities = new JMoviesEntities(dbContextOptionsBuilder.Options))
             {
                 IServiceProvider serviceProvider = DIHelper.Initialize();
                 //DBHelper.EmptyDB(entities);
@@ -72,7 +75,9 @@ namespace JMovies.Tests
         {
             IServiceProvider serviceProvider = DIHelper.Initialize();
             ProductionDataFetchSettings productionDataFetchSettings = new FullProductionDataFetchSettings();
-            using (JMoviesEntities entities = new JMoviesEntities())
+            DbContextOptionsBuilder<JMoviesEntities> dbContextOptionsBuilder = new DbContextOptionsBuilder<JMoviesEntities>();
+            dbContextOptionsBuilder.UseLazyLoadingProxies(true);
+            using (JMoviesEntities entities = new JMoviesEntities(dbContextOptionsBuilder.Options))
             {
                 long[] imdbIDs = new long[] { 1477834, 18652, 16624, 8269, 6958 };
                 foreach (long imdbID in imdbIDs)
@@ -97,7 +102,9 @@ namespace JMovies.Tests
         {
             IServiceProvider serviceProvider = DIHelper.Initialize();
             PersonDataFetchSettings personDataFetchSettings = new FullPersonDataFetchSettings();
-            using (JMoviesEntities entities = new JMoviesEntities())
+            DbContextOptionsBuilder<JMoviesEntities> dbContextOptionsBuilder = new DbContextOptionsBuilder<JMoviesEntities>();
+            dbContextOptionsBuilder.UseLazyLoadingProxies(true);
+            using (JMoviesEntities entities = new JMoviesEntities(dbContextOptionsBuilder.Options))
             {
                 foreach (long imdbID in personIDsToTest)
                 {

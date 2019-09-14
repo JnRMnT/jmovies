@@ -32,7 +32,7 @@ namespace JMovies.DataAccess
             ProxiesOptionsExtension proxiesOptionsExtension = optionsBuilder.Options?.FindExtension<ProxiesOptionsExtension>();
             if (proxiesOptionsExtension == null)
             {
-                optionsBuilder.UseLazyLoadingProxies();
+                optionsBuilder.UseLazyLoadingProxies(false);
             }
             optionsBuilder.EnableDetailedErrors();
             if (!EnvironmentUtilities.IsProduction())

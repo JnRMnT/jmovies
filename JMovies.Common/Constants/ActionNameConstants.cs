@@ -12,5 +12,6 @@ namespace JMovies.Common.Constants
         public static readonly string StaticDataManagement = "StaticDataManagement";
         public static readonly string GetProductionDetails = "GetProductionDetails";
         public static readonly string GetPersonDetails = "GetPersonDetails";
+        public static readonly string GetImageContents = "GetImageContents";
     }
 }

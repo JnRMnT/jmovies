@@ -1,0 +1,7 @@
+{
+  "$schema": "../schemas/flowconfiguration-schema.json#",
+  "Name": "GetImageContents",
+  "RequestIdentifier": "JMovies.Entities.Requests.GetImageContentsRequest, JMovies.Entities",
+  "ResponseIdentifier": "JMovies.Entities.Responses.GetImageContentsResponse, JMovies.Entities",
+  "ActionClassIdentifier": "JMovies.App.Business.Actions.GetImageContents, JMovies.App.Business"
+}

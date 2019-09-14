@@ -1,5 +1,6 @@
 ﻿using JMovies.IMDb.Entities.Interfaces;
 using JMovies.IMDb.Entities.People;
+using JMovies.Web.Helpers;
 
 namespace JMovies.Web.Controllers
 {
@@ -13,7 +14,9 @@ namespace JMovies.Web.Controllers
 
         protected Person GetPersonDetails(long id)
         {
-            return imdbDataProvider.GetPerson(id);
+            Person person = imdbDataProvider.GetPerson(id);
+            PersonHelper.WrapPersonImageUrls(person);
+            return person;
         }
     }
 }

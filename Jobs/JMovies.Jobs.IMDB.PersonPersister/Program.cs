@@ -11,6 +11,7 @@ using JMovies.IMDb.Providers;
 using JMovies.Jobs.Common;
 using JMovies.Jobs.Common.Configuration;
 using JMovies.Utilities.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 
@@ -61,7 +62,9 @@ namespace JMovies.Jobs.IMDB.PersonPersister
                         try
                         {
                             Person person = imdbDataProvider.GetPerson(dataID, PersonDataFetchSettings);
-                            using (JMoviesEntities productionPersistanceEntities = new JMoviesEntities())
+                            DbContextOptionsBuilder<JMoviesEntities> dbContextOptionsBuilder = new DbContextOptionsBuilder<JMoviesEntities>();
+                            dbContextOptionsBuilder.UseLazyLoadingProxies(true);
+                            using (JMoviesEntities productionPersistanceEntities = new JMoviesEntities(dbContextOptionsBuilder.Options))
                             {
                                 PersonPersistanceManager.Persist(productionPersistanceEntities, person);
                             }
