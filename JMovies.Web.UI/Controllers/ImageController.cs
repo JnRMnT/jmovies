@@ -2,12 +2,14 @@
 using JMovies.Entities.Interfaces;
 using JMovies.Entities.Requests;
 using JMovies.Entities.Responses;
-using JMovies.IMDb.Entities.Interfaces;
-using JMovies.IMDb.Entities.People;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using JMovies.Web.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Formats.Jpeg;
 
 namespace JMovies.Controllers
 {
@@ -21,7 +23,7 @@ namespace JMovies.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult Get(long id)
+        public ActionResult Get(long id, int w, int h)
         {
             GetImageContentsRequest request = new GetImageContentsRequest { ID = id };
             GetImageContentsResponse response = jmAppClientProvider.CallAction<GetImageContentsResponse>(ActionNameConstants.GetImageContents, request);
@@ -32,13 +34,45 @@ namespace JMovies.Controllers
             }
             else
             {
-                string extension = Path.GetExtension(response.Image.URL).TrimStart('.');
-                if (extension == "jpg")
+                if (w != default(int) || h != default(int))
                 {
-                    extension = "jpeg";
+                    using (Image image = Image.Load(response.Image.Content))
+                    {
+                        if (w != default(int))
+                        {
+                            h = (int)((double)image.Height / (double)image.Width * (double)w);
+                        }
+                        else
+                        {
+                            w = (int)((double)image.Width / (double)image.Height * (double)h);
+                        }
+                        ResizeOptions resizeOptions = new ResizeOptions
+                        {
+                            Size = new SixLabors.Primitives.Size
+                            {
+                                Width = w,
+                                Height = h
+                            }
+                        };
+
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            image.Mutate(e => e.Resize(resizeOptions));
+                            image.Save(stream, new JpegEncoder());
+                            return new FileContentResult(stream.ToArray(), "image/jpeg");
+                        }
+                    }
                 }
-                string mimeType = "image/" + extension;
-                return new FileContentResult(response.Image.Content, mimeType);
+                else
+                {
+                    string extension = Path.GetExtension(response.Image.URL).TrimStart('.');
+                    if (extension == "jpg")
+                    {
+                        extension = "jpeg";
+                    }
+                    string mimeType = "image/" + extension;
+                    return new FileContentResult(response.Image.Content, mimeType);
+                }
             }
         }
     }

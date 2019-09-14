@@ -59,7 +59,10 @@ namespace JMovies
                 options.IdleTimeout = TimeSpan.FromMinutes(5);
                 options.Cookie.HttpOnly = true;
             });
-            services.AddResponseCompression();
+            services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+            });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IContextProvider, SessionBasedContextProvider>();
             services.AddSingleton<IPathProvider, PathProvider>();

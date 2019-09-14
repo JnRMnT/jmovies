@@ -6,7 +6,7 @@
             <img class="card-img-right flex-auto d-lg-block shadow-lg border production-poster"
                  *ngIf="production"
                  [title]="production.poster ? production.poster.title : ''"
-                 [src]="production.poster ? production.poster.url : 'assets/empty.jpg'">
+                 [src]="production.poster ? production.poster.url + '?w=215' : 'assets/empty.jpg'">
         </div>
         <div class="col-9 px-0">
             <div class="row">
