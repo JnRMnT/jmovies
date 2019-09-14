@@ -35,16 +35,12 @@ namespace JMovies.DataAccess
                 optionsBuilder.UseLazyLoadingProxies();
             }
             optionsBuilder.EnableDetailedErrors();
-            optionsBuilder.EnableSensitiveDataLogging();
-
             if (!EnvironmentUtilities.IsProduction())
             {
-                optionsBuilder.UseMySQL("server=remotemysql.com;port=3306;database=3HOGbi1TUW;user=3HOGbi1TUW;password=wUu4OBDGA8", b => b.MigrationsAssembly("JMovies.App"));
+                optionsBuilder.EnableSensitiveDataLogging();
             }
-            else
-            {
-                optionsBuilder.UseMySQL(Environment.GetEnvironmentVariable(ConfigurationConstants.ConnectionStringEnvironmentName));
-            }
+
+            optionsBuilder.UseMySQL(Environment.GetEnvironmentVariable(ConfigurationConstants.ConnectionStringEnvironmentName), b => b.MigrationsAssembly("JMovies.App"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
