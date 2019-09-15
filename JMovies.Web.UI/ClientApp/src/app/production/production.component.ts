@@ -40,7 +40,7 @@ export class ProductionComponent implements OnInit, OnDestroy {
           var movie = <Movie>vm.production;
           if (JM.isDefined(movie.credits)) {
             vm.summaryActingCredits = _.filter(<ActingCredit[]>movie.credits.$values, (credit: ActingCredit): boolean => {
-              if (credit.roleType == CreditRoleType.Acting && summaryCount < 5) {
+              if (credit.roleType == CreditRoleType.Acting && summaryCount < 8) {
                 summaryCount++;
                 return true;
               } else {

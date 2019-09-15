@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatButtonToggleModule } from '@angular/material';
+import { MatButtonModule, MatButtonToggleModule, MatRippleModule, MatGridListModule, MatCardModule } from '@angular/material';
 import 'hammerjs';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -63,7 +63,10 @@ import { ToBase64Pipe } from './to-base64.pipe';
     BrowserAnimationsModule,
     AppInitializerModule,
     MatButtonToggleModule,
-    MatButtonModule
+    MatButtonModule,
+    MatRippleModule,
+    MatGridListModule,
+    MatCardModule
   ],
   providers: [HttpService, LoadingService, TranslateService, ProductionService],
   bootstrap: [AppComponent]

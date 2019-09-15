@@ -3,6 +3,7 @@ import { ActingCredit } from "./acting-credit";
 import { BaseProduction } from './production';
 import { TagLine } from './tag-line';
 import { ComplexCollection } from './complexCollection';
+import * as moment from "moment";
 
 export class Movie extends BaseProduction {
   originalTitle: string;
@@ -21,5 +22,5 @@ export class Movie extends BaseProduction {
   filmingLocations: string[];
   //public Budget Budget { get; set; }
   //public Company[] ProductionCompanies { get; set; }
-  //public TimeSpan Runtime { get; set; }
+  runtime: string | moment.Moment;
 }

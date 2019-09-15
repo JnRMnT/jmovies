@@ -53,6 +53,10 @@ namespace JMovies.App.Business.Managers
                 entities.Person.FirstOrDefault(e => e.ID == person.ID).PrimaryImage = null;
                 entities.Image.Remove(oldPrimaryImage);
             }
+            if (person.PrimaryImage != null)
+            {
+                person.PrimaryImage.PersonID = person.ID;
+            }
             entities.SaveChanges();
             CommonDBHelper.DetachAllEntries(entities);
 
@@ -64,6 +68,7 @@ namespace JMovies.App.Business.Managers
                     if (savedImage == null)
                     {
                         image.ID = CommonDBHelper.GetNewID<Image>(entities, e => e.ID);
+                        image.PersonID = person.ID;
                         entities.Add(image);
                     }
                     entities.SaveChanges();

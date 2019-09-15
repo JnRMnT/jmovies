@@ -535,6 +535,10 @@ namespace JMovies.App.Business.Managers
                 entities.Production.FirstOrDefault(e => e.ID == production.ID).Poster = null;
                 entities.Image.Remove(oldPoster);
             }
+            if (production.Poster != null)
+            {
+                production.Poster.ProductionID = production.ID;
+            }
             entities.SaveChanges();
             CommonDBHelper.DetachAllEntries(entities);
 
@@ -546,6 +550,7 @@ namespace JMovies.App.Business.Managers
                     if (savedImage == null)
                     {
                         image.ID = CommonDBHelper.GetNewID<Image>(entities, e => e.ID);
+                        image.ProductionID = production.ID;
                         entities.Add(image);
                     }
                     entities.SaveChanges();
