@@ -18,8 +18,8 @@ steps:
   displayName: 'Install Node.js'
 - task: NuGetToolInstaller@1
   inputs:
-    versionSpec: '4.7.1'
-  displayName: 'Use v4.7.1 of NuGet'
+    versionSpec: '5.3.1'
+  displayName: 'Use v5.3.1 of NuGet'
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
