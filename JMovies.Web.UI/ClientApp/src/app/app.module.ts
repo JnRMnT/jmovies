@@ -37,43 +37,43 @@ import { ToTVSeriesPipe } from './to-tvseries.pipe';
 import { ToBase64Pipe } from './to-base64.pipe';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TranslatePipe,
-    AppHeaderComponent,
-    AppFooterComponent,
-    ProductionComponent,
-    PageNotFoundComponent,
-    DashboardComponent,
-    JmLinkComponent,
-    JmButtonComponent,
-    ProductionNavigationComponent,
-    ProductionCastComponent,
-    ProductionCreditsComponent,
-    NavMenuComponent,
-    ToMoviePipe,
-    ToTVSeriesPipe,
-    ToBase64Pipe
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    CommonModule,
-    NgxLoadingModule.forRoot({
-      fullScreenBackdrop: true
-    }),
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    AppInitializerModule,
-    MatButtonToggleModule,
-    MatButtonModule,
-    MatRippleModule,
-    MatGridListModule,
-    MatCardModule
-  ],
-  providers: [HttpService, LoadingService, TranslateService, ProductionService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        TranslatePipe,
+        AppHeaderComponent,
+        AppFooterComponent,
+        ProductionComponent,
+        PageNotFoundComponent,
+        DashboardComponent, 
+        JmLinkComponent,
+        JmButtonComponent,
+        ProductionNavigationComponent,
+        ProductionCastComponent,
+        ProductionCreditsComponent,
+        NavMenuComponent,
+        ToMoviePipe,
+        ToTVSeriesPipe,
+        ToBase64Pipe
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        CommonModule,
+        NgxLoadingModule.forRoot({
+            fullScreenBackdrop: true
+        }),
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        AppInitializerModule,
+        MatButtonToggleModule,
+        MatButtonModule,
+        MatRippleModule,
+        MatGridListModule,
+        MatCardModule
+    ],
+    providers: [HttpService, LoadingService, TranslateService, ProductionService],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
