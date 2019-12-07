@@ -17,7 +17,7 @@ namespace JMovies.App.Business.Actions
             GetPersonDetailsResponse responseMessage = response as GetPersonDetailsResponse;
 
             IIMDbDataProvider imdbDataProvider = serviceProvider.GetRequiredService<IIMDbDataProvider>();
-            responseMessage.Person = imdbDataProvider.GetPerson(requestMessage.ID);
+            responseMessage.Person = imdbDataProvider.GetPerson(requestMessage.ID, requestMessage.Settings);
         }
     }
 }

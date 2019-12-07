@@ -3,12 +3,7 @@ using JMovies.IMDb.Entities.Interfaces;
 using JMovies.IMDb.Entities.Movies;
 using JMovies.IMDb.Entities.People;
 using JMovies.IMDb.Entities.Settings;
-using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using JMovies.DataAccess.Helpers;
 using JMovies.IMDb.Entities.Common;
 
 namespace JMovies.App.Business.Providers
@@ -27,10 +22,24 @@ namespace JMovies.App.Business.Providers
             using (JMoviesEntities entities = new JMoviesEntities())
             {
                 person = entities.Person.FirstOrDefault(e => e.ID == id);
+                if (settings.MediaImagesFetchCount != 0 && person != null)
+                {
+                    //fetch primary image
+                    person.PrimaryImage = entities.Image.FirstOrDefault(e => e.ID == person.PrimaryImageID);
+                    //fetch images
+                    int imageCount = settings.MediaImagesFetchCount;
+                    if (imageCount <= 0)
+                    {
+                        //default value
+                        imageCount = 5;
+                    }
+                    person.Photos = entities.Image.Where(e => e.PersonID == person.ID).Take(imageCount).ToArray();
+                }
                 if (!settings.FetchImageContents && person != null)
                 {
                     RemoveImageContentsFromPerson(person);
                 }
+
                 return person;
             }
         }
@@ -63,33 +72,52 @@ namespace JMovies.App.Business.Providers
         {
             using (JMoviesEntities entities = new JMoviesEntities())
             {
-                Production production = ProductionQueryHelper.GetResolvedProductionQuery(entities).FirstOrDefault(e => e.ID == id);
-                if (!settings.FetchImageContents && production != null)
+                Production production = entities.Production.FirstOrDefault(e => e.ID == id);
+                if (settings.MediaImagesFetchCount != 0 && production != null)
                 {
-                    if (production.Poster != null)
+                    //fetch poster
+                    production.Poster = entities.Image.FirstOrDefault(e => e.ID == production.PosterID);
+                    //fetch images
+                    int imageCount = settings.MediaImagesFetchCount;
+                    if (imageCount <= 0)
                     {
-                        production.Poster.Content = null;
+                        //default value
+                        imageCount = 5;
                     }
-                    if (production.MediaImages != null)
+                    production.MediaImages = entities.Image.Where(e => e.ProductionID == production.ID).Take(imageCount).ToArray();
+                }
+
+                CleanupImageContents(settings, production);
+                return production;
+            }
+        }
+
+        private static void CleanupImageContents(ProductionDataFetchSettings settings, Production production)
+        {
+            if (!settings.FetchImageContents && production != null)
+            {
+                if (production.Poster != null)
+                {
+                    production.Poster.Content = null;
+                }
+                if (production.MediaImages != null)
+                {
+                    foreach (Image image in production.MediaImages)
                     {
-                        foreach (Image image in production.MediaImages)
-                        {
-                            image.Content = null;
-                        }
+                        image.Content = null;
                     }
-                    if (production is Movie)
+                }
+                if (production is Movie)
+                {
+                    Movie movie = (Movie)production;
+                    if (movie.Credits != null)
                     {
-                        Movie movie = (Movie)production;
-                        if (movie.Credits != null)
+                        foreach (Credit credit in movie.Credits)
                         {
-                            foreach (Credit credit in movie.Credits)
-                            {
-                                RemoveImageContentsFromPerson(credit.Person);
-                            }
+                            RemoveImageContentsFromPerson(credit.Person);
                         }
                     }
                 }
-                return production;
             }
         }
 

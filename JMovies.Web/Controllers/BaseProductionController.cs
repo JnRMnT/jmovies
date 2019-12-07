@@ -1,6 +1,7 @@
 ﻿using JMovies.IMDb.Entities.Common;
 using JMovies.IMDb.Entities.Interfaces;
 using JMovies.IMDb.Entities.Movies;
+using JMovies.IMDb.Entities.Settings;
 using JMovies.Web.Helpers;
 
 namespace JMovies.Web.Controllers

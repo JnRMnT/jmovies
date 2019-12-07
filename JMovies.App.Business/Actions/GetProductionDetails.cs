@@ -17,7 +17,7 @@ namespace JMovies.App.Business.Actions
             GetProductionDetailsResponse responseMessage = response as GetProductionDetailsResponse;
 
             IIMDbDataProvider imdbDataProvider = serviceProvider.GetRequiredService<IIMDbDataProvider>();
-            responseMessage.Production = imdbDataProvider.GetProduction(requestMessage.ID);
+            responseMessage.Production = imdbDataProvider.GetProduction(requestMessage.ID, requestMessage.Settings);
         }
     }
 }

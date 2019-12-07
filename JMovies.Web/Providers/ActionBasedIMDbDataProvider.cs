@@ -20,8 +20,8 @@ namespace JMovies.Web.Providers
             this.jmAppClientProvider = jmAppClientProvider;
         }
 
-        private static readonly PersonDataFetchSettings defaultPersonDataFetchSettings = new PersonDataFetchSettings { FetchBioPage = true, FetchImageContents = false, MediaImagesFetchCount = 10 };
-        private static readonly ProductionDataFetchSettings defaultProductionDataFetchSettings = new ProductionDataFetchSettings { FetchDetailedCast = true, FetchImageContents = false, MediaImagesFetchCount = 10 };
+        private static readonly PersonDataFetchSettings defaultPersonDataFetchSettings = new PersonDataFetchSettings { FetchBioPage = true, FetchImageContents = false, MediaImagesFetchCount = 5 };
+        private static readonly ProductionDataFetchSettings defaultProductionDataFetchSettings = new ProductionDataFetchSettings { FetchDetailedCast = true, FetchImageContents = false, MediaImagesFetchCount = 5 };
 
         /// <summary>
         /// Gets Person information
@@ -32,7 +32,7 @@ namespace JMovies.Web.Providers
         /// <returns>Person instance containing retreived information</returns>
         public Person GetPerson(long id, Person person, PersonDataFetchSettings settings)
         {
-            GetPersonDetailsRequest request = new GetPersonDetailsRequest { ID = id };
+            GetPersonDetailsRequest request = new GetPersonDetailsRequest { ID = id, Settings = settings };
             GetPersonDetailsResponse response = jmAppClientProvider.CallAction<GetPersonDetailsResponse>(ActionNameConstants.GetPersonDetails, request);
             return response.Person;
         }
@@ -45,7 +45,7 @@ namespace JMovies.Web.Providers
         /// <returns>Production instance containing retreived information</returns>
         public Production GetProduction(long id, ProductionDataFetchSettings settings)
         {
-            GetProductionDetailsRequest request = new GetProductionDetailsRequest { ID = id };
+            GetProductionDetailsRequest request = new GetProductionDetailsRequest { ID = id, Settings = settings };
             GetProductionDetailsResponse response = jmAppClientProvider.CallAction<GetProductionDetailsResponse>(ActionNameConstants.GetProductionDetails, request);
             return response.Production;
         }
