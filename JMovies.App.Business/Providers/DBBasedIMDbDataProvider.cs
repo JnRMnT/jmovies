@@ -5,6 +5,7 @@ using JMovies.IMDb.Entities.People;
 using JMovies.IMDb.Entities.Settings;
 using System.Linq;
 using JMovies.IMDb.Entities.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace JMovies.App.Business.Providers
 {
@@ -85,6 +86,29 @@ namespace JMovies.App.Business.Providers
                         imageCount = 5;
                     }
                     production.MediaImages = entities.Image.Where(e => e.ProductionID == production.ID).Take(imageCount).ToArray();
+                }
+
+                if (production is Movie)
+                {
+                    Movie movie = production as Movie;
+                    int castCount = settings.CastFetchCount;
+                    if (castCount <= 0)
+                    {
+                        //default value
+                        castCount = 5;
+                    }
+
+                    movie.Credits = entities.Credit.Include(e => (e as ActingCredit).Characters)
+                        .Where(e => e.ProductionID == production.ID).Take(castCount).ToArray();
+
+                    if (movie.Credits != null)
+                    {
+                        foreach (Credit credit in movie.Credits)
+                        {
+                            credit.Person = entities.Person.FirstOrDefault(e => e.ID == credit.PersonID);
+                            credit.Person.PrimaryImage = entities.Image.FirstOrDefault(e => e.ID == credit.Person.PrimaryImageID);
+                        }
+                    }
                 }
 
                 CleanupImageContents(settings, production);

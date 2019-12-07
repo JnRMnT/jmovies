@@ -21,7 +21,7 @@ namespace JMovies.Web.Providers
         }
 
         private static readonly PersonDataFetchSettings defaultPersonDataFetchSettings = new PersonDataFetchSettings { FetchBioPage = true, FetchImageContents = false, MediaImagesFetchCount = 5 };
-        private static readonly ProductionDataFetchSettings defaultProductionDataFetchSettings = new ProductionDataFetchSettings { FetchDetailedCast = true, FetchImageContents = false, MediaImagesFetchCount = 5 };
+        private static readonly ProductionDataFetchSettings defaultProductionDataFetchSettings = new ProductionDataFetchSettings { FetchDetailedCast = true, FetchImageContents = false, MediaImagesFetchCount = 5, CastFetchCount = 8 };
 
         /// <summary>
         /// Gets Person information

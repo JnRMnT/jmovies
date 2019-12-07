@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JMovies.IMDb" Version="1.5.0" />
+    <PackageReference Include="JMovies.IMDb" Version="1.5.1" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.11.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.2" />
