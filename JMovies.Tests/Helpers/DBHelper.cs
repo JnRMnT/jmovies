@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using JMovies.IMDb.Entities.Movies;
+using JMovies.IMDb.Entities.People;
 
 namespace JMovies.Tests.Helpers
 {
@@ -38,9 +40,18 @@ namespace JMovies.Tests.Helpers
             entities.SaveChanges();
             entities.TagLine.RemoveRange(entities.TagLine);
             entities.SaveChanges();
-            entities.Production.RemoveRange(entities.Production);
+            foreach (Production production in entities.Production)
+            {
+                production.PosterID = null;
+            }
+            foreach (Person person in entities.Person)
+            {
+                person.PrimaryImageID = null;
+            }
             entities.SaveChanges();
             entities.Image.RemoveRange(entities.Image);
+            entities.SaveChanges();
+            entities.Production.RemoveRange(entities.Production);
             entities.SaveChanges();
             entities.Person.RemoveRange(entities.Person);
             entities.SaveChanges();

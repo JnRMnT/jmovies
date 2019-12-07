@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using JMovies.IMDb.Entities.Settings;
 using JMovies.IMDb.Entities.Settings.Presets;
 using Microsoft.EntityFrameworkCore;
+using JMovies.DataAccess.Helpers;
 
 namespace JMovies.Tests
 {

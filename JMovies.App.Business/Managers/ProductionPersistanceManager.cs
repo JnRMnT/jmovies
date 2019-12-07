@@ -27,7 +27,7 @@ namespace JMovies.App.Business.Managers
             options.Timeout = new TimeSpan(0, 5, 0);
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, options))
             {
-                Production savedProduction = ProductionQueryHelper.GetResolvedProductionQuery(entities).FirstOrDefault(e => e.IMDbID == production.IMDbID);
+                Production savedProduction = entities.Production.FirstOrDefault(e => e.IMDbID == production.IMDbID);
 
                 bool saved = false;
                 if (savedProduction != null)
@@ -45,20 +45,21 @@ namespace JMovies.App.Business.Managers
                 {
                     entities.Production.Add(trimmedProduction);
                 }
+                entities.SaveChanges();
                 HandleAKAs(entities, production, savedProduction);
                 HandleCompanies(entities, production, savedProduction);
                 HandleDataSources(entities, production, savedProduction);
                 HandleGenres(entities, production, savedProduction);
                 HandleKeywords(entities, production, savedProduction);
-                HandleLanguages(entities, production, savedProduction);
+                HandleLanguages(entities, production);
                 HandleCountries(entities, production, savedProduction);
-                HandlePersons(entities, production, savedProduction);
+                HandlePersons(entities, production);
                 HandleCharacters(entities, production, savedProduction);
                 HandleRatings(entities, production, savedProduction);
                 HandleReleaseDates(entities, production, savedProduction);
                 HandleImages(entities, production, savedProduction);
                 HandleTagLines(entities, production, savedProduction);
-                CommonDBHelper.MarkEntityAsUpdated(entities, trimmedProduction, new string[] { "ProductionType" }, true);
+                CommonDBHelper.MarkEntityAsUpdated(entities, trimmedProduction, new string[] { "ProductionType", "Poster", "PosterID" }, true);
                 entities.SaveChanges();
                 scope.Complete();
             }
@@ -71,6 +72,7 @@ namespace JMovies.App.Business.Managers
 
             if (savedMovie != null)
             {
+                savedMovie.TagLines = entities.TagLine.Where(e => e.ProductionID == savedMovie.ID).ToArray();
                 entities.TagLine.RemoveRange(savedMovie.TagLines);
             }
         }
@@ -85,7 +87,6 @@ namespace JMovies.App.Business.Managers
             trimmedProduction.Title = production.Title;
             trimmedProduction.Year = production.Year;
             trimmedProduction.ProductionType = production.ProductionType;
-            trimmedProduction.Poster = production.Poster;
 
             if (trimmedProduction is Movie)
             {
@@ -115,7 +116,8 @@ namespace JMovies.App.Business.Managers
             Movie savedMovie = savedProduction as Movie;
             if (savedMovie != null)
             {
-                entities.ReleaseDate.RemoveRange(savedMovie.ReleaseDates);
+                ReleaseDate[] existingReleaseDates = entities.ReleaseDate.Where(e => e.ProductionID == savedMovie.ID).ToArray();
+                entities.ReleaseDate.RemoveRange(existingReleaseDates);
             }
 
             Movie movie = production as Movie;
@@ -156,15 +158,21 @@ namespace JMovies.App.Business.Managers
             if (production.Rating != null)
             {
                 EntityEntry entry = null;
-
-                production.Rating.DataSourceID = entities.DataSource.FirstOrDefault(e => e.DataSourceType == production.Rating.DataSource.DataSourceType).ID;
+                production.Rating.DataSourceID = entities.DataSource.FirstOrDefault(e => e.Identifier == production.Rating.DataSource.Identifier).ID;
                 production.Rating.DataSource = null;
 
                 production.Rating.ProductionID = production.ID;
                 production.Rating.Production = null;
-                if (savedProduction != null && savedProduction.Rating != null)
+
+                Rating existingRating = null;
+                if (savedProduction != null)
                 {
-                    production.Rating.ID = savedProduction.Rating.ID;
+                    existingRating = entities.Rating.FirstOrDefault(e => e.ProductionID == savedProduction.ID);
+                }
+
+                if (existingRating != null)
+                {
+                    production.Rating.ID = existingRating.ID;
                     entry = CommonDBHelper.MarkEntityAsUpdated(entities, production.Rating);
                 }
                 else
@@ -177,7 +185,7 @@ namespace JMovies.App.Business.Managers
             }
         }
 
-        private static void HandlePersons(JMoviesEntities entities, Production production, Production savedProduction)
+        private static void HandlePersons(JMoviesEntities entities, Production production)
         {
             Movie movie = production as Movie;
 
@@ -239,10 +247,9 @@ namespace JMovies.App.Business.Managers
             }
         }
 
-        private static void HandleLanguages(JMoviesEntities entities, Production production, Production savedProduction)
+        private static void HandleLanguages(JMoviesEntities entities, Production production)
         {
             Movie movie = production as Movie;
-            Movie savedMovie = savedProduction as Movie;
 
             if (movie != null && movie.Languages != null)
             {
@@ -296,7 +303,7 @@ namespace JMovies.App.Business.Managers
                     bool saved = false;
                     if (savedMovie != null)
                     {
-                        Keyword savedKeyword = savedMovie.Keywords.FirstOrDefault(e => e.Identifier == keyword.Identifier);
+                        Keyword savedKeyword = entities.Keyword.FirstOrDefault(e => e.Identifier == keyword.Identifier && keyword.ProductionID == movie.ID);
                         if (savedKeyword != null)
                         {
                             keyword.ID = savedKeyword.ID;
@@ -330,7 +337,7 @@ namespace JMovies.App.Business.Managers
                     bool saved = false;
                     if (savedMovie != null)
                     {
-                        Genre savedGenre = savedMovie.Genres?.FirstOrDefault(e => e.Identifier == genre.Identifier);
+                        Genre savedGenre = entities.Genre.FirstOrDefault(e => e.Identifier == genre.Identifier && genre.ProductionID == savedMovie.ID);
                         if (savedGenre != null)
                         {
                             genre.ID = savedGenre.ID;
@@ -393,7 +400,12 @@ namespace JMovies.App.Business.Managers
                     productionCountry.CountryID = productionCountry.Country.ID;
                     productionCountry.Country = null;
 
-                    ProductionCountry savedProductionCountry = savedMovie?.Countries?.FirstOrDefault(e => e.CountryID == productionCountry.CountryID);
+                    ProductionCountry savedProductionCountry = null;
+                    if (savedMovie != null)
+                    {
+                        savedProductionCountry = entities.ProductionCountry.FirstOrDefault(e => e.ProductionID == savedMovie.ID && e.CountryID == productionCountry.CountryID);
+                    }
+
                     if (savedProductionCountry != null)
                     {
                         productionCountry.ID = savedProductionCountry.ID;
@@ -425,7 +437,7 @@ namespace JMovies.App.Business.Managers
                     bool saved = false;
                     if (savedMovie != null)
                     {
-                        Company savedCompany = savedMovie.ProductionCompanies?.FirstOrDefault(e => e.Name == company.Name);
+                        Company savedCompany = entities.Company.FirstOrDefault(e => e.Name == company.Name && company.ProductionID == savedMovie.ID);
                         if (savedCompany != null)
                         {
                             company.ID = savedCompany.ID;
@@ -465,7 +477,17 @@ namespace JMovies.App.Business.Managers
                             bool saved = false;
                             if (savedMovie != null)
                             {
-                                Character savedCharacter = entities.Character.FirstOrDefault(e => FindCharacter(e, savedMovie, character));
+                                if (savedMovie.Credits == null)
+                                {
+                                    savedMovie.Credits = entities.Credit.Where(e => e.ProductionID == savedMovie.ID).ToArray();
+                                }
+                                Character savedCharacter = null;
+                                if (savedMovie.Credits != null)
+                                {
+                                    long[] existingCreditIDs = savedMovie.Credits.Where(x => x.RoleType == CreditRoleType.Acting).Select(x => x.ID).ToArray();
+                                    savedCharacter = entities.Character.FirstOrDefault(currentCharacter => existingCreditIDs.Contains(currentCharacter.CreditID) && currentCharacter.Name == character.Name && currentCharacter.IMDbID == character.IMDbID);
+                                }
+
                                 if (savedCharacter != null)
                                 {
                                     character.ID = savedCharacter.ID;
@@ -488,11 +510,6 @@ namespace JMovies.App.Business.Managers
             }
         }
 
-        private static bool FindCharacter(Character currentCharacter, Movie savedMovie, Character searchedCharacter)
-        {
-            return savedMovie.Credits?.Where(x => x.RoleType == CreditRoleType.Acting).Select(x => x.ID).ToArray().Contains(currentCharacter.CreditID) == true && currentCharacter.Name == searchedCharacter.Name && currentCharacter.IMDbID == searchedCharacter.IMDbID;
-        }
-
         private static void HandleAKAs(JMoviesEntities entities, Production production, Production savedProduction)
         {
             Movie movie = production as Movie;
@@ -506,7 +523,7 @@ namespace JMovies.App.Business.Managers
                     bool saved = false;
                     if (savedMovie != null)
                     {
-                        AKA savedAKA = savedMovie.AKAs?.FirstOrDefault(e => e.Name == aka.Name && e.Description == aka.Description);
+                        AKA savedAKA = entities.AKA.FirstOrDefault(e => e.Name == aka.Name && e.Description == aka.Description && aka.ProductionID == savedMovie.ID);
                         if (savedAKA != null)
                         {
                             aka.ID = savedAKA.ID;
@@ -529,15 +546,27 @@ namespace JMovies.App.Business.Managers
 
         private static void HandleImages(JMoviesEntities entities, Production production, Production savedProduction)
         {
-            if (savedProduction != null && savedProduction.Poster != null)
+            Image oldPoster = savedProduction?.Poster;
+            if (savedProduction != null && oldPoster == null)
             {
-                Image oldPoster = savedProduction.Poster;
-                entities.Production.FirstOrDefault(e => e.ID == production.ID).Poster = null;
-                entities.Image.Remove(oldPoster);
+                oldPoster = entities.Image.FirstOrDefault(e => e.ID == savedProduction.PosterID);
             }
+
+            Production trackedProduction = entities.Production.FirstOrDefault(e => e.ID == production.ID);
+            if (savedProduction != null && oldPoster != null)
+            {
+                trackedProduction.PosterID = null;
+                trackedProduction.Poster = null;
+                entities.Image.Remove(oldPoster);
+                entities.SaveChanges();
+            }
+
             if (production.Poster != null)
             {
                 production.Poster.ProductionID = production.ID;
+                production.Poster.ID = CommonDBHelper.GetNewID<Image>(entities, e => e.ID);
+                entities.Image.Add(production.Poster);
+                trackedProduction.PosterID = production.Poster.ID;
             }
             entities.SaveChanges();
             CommonDBHelper.DetachAllEntries(entities);

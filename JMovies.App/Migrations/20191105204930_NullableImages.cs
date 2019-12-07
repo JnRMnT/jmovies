@@ -2,7 +2,7 @@
 
 namespace JMovies.App.Migrations
 {
-    public partial class ImageUpdate : Migration
+    public partial class NullableImages : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,16 +17,16 @@ namespace JMovies.App.Migrations
             migrationBuilder.AlterColumn<long>(
                 name: "ProductionID",
                 table: "Image",
-                nullable: false,
+                nullable: true,
                 oldClrType: typeof(long),
-                oldNullable: true);
+                oldType: "bigint");
 
             migrationBuilder.AlterColumn<long>(
                 name: "PersonID",
                 table: "Image",
-                nullable: false,
+                nullable: true,
                 oldClrType: typeof(long),
-                oldNullable: true);
+                oldType: "bigint");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Image_Person_PersonID",
@@ -34,7 +34,7 @@ namespace JMovies.App.Migrations
                 column: "PersonID",
                 principalTable: "Person",
                 principalColumn: "ID",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Image_Production_ProductionID",
@@ -42,7 +42,7 @@ namespace JMovies.App.Migrations
                 column: "ProductionID",
                 principalTable: "Production",
                 principalColumn: "ID",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -58,14 +58,18 @@ namespace JMovies.App.Migrations
             migrationBuilder.AlterColumn<long>(
                 name: "ProductionID",
                 table: "Image",
-                nullable: true,
-                oldClrType: typeof(long));
+                type: "bigint",
+                nullable: false,
+                oldClrType: typeof(long),
+                oldNullable: true);
 
             migrationBuilder.AlterColumn<long>(
                 name: "PersonID",
                 table: "Image",
-                nullable: true,
-                oldClrType: typeof(long));
+                type: "bigint",
+                nullable: false,
+                oldClrType: typeof(long),
+                oldNullable: true);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Image_Person_PersonID",
@@ -73,7 +77,7 @@ namespace JMovies.App.Migrations
                 column: "PersonID",
                 principalTable: "Person",
                 principalColumn: "ID",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Image_Production_ProductionID",
@@ -81,7 +85,7 @@ namespace JMovies.App.Migrations
                 column: "ProductionID",
                 principalTable: "Production",
                 principalColumn: "ID",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
         }
     }
 }

@@ -36,11 +36,11 @@ namespace JMovies
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationInsightsTelemetry();
-            services.AddMvc().AddJsonOptions(options =>
+            services.AddMvc().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.TypeNameHandling = Utilities.Serialization.JsonSerializer.Settings.TypeNameHandling;
                 options.SerializerSettings.ReferenceLoopHandling = Utilities.Serialization.JsonSerializer.Settings.ReferenceLoopHandling;
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -96,6 +96,7 @@ namespace JMovies
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseStaticFiles();
+            app.UseRouting();
             app.UseSpaStaticFiles();
             app.UseCookiePolicy();
             app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -105,11 +106,9 @@ namespace JMovies
             app.UseAuthentication();
             app.UseSession();
             app.UseMiddleware<ContextInitializerMiddleware>();
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>

@@ -7,7 +7,6 @@ using JMovies.IMDb.Entities.Misc;
 using JMovies.IMDb.Entities.Movies;
 using JMovies.IMDb.Entities.People;
 using JMovies.Utilities.Common;
-using JMovies.Utilities.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Proxies.Internal;
 using System;
@@ -40,7 +39,10 @@ namespace JMovies.DataAccess
                 optionsBuilder.EnableSensitiveDataLogging();
             }
 
-            optionsBuilder.UseMySQL(Environment.GetEnvironmentVariable(ConfigurationConstants.ConnectionStringEnvironmentName), b => b.MigrationsAssembly("JMovies.App"));
+            optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable(ConfigurationConstants.ConnectionStringEnvironmentName), b =>
+            {
+                b.MigrationsAssembly("JMovies.App");
+            });
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -57,7 +59,7 @@ namespace JMovies.DataAccess
             modelBuilder.Entity<Movie>().Property(e => e.OfficialSites).HasConversion(officialSitesConverter);
             modelBuilder.Entity<Person>().Property(e => e.Roles).HasConversion(creditRoleTypeConverter);
             modelBuilder.Entity<PersisterHistory>().Property(e => e.IsSuccess).HasConversion<short>();
-            modelBuilder.Entity<Image>().Property(e => e.Content).HasColumnType("MEDIUMBLOB");
+            modelBuilder.Entity<Image>().Property(e => e.Content).HasColumnType("BYTEA");
 
             modelBuilder.Entity<Production>()
              .HasDiscriminator<ProductionTypeEnum>("ProductionType")

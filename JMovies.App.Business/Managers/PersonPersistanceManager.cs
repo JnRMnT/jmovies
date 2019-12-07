@@ -18,7 +18,7 @@ namespace JMovies.App.Business.Managers
             options.Timeout = new TimeSpan(0, 5, 0);
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, options))
             {
-                Person savedPerson = PersonQueryHelper.GetResolvedPersonQuery(entities).FirstOrDefault(e => e.IMDbID == person.IMDbID);
+                Person savedPerson = entities.Person.FirstOrDefault(e => e.IMDbID == person.IMDbID);
 
                 bool saved = false;
                 if (savedPerson != null)
@@ -39,7 +39,7 @@ namespace JMovies.App.Business.Managers
                 entities.SaveChanges();
                 HandleImages(entities, person, savedPerson);
                 CommonDBHelper.DetachAllEntries(entities);
-                CommonDBHelper.MarkEntityAsUpdated(entities, trimmedPerson, new string[] { "PersonType" }, true);
+                CommonDBHelper.MarkEntityAsUpdated(entities, trimmedPerson, new string[] { "PersonType", "PrimaryImage", "PrimaryImageID" }, true);
                 entities.SaveChanges();
                 scope.Complete();
             }
@@ -47,15 +47,27 @@ namespace JMovies.App.Business.Managers
 
         private static void HandleImages(JMoviesEntities entities, Person person, Person savedPerson)
         {
-            if (savedPerson != null && savedPerson.PrimaryImage != null)
+            Image oldPrimaryImage = null;
+            if (savedPerson != null)
             {
-                Image oldPrimaryImage = savedPerson.PrimaryImage;
-                entities.Person.FirstOrDefault(e => e.ID == person.ID).PrimaryImage = null;
-                entities.Image.Remove(oldPrimaryImage);
+                oldPrimaryImage = entities.Image.FirstOrDefault(e => e.ID == savedPerson.PrimaryImageID);
             }
+
+            Person trackedPerson = entities.Person.FirstOrDefault(e => e.ID == person.ID);
+            if (savedPerson != null && oldPrimaryImage != null)
+            {
+                trackedPerson.PrimaryImage = null;
+                trackedPerson.PrimaryImageID = null;
+                entities.Image.Remove(oldPrimaryImage);
+                entities.SaveChanges();
+            }
+
             if (person.PrimaryImage != null)
             {
                 person.PrimaryImage.PersonID = person.ID;
+                person.PrimaryImage.ID = CommonDBHelper.GetNewID<Image>(entities, e => e.ID);
+                entities.Image.Add(person.PrimaryImage);
+                trackedPerson.PrimaryImageID = person.PrimaryImage.ID;
             }
             entities.SaveChanges();
             CommonDBHelper.DetachAllEntries(entities);
@@ -92,7 +104,6 @@ namespace JMovies.App.Business.Managers
             trimmedPerson.NickName = person.NickName;
             trimmedPerson.PersonType = person.PersonType;
             trimmedPerson.Roles = person.Roles;
-            trimmedPerson.PrimaryImage = person.PrimaryImage;
 
             return trimmedPerson;
         }

@@ -32,8 +32,12 @@ export class HttpService {
             me.loadingService.activeLoading();
             me.http.post<T>(this.getApiUrl(url), requestObject, me.getHttpConfig()).subscribe(data => {
                 me.loadingService.attemptToDeactivate();
-                observer.next(data);
-                observer.complete();
+                if (data["isSuccess"] == false) {
+                    observer.error(data["errors"]);
+                } else {
+                    observer.next(data);
+                    observer.complete();
+                }
             }, error => {
                 me.loadingService.attemptToDeactivate();
                 observer.error(error);

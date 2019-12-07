@@ -1,4 +1,6 @@
-﻿using JM.Entities.Framework;
+﻿using JM.Entities;
+using JM.Entities.Framework;
+using JMovies.Utilities.ExceptionHandling;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
@@ -37,14 +39,12 @@ namespace JMovies.Web.UI.ErrorHandler
 
                 //customException.detail = callStack;
                 //customException = new ApiError(errorMessage);
-
                 context.HttpContext.Response.StatusCode = 500;
-
-                // handle logging here
             }
-
+            // handle logging here
+            JMResult result = ExceptionHandler.HandleException(customException);
             //always return a JSON result
-            context.Result = new JsonResult(customException);
+            context.Result = new JsonResult(result);
             base.OnException(context);
         }
     }
