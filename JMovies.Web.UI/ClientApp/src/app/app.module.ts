@@ -1,6 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatButtonToggleModule, MatRippleModule, MatGridListModule, MatCardModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatRippleModule } from '@angular/material/core';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+
 import 'hammerjs';
 
 import { AppRoutingModule } from './app-routing.module';
