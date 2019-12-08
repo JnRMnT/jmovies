@@ -2,6 +2,7 @@
 using JMovies.DataAccess.Converters;
 using JMovies.DataAccess.Entities;
 using JMovies.DataAccess.Entities.Persisters;
+using JMovies.DataAccess.Entities.ResultHandling;
 using JMovies.IMDb.Entities.Common;
 using JMovies.IMDb.Entities.Misc;
 using JMovies.IMDb.Entities.Movies;
@@ -107,6 +108,8 @@ namespace JMovies.DataAccess
         public DbSet<ReleaseDate> ReleaseDate { get; set; }
         public DbSet<Resource> Resource { get; set; }
         public DbSet<ResourceTranslation> ResourceTranslation { get; set; }
+        public DbSet<ResultConfiguration> ResultConfiguration { get; set; }
+        public DbSet<ResultMessage> ResultMessage { get; set; }
         public DbSet<PersisterHistory> PersisterHistory { get; set; }
         public DbSet<ProductionCountry> ProductionCountry { get; set; }
         public DbSet<ProductionLanguage> ProductionLanguage { get; set; }

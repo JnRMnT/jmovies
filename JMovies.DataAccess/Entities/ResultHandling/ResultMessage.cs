@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace JMovies.DataAccess.Entities
+namespace JMovies.DataAccess.Entities.ResultHandling
 {
     /// <summary>
-    /// Translation of the resources
+    /// Result Message Associated with the Result Configuration
     /// </summary>
-    public class ResourceTranslation
+    public class ResultMessage
     {
+
         /// <summary>
         /// Primary Key
         /// </summary>
@@ -17,21 +18,21 @@ namespace JMovies.DataAccess.Entities
         public long ID { get; set; }
 
         /// <summary>
-        /// Foreign Key to Resource
+        /// Foreign Key to the Result Configuration
         /// </summary>
-        public long ResourceID { get; set; }
+        public long ResultConfigurationID { get; set; }
 
         /// <summary>
-        /// Culture of the text resource
+        /// Culture of the result message
         /// </summary>
         [Required]
         [MaxLength(8)]
         public string Culture { get; set; }
 
         /// <summary>
-        /// Content of the text resource
+        /// Content of the result message
         /// </summary>
         [Required]
-        public string Value { get; set; }
+        public string Content { get; set; }
     }
 }

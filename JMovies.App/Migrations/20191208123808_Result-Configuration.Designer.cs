@@ -4,15 +4,17 @@ using JMovies.DataAccess;
 using JMovies.IMDb.Entities.Movies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace JMovies.App.Migrations
 {
     [DbContext(typeof(JMoviesEntities))]
-    partial class JMoviesEntitiesModelSnapshot : ModelSnapshot
+    [Migration("20191208123808_Result-Configuration")]
+    partial class ResultConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,10 +109,6 @@ namespace JMovies.App.Migrations
                         .IsRequired()
                         .HasColumnType("character varying(255)")
                         .HasMaxLength(255);
-
-                    b.Property<string>("RedirectionParameter")
-                        .HasColumnType("character varying(512)")
-                        .HasMaxLength(512);
 
                     b.Property<int>("RedirectionType")
                         .HasColumnType("integer");

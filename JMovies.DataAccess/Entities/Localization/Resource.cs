@@ -24,7 +24,9 @@ namespace JMovies.DataAccess.Entities
         [MaxLength(128)]
         public string Key { get; set; }
 
-
+        /// <summary>
+        /// Translations associated with the resource
+        /// </summary>
         [ForeignKey("ResourceID")]
         public virtual ICollection<ResourceTranslation> Translations { get; set; }
 

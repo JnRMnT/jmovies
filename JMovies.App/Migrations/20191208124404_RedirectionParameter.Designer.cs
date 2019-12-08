@@ -4,15 +4,17 @@ using JMovies.DataAccess;
 using JMovies.IMDb.Entities.Movies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace JMovies.App.Migrations
 {
     [DbContext(typeof(JMoviesEntities))]
-    partial class JMoviesEntitiesModelSnapshot : ModelSnapshot
+    [Migration("20191208124404_RedirectionParameter")]
+    partial class RedirectionParameter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
