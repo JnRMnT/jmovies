@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace JMovies.App.Business.Providers.StaticData
 {
@@ -33,9 +33,8 @@ namespace JMovies.App.Business.Providers.StaticData
             using (JMoviesEntities entities = new JMoviesEntities())
             {
                 List<FWEntities.Resource> resources = new List<FWEntities.Resource>();
-                foreach (Resource resource in entities.Resource)
+                foreach (Resource resource in entities.Resource.Include(e=> e.Translations))
                 {
-                    resource.Translations = entities.ResourceTranslation.Where(e => e.ResourceID == resource.ID).ToArray();
                     if (resource.Translations != null)
                     {
                         foreach (ResourceTranslation resourceTranslation in resource.Translations)

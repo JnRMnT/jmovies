@@ -4,7 +4,7 @@ using FWEntities = JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace JMovies.App.Business.Providers.StaticData
 {
@@ -33,9 +33,8 @@ namespace JMovies.App.Business.Providers.StaticData
             using (JMoviesEntities entities = new JMoviesEntities())
             {
                 List<FWEntities.ResultConfiguration> resultConfigurations = new List<FWEntities.ResultConfiguration>();
-                foreach (ResultConfiguration resultConfiguration in entities.ResultConfiguration.ToArray())
+                foreach (ResultConfiguration resultConfiguration in entities.ResultConfiguration.Include(e=>e.ResultMessages))
                 {
-                    resultConfiguration.ResultMessages = entities.ResultMessage.Where(e => e.ResultConfigurationID == resultConfiguration.ID).ToArray();
                     if (resultConfiguration.ResultMessages != null)
                     {
                         resultConfigurations.Add(new FWEntities.ResultConfiguration
