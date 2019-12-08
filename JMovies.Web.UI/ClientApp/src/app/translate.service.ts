@@ -1,7 +1,6 @@
-﻿import { Injectable, APP_INITIALIZER } from '@angular/core';
+import { Injectable, APP_INITIALIZER } from '@angular/core';
 import { HttpService } from './http.service';
 import { Resource } from './models/general-models/resource';
-import { $ } from 'protractor';
 
 @Injectable({
     providedIn: 'root'

@@ -6,5 +6,6 @@ namespace JMovies.Web.Controllers
     [JMExceptionFilter]
     public class BaseApiController : Controller
     {
+
     }
 }

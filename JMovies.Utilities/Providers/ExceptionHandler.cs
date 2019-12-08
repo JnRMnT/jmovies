@@ -1,19 +1,22 @@
 ﻿using JM.Entities;
 using JM.Entities.Framework;
+using JM.Entities.Interfaces;
+using JMovies.Utilities.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JMovies.Utilities.ExceptionHandling
+namespace JMovies.Utilities.Providers
 {
-    public class ExceptionHandler
+    public class ExceptionHandler : IExceptionHandler
     {
-        public static JMResult HandleException(Exception e)
+        public JMResult HandleException(Exception e)
         {
+            DefaultLogger.Error(e);
             string code = "System";
-            if(e is JMException)
+            if (e is JMException)
             {
                 code = (e as JMException).Code;
             }

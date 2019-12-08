@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JM.Entities" Version="1.0.1" />
-    <PackageReference Include="JM.Framework" Version="1.0.4" />
+    <PackageReference Include="JM.Entities" Version="1.0.2" />
+    <PackageReference Include="JM.Framework" Version="1.0.5" />
     <PackageReference Include="JMovies.IMDb.Entities" Version="1.5.3" />
   </ItemGroup>
 

@@ -1,3 +1,4 @@
+using JM.Entities.Interfaces;
 using JMovies.Common.Constants;
 using JMovies.Entities;
 using JMovies.Entities.Framework;
@@ -24,7 +25,6 @@ namespace JMovies
 {
     public class Startup
     {
-        private IServiceProvider serviceProvider;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -71,8 +71,8 @@ namespace JMovies
             services.AddSingleton<IFlowExecutionConfigurationProvider, JsonFileBasedFlowExecutionConfigurationProvider>();
             services.AddSingleton<IIMDbDataProvider, ActionBasedIMDbDataProvider>();
             services.AddSingleton<IResourcesStaticDataProvider, ResourcesStaticDataProvider>();
+            services.AddSingleton<IExceptionHandler, ExceptionHandler>();
             MainStaticDataProvider.RegisterProvider<IResourcesStaticDataProvider, ResourcesStaticDataProvider>(services);
-            this.serviceProvider = services.BuildServiceProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,11 +1,12 @@
 ﻿using JMovies.Entities;
-using JMovies.Utilities.ExceptionHandling;
 using JMovies.Utilities.Logging;
 using System;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JM.Entities.Interfaces;
 
 namespace JMovies.Configuration.FlowItems
 {
@@ -31,8 +32,7 @@ namespace JMovies.Configuration.FlowItems
             }
             catch (Exception e)
             {
-                DefaultLogger.Error(e);
-                ExceptionHandler.HandleException(e);
+                serviceProvider.GetRequiredService<IExceptionHandler>().HandleException(e);
                 if (stopFlowOnException)
                 {
                     throw;

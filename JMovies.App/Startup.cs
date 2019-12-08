@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using JM.Entities.Interfaces;
 using JMovies.App.Business.Configuration;
 using JMovies.App.Business.Context;
 using JMovies.App.Business.Providers;
@@ -32,7 +33,6 @@ namespace JMovies.App
 {
     public class Startup
     {
-        private IServiceProvider serviceProvider;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -63,13 +63,13 @@ namespace JMovies.App
             services.AddSingleton<IFlowExecutionConfigurationProvider, JsonFileBasedFlowExecutionConfigurationProvider>();
             services.AddSingleton<IFlowProvider, FlowProvider>();
             services.AddSingleton<IIMDbDataProvider, DBBasedIMDbDataProvider>();
+            services.AddSingleton<IExceptionHandler, ExceptionHandler>();
             // Add our Config object so it can be injected
             services.Configure<AppConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));
             services.Configure<CustomConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));
             services.AddOptions();
             MainStaticDataProvider.RegisterProvider<IResourcesStaticDataProvider, ResourcesStaticDataProvider>(services);
             services.AddDbContext<JMoviesEntities>();
-            serviceProvider = services.BuildServiceProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

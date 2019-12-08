@@ -1,11 +1,10 @@
 ﻿using JM.Entities;
 using JM.Entities.Framework;
-using JMovies.Utilities.ExceptionHandling;
+using JM.Entities.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Net;
-using System.Net.Http;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace JMovies.Web.UI.ErrorHandler
 {
@@ -42,7 +41,7 @@ namespace JMovies.Web.UI.ErrorHandler
                 context.HttpContext.Response.StatusCode = 500;
             }
             // handle logging here
-            JMResult result = ExceptionHandler.HandleException(customException);
+            JMResult result = context.HttpContext.RequestServices.GetRequiredService<IExceptionHandler>().HandleException(customException);
             //always return a JSON result
             context.Result = new JsonResult(result);
             base.OnException(context);

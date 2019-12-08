@@ -1,4 +1,5 @@
-﻿using JMovies.IMDb.Entities.Common;
+﻿using JM.Entities.Framework;
+using JMovies.IMDb.Entities.Common;
 using JMovies.IMDb.Entities.Interfaces;
 using JMovies.IMDb.Entities.Movies;
 using JMovies.IMDb.Entities.Settings;
@@ -39,6 +40,11 @@ namespace JMovies.Web.Controllers
                         }
                     }
                 }
+            }
+
+            if (production is null)
+            {
+                throw new JMException("ProductionNotFound");
             }
 
             return production;

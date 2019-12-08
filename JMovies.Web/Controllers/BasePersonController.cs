@@ -1,4 +1,5 @@
-﻿using JMovies.IMDb.Entities.Interfaces;
+﻿using JM.Entities.Framework;
+using JMovies.IMDb.Entities.Interfaces;
 using JMovies.IMDb.Entities.People;
 using JMovies.Web.Helpers;
 
@@ -16,6 +17,12 @@ namespace JMovies.Web.Controllers
         {
             Person person = imdbDataProvider.GetPerson(id);
             PersonHelper.WrapPersonImageUrls(person);
+
+            if (person is null)
+            {
+                throw new JMException("PersonNotFound");
+            }
+
             return person;
         }
     }

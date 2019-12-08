@@ -1,5 +1,6 @@
 <div *ngIf="renderedCulture == translateService.activeCulture" class="main-container">
     <app-header (cultureChanged)="handleCultureChange($event)"></app-header>
+    <jm-result-panel></jm-result-panel>
     <main role="main" class="container router-container my-4">
         <router-outlet></router-outlet>
     </main>

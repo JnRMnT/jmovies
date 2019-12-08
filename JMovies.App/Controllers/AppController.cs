@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Net;
 using JM.Entities;
-using JMovies.Configuration.Flow;
+using Microsoft.Extensions.DependencyInjection;
 using JMovies.Entities;
 using JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
-using JMovies.Utilities.ExceptionHandling;
 using JMovies.Utilities.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using JM.Entities.Interfaces;
 
 namespace JMovies.App.Controllers
 {
@@ -51,8 +51,7 @@ namespace JMovies.App.Controllers
             {
                 try
                 {
-                    DefaultLogger.Error(e);
-                    JMResult result = ExceptionHandler.HandleException(e);
+                    JMResult result = serviceProvider.GetRequiredService<IExceptionHandler>().HandleException(e);
                     Context context = contextProvider.GetContext();
                     context.ActiveResult = result;
                     return new ResponsePayload

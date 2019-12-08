@@ -35,6 +35,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { ToMoviePipe } from './to-movie.pipe';
 import { ToTVSeriesPipe } from './to-tvseries.pipe';
 import { ToBase64Pipe } from './to-base64.pipe';
+import { JmResultPanelComponent } from './jm-result-panel/jm-result-panel.component';
+import { ResultHandlingService } from './result-handling.service';
 
 @NgModule({
     declarations: [
@@ -53,7 +55,8 @@ import { ToBase64Pipe } from './to-base64.pipe';
         NavMenuComponent,
         ToMoviePipe,
         ToTVSeriesPipe,
-        ToBase64Pipe
+        ToBase64Pipe,
+        JmResultPanelComponent
     ],
     imports: [
         BrowserModule,
@@ -73,7 +76,7 @@ import { ToBase64Pipe } from './to-base64.pipe';
         MatGridListModule,
         MatCardModule
     ],
-    providers: [HttpService, LoadingService, TranslateService, ProductionService],
+    providers: [HttpService, LoadingService, TranslateService, ProductionService, ResultHandlingService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
