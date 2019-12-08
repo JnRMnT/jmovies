@@ -47,6 +47,10 @@ export class HttpService {
         });
     }
 
+    postToAction<T>(action: string, requestObject: any): Observable<T> {
+        return this.post<T>("action/" + action, requestObject);
+    }
+
     getApiUrl(url: string): string {
         if (url.substr(0, 4) == "http") {
             return url;

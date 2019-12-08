@@ -31,7 +31,7 @@ export class TranslateService {
 
                 me.use();
                 resolve();
-            }, () => reject());
+            }, (error) => reject(error));
         });
     }
 

@@ -37,6 +37,9 @@ import { ToTVSeriesPipe } from './to-tvseries.pipe';
 import { ToBase64Pipe } from './to-base64.pipe';
 import { JmResultPanelComponent } from './jm-result-panel/jm-result-panel.component';
 import { ResultHandlingService } from './result-handling.service';
+import { LastAddedProductionsComponent } from './last-added-productions/last-added-productions.component';
+import { ProductionPreviewComponent } from './production-preview/production-preview.component';
+import { ProductionTitlePipe } from './production-title.pipe';
 
 @NgModule({
     declarations: [
@@ -56,7 +59,10 @@ import { ResultHandlingService } from './result-handling.service';
         ToMoviePipe,
         ToTVSeriesPipe,
         ToBase64Pipe,
-        JmResultPanelComponent
+        JmResultPanelComponent,
+        LastAddedProductionsComponent,
+        ProductionPreviewComponent,
+        ProductionTitlePipe
     ],
     imports: [
         BrowserModule,

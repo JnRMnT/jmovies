@@ -1,7 +1,7 @@
 ﻿using JM.Entities.Framework;
 using JMovies.IMDb.Entities.Interfaces;
 using JMovies.IMDb.Entities.People;
-using JMovies.Web.Helpers;
+using JMovies.Utilities.Helpers;
 
 namespace JMovies.Web.Controllers
 {

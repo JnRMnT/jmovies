@@ -1,0 +1,7 @@
+{
+  "$schema": "../schemas/flowconfiguration-schema.json#",
+  "Name": "GetLastAddedProductions",
+  "RequestIdentifier": "JMovies.Entities.Requests.GetLastAddedProductionsRequest, JMovies.Entities",
+  "ResponseIdentifier": "JMovies.Entities.Responses.GetLastAddedProductionsResponse, JMovies.Entities",
+  "ActionClassIdentifier": "JMovies.App.Business.Actions.GetLastAddedProductions, JMovies.App.Business"
+}

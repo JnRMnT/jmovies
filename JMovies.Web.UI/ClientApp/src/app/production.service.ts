@@ -24,21 +24,25 @@ export class ProductionService {
         observer.next(self.movieDetailsCache[id]);
       } else {
         this.httpService.get<Production>("production/" + id).subscribe((production) => {
-          if (JM.isDefined(production)) {
-            production.imdbLink = "https://www.imdb.com/title/tt" + _.padStart(production.imDbID.toString(), 8, '0');
-          }
-          var movie: Movie = <Movie>production;
-          if (JM.isDefined(movie.runtime)) {
-            movie.runtime = moment.utc(moment.duration(<string>movie.runtime).as('milliseconds')).format('H:mm');
-          }
-          self.movieDetailsCache[id] = production;
+            self.arrangeProduction(production);
+            self.movieDetailsCache[production.id] = production;
           observer.next(production);
         }, (error) => {
           observer.error(error);
         });
       }
     });
-    return;
   }
-  private movieDetailsCache;
+    private movieDetailsCache;
+
+    public arrangeProduction(production: Production): void {
+        var self = this;
+        if (JM.isDefined(production)) {
+            production.imdbLink = "https://www.imdb.com/title/tt" + _.padStart(production.imDbID.toString(), 8, '0');
+        }
+        var movie: Movie = <Movie>production;
+        if (JM.isDefined(movie.runtime)) {
+            movie.runtime = moment.utc(moment.duration(<string>movie.runtime).as('milliseconds')).format('H:mm');
+        }
+    }
 }

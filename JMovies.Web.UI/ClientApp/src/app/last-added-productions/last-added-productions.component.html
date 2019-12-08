@@ -1,0 +1,5 @@
+<mat-grid-list rowHeight="25em" gutterSize="1em" cols="4">
+  <mat-grid-tile *ngFor="let production of productions" class="card">
+    <app-production-preview [production]="production"></app-production-preview>
+  </mat-grid-tile>
+</mat-grid-list>

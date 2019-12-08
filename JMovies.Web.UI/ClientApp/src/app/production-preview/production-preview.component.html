@@ -1,0 +1,9 @@
+<div class="rounded">
+  <img class="card-img-top flex-auto d-lg-block shadow-lg border production-poster"
+       *ngIf="production"
+       [title]="production.poster ? production.poster.title : ''"
+       [src]="production.poster ? production.poster.url + '?w=215' : 'assets/empty.jpg'">
+  <div class="card-body">
+    <h5 class="text-center"><a [routerLink]="['/app/production', production.id]">{{production | productionTitle}}</a></h5>
+  </div>
+</div>

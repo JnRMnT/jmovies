@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JMovies.Web.Helpers
+namespace JMovies.Utilities.Helpers
 {
     public class PersonHelper
     {
