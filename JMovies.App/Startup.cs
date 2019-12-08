@@ -99,6 +99,7 @@ namespace JMovies.App
            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
            .AddEnvironmentVariables();
             Configuration = builder.Build();
+            app.UseIPRestriction();
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseResponseCompression();

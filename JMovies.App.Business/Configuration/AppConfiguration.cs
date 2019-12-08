@@ -6,7 +6,8 @@ using System.Text;
 
 namespace JMovies.App.Business.Configuration
 {
-    public class AppConfiguration: CustomConfiguration
+    public class AppConfiguration : CustomConfiguration
     {
+        public string[] WhiteList { get; set; }
     }
 }

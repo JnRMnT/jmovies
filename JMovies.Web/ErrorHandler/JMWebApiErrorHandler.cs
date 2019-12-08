@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using JMovies.Utilities.Logging;
 
 namespace JMovies.Web.UI.ErrorHandler
 {
@@ -12,18 +13,19 @@ namespace JMovies.Web.UI.ErrorHandler
     {
         public override void OnException(ExceptionContext context)
         {
-            JMException customException = null;
-            if (context.Exception is JMException)
+            if (context.Exception is AggregateException)
             {
-                // handle custom exception
-                var contextCustomException = context.Exception as JMException;
-                context.Exception = null;
-                customException = contextCustomException;
+                AggregateException aggregateException = context.Exception as AggregateException;
+                foreach (Exception exception in aggregateException.InnerExceptions)
+                {
+                    DefaultLogger.Error(exception);
+                }
+                context.Exception = aggregateException.InnerException;
             }
-            else if (context.Exception is UnauthorizedAccessException)
+
+            if (context.Exception is UnauthorizedAccessException)
             {
                 context.HttpContext.Response.StatusCode = 401;
-                // handle logging here
             }
             else
             {
@@ -36,12 +38,10 @@ namespace JMovies.Web.UI.ErrorHandler
                 string callStack = context.Exception.StackTrace;
 #endif
 
-                //customException.detail = callStack;
-                //customException = new ApiError(errorMessage);
                 context.HttpContext.Response.StatusCode = 500;
             }
             // handle logging here
-            JMResult result = context.HttpContext.RequestServices.GetRequiredService<IExceptionHandler>().HandleException(customException);
+            JMResult result = context.HttpContext.RequestServices.GetRequiredService<IExceptionHandler>().HandleException(context.Exception);
             //always return a JSON result
             context.Result = new JsonResult(result);
             base.OnException(context);
