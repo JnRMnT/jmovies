@@ -14,7 +14,7 @@ namespace JMovies.App.Business.Managers
         public static void Persist(JMoviesEntities entities, Person person)
         {
             TransactionOptions options = new TransactionOptions();
-            options.IsolationLevel = IsolationLevel.ReadCommitted;
+            options.IsolationLevel = IsolationLevel.Serializable;
             options.Timeout = new TimeSpan(0, 5, 0);
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, options))
             {
