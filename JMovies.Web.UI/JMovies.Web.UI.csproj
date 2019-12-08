@@ -42,7 +42,9 @@
     <None Remove="ClientApp\src\app\models\general-models\result-handling\jm-result.ts" />
     <None Remove="ClientApp\src\app\models\general-models\result-handling\redirection-info.ts" />
     <None Remove="ClientApp\src\app\models\general-models\result-handling\redirection-type-enum.ts" />
+    <None Remove="ClientApp\src\app\models\request-models\getProductionCastRequest.ts" />
     <None Remove="ClientApp\src\app\models\response-models\getLastAddedProductionsResponse.ts" />
+    <None Remove="ClientApp\src\app\models\response-models\getProductionCastResponse.ts" />
     <None Remove="Gulpfile.ts" />
   </ItemGroup>
 
@@ -57,7 +59,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\models\general-models\result-handling\jm-result.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\general-models\result-handling\redirection-info.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\general-models\result-handling\redirection-type-enum.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\request-models\getProductionCastRequest.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\response-models\getLastAddedProductionsResponse.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\response-models\getProductionCastResponse.ts" />
     <TypeScriptCompile Include="Gulpfile.ts">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </TypeScriptCompile>

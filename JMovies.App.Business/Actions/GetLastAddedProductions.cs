@@ -3,6 +3,7 @@ using JMovies.Entities;
 using JMovies.Entities.Interfaces;
 using JMovies.Entities.Requests;
 using JMovies.Entities.Responses;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using JMovies.IMDb.Entities.Movies;
 using System;
@@ -18,19 +19,15 @@ namespace JMovies.App.Business.Actions
             GetLastAddedProductionsResponse responseMessage = response as GetLastAddedProductionsResponse;
             using (JMoviesEntities entities = new JMoviesEntities())
             {
-                Production[] productions = entities.Production.OrderByDescending(e => e.ID).Take(16).ToArray();
+                Production[] productions = entities.Production.Include(e=> e.Poster).OrderByDescending(e => e.ID).Take(16).ToArray();
                 if (productions != null)
                 {
                     foreach (Production production in productions)
                     {
-                        if (production.PosterID != null)
+                        if (production.Poster != null)
                         {
-                            production.Poster = entities.Image.FirstOrDefault(e => e.ID == production.PosterID);
-                            if (production.Poster != null)
-                            {
-                                production.Poster.Content = null;
-                                ImageHelper.WrapImageUrl(production.Poster);
-                            }
+                            production.Poster.Content = null;
+                            ImageHelper.WrapImageUrl(production.Poster);
                         }
                     }
                 }

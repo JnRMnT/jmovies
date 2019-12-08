@@ -1,6 +1,4 @@
-import { Movie } from "../general-models/movie";
-import { BaseProduction, Production } from '../general-models/production';
-import { TVSeries } from '../general-models/tv-series';
+import { Production } from '../general-models/production';
 
 export class GetProductionDetailsResponse{
     production: Production;
