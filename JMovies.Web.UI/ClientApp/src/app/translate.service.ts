@@ -3,11 +3,13 @@ import { HttpService } from './http.service';
 import { Resource } from './models/general-models/resource';
 import { ComplexCollection } from './models/general-models/complexCollection';
 import { JM } from 'jm-utilities';
+import * as _ from 'lodash';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TranslateService {
+    private supportedLocales = ["en-US", "tr-TR"];
     private localResources: any = {
         "en-US": {
             "Title.Error": "Error",
@@ -40,7 +42,10 @@ export class TranslateService {
     public use(cultureCode?: string) {
         const me = this;
         if (!cultureCode) {
-            cultureCode = "en-US";
+            cultureCode = navigator.language;
+            if (!_.includes(me.supportedLocales, cultureCode)) {
+                cultureCode = "en-US";
+            }
         }
 
         this.resources = {};
@@ -53,6 +58,7 @@ export class TranslateService {
         }
 
         this.activeCulture = cultureCode;
+        this.httpService.activeCulture = this.activeCulture;
     }
 
     public translate(key: string): string {

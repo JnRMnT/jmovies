@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { LoadingService } from './loading.service';
 import { Observable, Observer } from 'rxjs';
@@ -61,6 +61,7 @@ export class HttpService {
 
     getHttpConfig(): any {
         var headers: HttpHeaders = new HttpHeaders();
+        headers = headers.append("Accept-Language", this.activeCulture);
         return {
             headers: headers
         };
@@ -75,4 +76,6 @@ export class HttpService {
             return false;
         }
     }
+
+    public activeCulture: string;
 }
