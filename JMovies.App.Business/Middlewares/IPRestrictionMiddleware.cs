@@ -1,4 +1,5 @@
 ﻿using JMovies.App.Business.Configuration;
+using JMovies.Utilities.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System;
@@ -29,6 +30,7 @@ namespace JMovies.App.Business.Middlewares
                 .Any();
             if (!isInwhiteListIPList)
             {
+                DefaultLogger.Warn($"{ipAddress} is not an allowed IP Address!");
                 context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                 return;
             }
