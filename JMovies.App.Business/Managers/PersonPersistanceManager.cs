@@ -15,7 +15,7 @@ namespace JMovies.App.Business.Managers
         {
             TransactionOptions options = new TransactionOptions();
             options.IsolationLevel = IsolationLevel.Serializable;
-            options.Timeout = new TimeSpan(0, 5, 0);
+            options.Timeout = new TimeSpan(0, 10, 0);
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, options))
             {
                 Person savedPerson = entities.Person.FirstOrDefault(e => e.IMDbID == person.IMDbID);
