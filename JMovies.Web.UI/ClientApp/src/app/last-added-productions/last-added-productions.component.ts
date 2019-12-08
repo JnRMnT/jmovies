@@ -27,5 +27,5 @@ export class LastAddedProductionsComponent implements OnInit {
         });
     }
 
-    private productions: Production[];
+    public productions: Production[];
 }
