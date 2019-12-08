@@ -29,12 +29,12 @@ namespace JMovies.Utilities.Logging
 
         public static void Error(Exception e)
         {
-            logger.Error(e);
+            logger.Fatal(e, e);
         }
 
         public static void Error(string message, Exception e)
         {
-            logger.Error(message, e);
+            logger.Fatal(message, e);
         }
     }
 }
