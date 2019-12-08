@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using JM.Entities.Interfaces;
+﻿using JM.Entities.Interfaces;
 using JMovies.App.Business.Configuration;
 using JMovies.App.Business.Context;
 using JMovies.App.Business.Providers;
@@ -17,22 +11,22 @@ using JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
 using JMovies.IMDb.Entities.Interfaces;
 using JMovies.Utilities.Providers;
-using log4net;
-using log4net.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
+using System.Globalization;
 
 namespace JMovies.App
 {
     public class Startup
     {
+        private const string enUSCulture = "en-US";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -56,6 +50,20 @@ namespace JMovies.App
             {
                 options.EnableForHttps = true;
             });
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                new CultureInfo(enUSCulture),
+                new CultureInfo("tr-TR")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture(culture: enUSCulture, uiCulture: enUSCulture);
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IPathProvider, PathProvider>();
             services.AddSingleton<IContextProvider, ContextProvider>();
@@ -69,6 +77,7 @@ namespace JMovies.App
             services.Configure<CustomConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));
             services.AddOptions();
             MainStaticDataProvider.RegisterProvider<IResourcesStaticDataProvider, ResourcesStaticDataProvider>(services);
+            MainStaticDataProvider.RegisterProvider<IResultConfigurationsStaticDataProvider, ResultConfigurationsStaticDataProvider>(services);
             services.AddDbContext<JMoviesEntities>();
         }
 
@@ -93,6 +102,7 @@ namespace JMovies.App
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseResponseCompression();
+            app.UseRequestLocalization();
         }
     }
 }

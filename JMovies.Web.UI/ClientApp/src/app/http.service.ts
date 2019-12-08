@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { LoadingService } from './loading.service';
 import { Observable, Observer } from 'rxjs';
 import { JM } from 'jm-utilities';
+import { ResultHandlingService } from './result-handling.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HttpService {
-    constructor(private http: HttpClient, private loadingService: LoadingService) {
+    constructor(private http: HttpClient, private loadingService: LoadingService, private resultHandlingService: ResultHandlingService) {
 
     }
 
@@ -63,6 +64,7 @@ export class HttpService {
 
     checkAndHandleErrors(data, observer: Observer<any>): boolean {
         if (JM.isDefined(data) && data.isSuccess == false) {
+            this.resultHandlingService.handleResult(data);
             observer.error(data.errors);
             return true;
         } else {

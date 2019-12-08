@@ -14,17 +14,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
+using System.Globalization;
 
 namespace JMovies
 {
     public class Startup
     {
+        private const string enUSCulture = "en-US";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -63,6 +66,20 @@ namespace JMovies
             {
                 options.EnableForHttps = true;
             });
+
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                new CultureInfo(enUSCulture),
+                new CultureInfo("tr-TR")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture(culture: enUSCulture, uiCulture: enUSCulture);
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IContextProvider, SessionBasedContextProvider>();
             services.AddSingleton<IPathProvider, PathProvider>();
@@ -70,9 +87,9 @@ namespace JMovies
             services.AddSingleton<IFlowConfigurationProvider, JsonFileBasedFlowConfigurationProvider>();
             services.AddSingleton<IFlowExecutionConfigurationProvider, JsonFileBasedFlowExecutionConfigurationProvider>();
             services.AddSingleton<IIMDbDataProvider, ActionBasedIMDbDataProvider>();
-            services.AddSingleton<IResourcesStaticDataProvider, ResourcesStaticDataProvider>();
             services.AddSingleton<IExceptionHandler, ExceptionHandler>();
             MainStaticDataProvider.RegisterProvider<IResourcesStaticDataProvider, ResourcesStaticDataProvider>(services);
+            MainStaticDataProvider.RegisterProvider<IResultConfigurationsStaticDataProvider, ResultConfigurationsStaticDataProvider>(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,7 +127,7 @@ namespace JMovies
             {
                 endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}");
             });
-
+            app.UseRequestLocalization();
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,

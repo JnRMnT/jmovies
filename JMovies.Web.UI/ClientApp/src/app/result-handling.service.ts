@@ -1,9 +1,51 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
+import { JMResult } from './models/general-models/result-handling/jm-result';
+import { JM } from 'jm-utilities';
+import { RedirectionTypeEnum } from './models/general-models/result-handling/redirection-type-enum';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ResultHandlingService {
 
-  constructor() { }
+    constructor(private injector: Injector) { }
+
+    handleResult(result: JMResult) {
+        if (JM.isDefined(result)) {
+            this.handleRedirection(result);
+            this.handleMessageDisplay(result);
+        }
+    }
+
+    private handleRedirection(result: JMResult) {
+        if (JM.isDefined(result.redirectionInfo)) {
+            if (result.redirectionInfo.redirectionType == RedirectionTypeEnum.RedirectToErrorPage) {
+                result.redirectionInfo.redirectionParameter = "error";
+            }
+            else if (result.redirectionInfo.redirectionType == RedirectionTypeEnum.RedirectToLogout) {
+                result.redirectionInfo.redirectionParameter = "logout";
+            }
+            switch (result.redirectionInfo.redirectionType) {
+                case RedirectionTypeEnum.RedirectToErrorPage:
+                case RedirectionTypeEnum.RedirectToRoute:
+                    this.getRouter().navigate([result.redirectionInfo.redirectionParameter]);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private handleMessageDisplay(result: JMResult) {
+
+    }
+
+    private getRouter(): Router {
+        if (!JM.isDefined(this.router)) {
+            this.router = this.injector.get(Router);
+        }
+        return this.router;
+    }
+    private router: Router;
 }

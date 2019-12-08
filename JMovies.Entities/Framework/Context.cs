@@ -10,6 +10,7 @@ namespace JMovies.Entities
 {
     public class Context
     {
+        public string ClientCulture { get; set; }
         public JMResult ActiveResult { get; set; }
         public FlowConfiguration ActiveFlowConfiguration { get; set; }
     }

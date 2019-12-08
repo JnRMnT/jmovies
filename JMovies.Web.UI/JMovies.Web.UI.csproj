@@ -38,6 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\general-models\result-handling\jm-result-item.ts" />
+    <None Remove="ClientApp\src\app\models\general-models\result-handling\jm-result.ts" />
+    <None Remove="ClientApp\src\app\models\general-models\result-handling\redirection-info.ts" />
+    <None Remove="ClientApp\src\app\models\general-models\result-handling\redirection-type-enum.ts" />
     <None Remove="Gulpfile.ts" />
   </ItemGroup>
 
@@ -48,6 +52,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\general-models\result-handling\jm-result-item.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\general-models\result-handling\jm-result.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\general-models\result-handling\redirection-info.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\general-models\result-handling\redirection-type-enum.ts" />
     <TypeScriptCompile Include="Gulpfile.ts">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </TypeScriptCompile>

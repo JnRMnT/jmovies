@@ -7,18 +7,16 @@ using System.Collections.Generic;
 
 namespace JMovies.Web.Providers.StaticDataProviders
 {
-    public class ResourcesStaticDataProvider : IResourcesStaticDataProvider
+    public class ResourcesStaticDataProvider : ActionBasedBaseStaticDataProvider<IResourcesStaticDataProvider>, IResourcesStaticDataProvider
     {
-        private IJMAppClientProvider jmAppClientProvider;
         private IEnumerable<Resource> resources = null;
         public IEnumerable<Resource> GetResources()
         {
             return resources;
         }
 
-        public ResourcesStaticDataProvider(IJMAppClientProvider jmAppClientProvider)
+        public ResourcesStaticDataProvider(IJMAppClientProvider jmAppClientProvider) : base(jmAppClientProvider)
         {
-            this.jmAppClientProvider = jmAppClientProvider;
         }
 
         public object GetData()
@@ -26,11 +24,8 @@ namespace JMovies.Web.Providers.StaticDataProviders
             return resources;
         }
 
-        public void Initialize()
+        protected override void HandleStaticDataResponse(StaticDataManagementResponse response)
         {
-            StaticDataManagementRequest request = new StaticDataManagementRequest();
-            request.StaticDataProviderType = typeof(IResourcesStaticDataProvider);
-            StaticDataManagementResponse response = jmAppClientProvider.CallAction<StaticDataManagementResponse>(ActionNameConstants.StaticDataManagement, request);
             resources = response.StaticData as IEnumerable<Resource>;
         }
     }
