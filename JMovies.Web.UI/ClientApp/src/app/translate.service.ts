@@ -1,6 +1,8 @@
 import { Injectable, APP_INITIALIZER } from '@angular/core';
 import { HttpService } from './http.service';
 import { Resource } from './models/general-models/resource';
+import { ComplexCollection } from './models/general-models/complexCollection';
+import { JM } from 'jm-utilities';
 
 @Injectable({
     providedIn: 'root'
@@ -24,9 +26,9 @@ export class TranslateService {
         const me = this;
         return new Promise((resolve, reject) => {
             me.use();
-            me.httpService.get("resources").subscribe((resources: Resource[]) => {
-                if (resources) {
-                    me.allResources = resources;
+            me.httpService.get("resources").subscribe((resources: ComplexCollection<Resource>) => {
+                if (JM.isDefined(resources)) {
+                    me.allResources = resources.$values;
                 }
 
                 me.use();
