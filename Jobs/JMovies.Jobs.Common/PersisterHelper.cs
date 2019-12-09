@@ -4,6 +4,7 @@ using JMovies.DataAccess.Entities.Enums;
 using JMovies.DataAccess.Entities.Persisters;
 using JMovies.IMDb.Entities.Misc;
 using JMovies.IMDb.Entities.Movies;
+using Microsoft.EntityFrameworkCore;
 using JMovies.IMDb.Entities.People;
 using System;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace JMovies.Jobs.Common
                 if (startID == default(long) && entityType == EntityTypeEnum.Person)
                 {
                     //Find the first data that seems empty for persons 
-                    Person person = entities.Person.OrderBy(e => e.IMDbID).FirstOrDefault(e => (e.Roles == null || e.Roles.Count == 0) && e.BirthDate == null && string.IsNullOrEmpty(e.BirthName) && string.IsNullOrEmpty(e.BirthPlace) && e.PrimaryImage == null && string.IsNullOrEmpty(e.MiniBiography) && string.IsNullOrEmpty(e.NickName));
+                    Person person = entities.Person.OrderBy(e => e.IMDbID).FirstOrDefault(e => e.BirthDate == null && string.IsNullOrEmpty(e.BirthName) && string.IsNullOrEmpty(e.BirthPlace) && e.PrimaryImageID == null && string.IsNullOrEmpty(e.MiniBiography) && string.IsNullOrEmpty(e.NickName));
                     if (person != null)
                     {
                         return person.IMDbID;
