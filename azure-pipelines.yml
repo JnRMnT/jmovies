@@ -50,6 +50,12 @@ steps:
     configuration: 'Release' 
     msbuildArguments: '/p:PublishDir="Release" /t:publish /p:Configuration=Release /p:PublishProfile="JMovies.Jobs.IMDB.PersonPersister.Local.pubxml"'
   displayName: 'Deploy Locally IMDB Person Persister'
+- task: MSBuild@1
+  inputs:
+    solution: 'Jobs/JMovies.Jobs.ElasticSearchSync/JMovies.Jobs.ElasticSearchSync.csproj'
+    configuration: 'Release' 
+    msbuildArguments: '/p:PublishDir="Release" /t:publish /p:Configuration=Release /p:PublishProfile="JMovies.Jobs.ElasticSearchSync.Local.pubxml"'
+  displayName: 'Deploy Locally Elastic Search Sync Job'
 - task: CopyFiles@2
   inputs:
     SourceFolder: 'JMovies.App/Release'
@@ -74,6 +80,12 @@ steps:
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/Jobs/imdbPersonPersister'
   displayName: 'Add IMDB Person Persister Release Files to Artifacts'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'Jobs/JMovies.Jobs.ElasticSearchSync/Release/'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/Jobs/elasticSearchSync'
+  displayName: 'Add Elastic Search Sync Job Release Files to Artifacts'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
