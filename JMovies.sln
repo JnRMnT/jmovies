@@ -29,7 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.Jobs.IMDB.Productio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.Jobs.Common", "Jobs\JMovies.Jobs.Common\JMovies.Jobs.Common.csproj", "{E49DEB63-A714-409B-9DA7-39791F6FA50B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Jobs.IMDB.PersonPersister", "Jobs\JMovies.Jobs.IMDB.PersonPersister\JMovies.Jobs.IMDB.PersonPersister.csproj", "{AD0F7257-0A32-4D39-A9BC-1D05A6CA083D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JMovies.Jobs.IMDB.PersonPersister", "Jobs\JMovies.Jobs.IMDB.PersonPersister\JMovies.Jobs.IMDB.PersonPersister.csproj", "{AD0F7257-0A32-4D39-A9BC-1D05A6CA083D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.App.ElasticSearch", "JMovies.App.ElasticSearch\JMovies.App.ElasticSearch.csproj", "{378578E2-4B91-41AB-8506-E7936C45538F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMovies.Jobs.ElasticSearchSync", "Jobs\JMovies.Jobs.ElasticSearchSync\JMovies.Jobs.ElasticSearchSync.csproj", "{9C11732A-7A8D-4614-A6C7-99564FBD624C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +93,14 @@ Global
 		{AD0F7257-0A32-4D39-A9BC-1D05A6CA083D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD0F7257-0A32-4D39-A9BC-1D05A6CA083D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD0F7257-0A32-4D39-A9BC-1D05A6CA083D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{378578E2-4B91-41AB-8506-E7936C45538F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{378578E2-4B91-41AB-8506-E7936C45538F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{378578E2-4B91-41AB-8506-E7936C45538F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{378578E2-4B91-41AB-8506-E7936C45538F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C11732A-7A8D-4614-A6C7-99564FBD624C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C11732A-7A8D-4614-A6C7-99564FBD624C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C11732A-7A8D-4614-A6C7-99564FBD624C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C11732A-7A8D-4614-A6C7-99564FBD624C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +109,7 @@ Global
 		{F85067B8-0C2C-41DD-AAC8-93DB8D106303} = {842053A4-193C-468F-B979-E0C6F55BBB48}
 		{E49DEB63-A714-409B-9DA7-39791F6FA50B} = {842053A4-193C-468F-B979-E0C6F55BBB48}
 		{AD0F7257-0A32-4D39-A9BC-1D05A6CA083D} = {842053A4-193C-468F-B979-E0C6F55BBB48}
+		{9C11732A-7A8D-4614-A6C7-99564FBD624C} = {842053A4-193C-468F-B979-E0C6F55BBB48}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {26392C10-8D3A-4448-8A9A-57B250C09A73}

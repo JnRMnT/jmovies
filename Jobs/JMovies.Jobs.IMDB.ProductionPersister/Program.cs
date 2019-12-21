@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using JMovies.Jobs.Common.Configuration;
 using JMovies.Utilities.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace JMovies.Jobs.IMDB.ProductionPersister
 {
@@ -33,6 +34,11 @@ namespace JMovies.Jobs.IMDB.ProductionPersister
              .AddCommandLine(args);
 
             BaseJobConfiguration configuration = builder.Build().Get<BaseJobConfiguration>();
+            InitializationHelper.Initialize(configuration);
+            var services = new ServiceCollection();
+            services.AddOptions();
+            var serviceProvider = services.BuildServiceProvider();
+
             if (configuration.MaxRecordCount == default(int))
             {
                 configuration.MaxRecordCount = ConfigurationConstants.PersisterRecordCountPerRun;

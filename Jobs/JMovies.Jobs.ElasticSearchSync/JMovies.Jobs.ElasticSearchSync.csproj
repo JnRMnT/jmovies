@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,11 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BouncyCastle.NetCore" Version="1.8.5" />
-    <PackageReference Include="JMovies.IMDb" Version="1.5.3" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.12.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.12.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.0" />
@@ -30,8 +26,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\JMovies.App.Business\JMovies.App.Business.csproj" />
-    <ProjectReference Include="..\..\JMovies.DataAccess\JMovies.DataAccess.csproj" />
-    <ProjectReference Include="..\..\JMovies.Entities\JMovies.Entities.csproj" />
+    <ProjectReference Include="..\..\JMovies.App.ElasticSearch\JMovies.App.ElasticSearch.csproj" />
+    <ProjectReference Include="..\..\JMovies.Utilities\JMovies.Utilities.csproj" />
     <ProjectReference Include="..\JMovies.Jobs.Common\JMovies.Jobs.Common.csproj" />
   </ItemGroup>
 

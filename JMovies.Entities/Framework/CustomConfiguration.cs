@@ -7,5 +7,6 @@ namespace JMovies.Entities.Framework
     public class CustomConfiguration
     {
         public string ConfigurationFilesPath { get; set; }
+        public string ElasticSearchConnectionURL { get; set; }
     }
 }

@@ -28,11 +28,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="NEST" Version="7.5.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\JMovies.App.Business\JMovies.App.Business.csproj" />
+    <ProjectReference Include="..\JMovies.App.ElasticSearch\JMovies.App.ElasticSearch.csproj" />
     <ProjectReference Include="..\JMovies.Configuration\JMovies.Configuration.csproj" />
     <ProjectReference Include="..\JMovies.DataAccess\JMovies.DataAccess.csproj" />
     <ProjectReference Include="..\JMovies.Utilities\JMovies.Utilities.csproj" />

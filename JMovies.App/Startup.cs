@@ -3,6 +3,8 @@ using JMovies.App.Business.Configuration;
 using JMovies.App.Business.Context;
 using JMovies.App.Business.Providers;
 using JMovies.App.Business.Providers.StaticData;
+using JMovies.App.ElasticSearch;
+using JMovies.App.ElasticSearch.Interfaces;
 using JMovies.Common.Constants;
 using JMovies.Configuration.Flow;
 using JMovies.DataAccess;
@@ -72,6 +74,7 @@ namespace JMovies.App
             services.AddSingleton<IFlowProvider, FlowProvider>();
             services.AddSingleton<IIMDbDataProvider, DBBasedIMDbDataProvider>();
             services.AddSingleton<IExceptionHandler, ExceptionHandler>();
+            services.AddSingleton<IElasticSearchConnectionProvider, ElasticSearchConnector>();
             // Add our Config object so it can be injected
             services.Configure<AppConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));
             services.Configure<CustomConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));
