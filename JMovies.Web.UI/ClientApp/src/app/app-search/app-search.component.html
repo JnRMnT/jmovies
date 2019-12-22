@@ -2,7 +2,7 @@
   <a role="button" (click)="toggleSearchBox()" class="header-search">
     <i class="fas fa-search"></i>
   </a>
-    <input type="text" [@openClose]="isOpen ? 'open' : 'closed'" placeholder="Search..." aria-label="Search" matInput  [formControl]="searchControl" [matAutocomplete]="auto"  class="form-control-sm">
+    <input type="text" id="search-box" [@openClose]="isOpen ? 'open' : 'closed'" placeholder="Search..." aria-label="Search" matInput  [formControl]="searchControl" [matAutocomplete]="auto"  class="form-control-sm">
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (onSelectionChange)="selected($event)">
         <a role="option" [title]="option | productionTitle">{{option | productionTitle}}</a>

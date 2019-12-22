@@ -2,6 +2,13 @@
 @import "./mixins.less";
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 
+body {
+  font-family: @fontFamily !important;
+
+  .mat-option, .mat-button-toggle-button, input {
+    font-family: @fontFamily !important;
+  }
+}
 
 .btn-primary, .btn, .mat-button-toggle-button, .mat-button {
     background-color: @secondaryColor !important;

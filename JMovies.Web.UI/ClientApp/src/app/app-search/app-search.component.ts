@@ -56,8 +56,10 @@ export class AppSearchComponent implements OnInit {
         this.searchControl.setValue("");
     }
     onAnimationCompleted(event: AnimationEvent) {
-        if (<any>(event.toState) == false && event.phaseName == "done") {
+        if (<any>(event.toState) == false) {
             this.isHidden = true;
+        } else {
+            $("#search-box").focus();
         }
     }
 
