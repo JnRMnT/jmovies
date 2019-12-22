@@ -43,6 +43,7 @@ import { LastAddedProductionsComponent } from './last-added-productions/last-add
 import { ProductionPreviewComponent } from './production-preview/production-preview.component';
 import { ProductionTitlePipe } from './production-title.pipe';
 import { AppSearchComponent } from './app-search/app-search.component';
+import { ToImdbIdPipe } from './to-imdbid.pipe';
 
 @NgModule({
     declarations: [
@@ -66,7 +67,8 @@ import { AppSearchComponent } from './app-search/app-search.component';
         LastAddedProductionsComponent,
         ProductionPreviewComponent,
         ProductionTitlePipe,
-        AppSearchComponent
+        AppSearchComponent,
+        ToImdbIdPipe
     ],
     imports: [
         BrowserModule,

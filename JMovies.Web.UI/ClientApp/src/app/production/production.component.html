@@ -29,7 +29,7 @@
         <div class="col-md-3 col-sm-12 main-actors">
           <div class="d-flex flex-column bd-highlight">
             <div class="p-2 bd-highlight" *ngIf="(production | toMovie)?.runtime">
-             <b>Duration: </b> {{(production | toMovie)?.runtime}}
+             <b>{{'Title.Duration' | translate}}: </b> {{(production | toMovie)?.runtime}}
             </div>
           </div>
         </div>
