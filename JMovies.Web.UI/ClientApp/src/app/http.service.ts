@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { LoadingService } from './loading.service';
 import { Observable, Observer } from 'rxjs';
 import { JM } from 'jm-utilities';
@@ -23,9 +23,11 @@ export class HttpService {
                     observer.next(data);
                     observer.complete();
                 }
-            }, error => {
+            }, (error: HttpErrorResponse) => {
                 me.loadingService.attemptToDeactivate();
-                observer.error(error);
+                if (!JM.isDefined(error) || !JM.isDefined(error.error) || !me.checkAndHandleErrors(error.error, observer)) {
+                    observer.error(error);
+                }
             });
         });
     }
@@ -40,9 +42,11 @@ export class HttpService {
                     observer.next(data);
                     observer.complete();
                 }
-            }, error => {
+            }, (error: HttpErrorResponse) => {
                 me.loadingService.attemptToDeactivate();
-                observer.error(error);
+                if (!JM.isDefined(error) || !JM.isDefined(error.error) || !me.checkAndHandleErrors(error.error, observer)) {
+                    observer.error(error);
+                }
             });
         });
     }

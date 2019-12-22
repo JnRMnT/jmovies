@@ -9,14 +9,13 @@ using Nest;
 using JMovies.Entities.Framework;
 using JMovies.Common.Constants;
 using JMovies.DataAccess;
-using JMovies.Jobs.ElasticSearchSync.Documents;
 using System.Linq;
+using JMovies.Entities.ElasticSearch;
 
 namespace JMovies.Jobs.ElasticSearchSync
 {
     class Program
     {
-        private static readonly string ProductionsIndexName = "productions";
         static void Main(string[] args)
         {
             var builder = new ConfigurationBuilder()
@@ -37,7 +36,7 @@ namespace JMovies.Jobs.ElasticSearchSync
             var serviceProvider = services.BuildServiceProvider();
 
             IElasticSearchConnectionProvider elasticSearchProvider = serviceProvider.GetRequiredService<IElasticSearchConnectionProvider>();
-            ElasticClient elasticClient = elasticSearchProvider.GetElasticClient(ProductionsIndexName);
+            ElasticClient elasticClient = elasticSearchProvider.GetElasticClient(ElasticSearchIndexNameConstants.Productions);
 
             using (JMoviesEntities entities = new JMoviesEntities())
             {
@@ -71,7 +70,6 @@ namespace JMovies.Jobs.ElasticSearchSync
                 Keywords = production.Keywords?.Select(e => e.Value).ToArray(),
                 OriginalTitle = production.OriginalTitle,
                 ProductionType = production.ProductionType,
-                TagLines = production.TagLines?.Select(e => e.Content).ToArray(),
                 Title = production.Title,
                 Year = production.Year
             };

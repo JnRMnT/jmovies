@@ -1,0 +1,7 @@
+{
+  "$schema": "../schemas/flowconfiguration-schema.json#",
+  "Name": "Search",
+  "RequestIdentifier": "JMovies.Entities.Requests.SearchRequest, JMovies.Entities",
+  "ResponseIdentifier": "JMovies.Entities.Responses.SearchResponse, JMovies.Entities",
+  "ActionClassIdentifier": "JMovies.App.Business.Actions.Search, JMovies.App.Business"
+}

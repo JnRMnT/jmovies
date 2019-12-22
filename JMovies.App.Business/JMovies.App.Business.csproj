@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JMovies.App.ElasticSearch\JMovies.App.ElasticSearch.csproj" />
     <ProjectReference Include="..\JMovies.Configuration\JMovies.Configuration.csproj" />
     <ProjectReference Include="..\JMovies.DataAccess\JMovies.DataAccess.csproj" />
     <ProjectReference Include="..\JMovies.Entities\JMovies.Entities.csproj" />

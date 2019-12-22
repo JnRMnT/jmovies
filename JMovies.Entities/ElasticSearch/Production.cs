@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JMovies.Jobs.ElasticSearchSync.Documents
+namespace JMovies.Entities.ElasticSearch
 {
     public class Production
     {
@@ -18,8 +18,6 @@ namespace JMovies.Jobs.ElasticSearchSync.Documents
         public string[] AKAs { get; set; }
 
         public string[] Keywords { get; set; }
-
-        public string[] TagLines { get; set; }
 
         public string Title { get; set; }
 

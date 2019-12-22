@@ -5,6 +5,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRippleModule } from '@angular/material/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import 'hammerjs';
 
@@ -40,6 +42,7 @@ import { ResultHandlingService } from './result-handling.service';
 import { LastAddedProductionsComponent } from './last-added-productions/last-added-productions.component';
 import { ProductionPreviewComponent } from './production-preview/production-preview.component';
 import { ProductionTitlePipe } from './production-title.pipe';
+import { AppSearchComponent } from './app-search/app-search.component';
 
 @NgModule({
     declarations: [
@@ -62,7 +65,8 @@ import { ProductionTitlePipe } from './production-title.pipe';
         JmResultPanelComponent,
         LastAddedProductionsComponent,
         ProductionPreviewComponent,
-        ProductionTitlePipe
+        ProductionTitlePipe,
+        AppSearchComponent
     ],
     imports: [
         BrowserModule,
@@ -80,7 +84,9 @@ import { ProductionTitlePipe } from './production-title.pipe';
         MatButtonModule,
         MatRippleModule,
         MatGridListModule,
-        MatCardModule
+        MatCardModule,
+        MatAutocompleteModule,
+        MatFormFieldModule
     ],
     providers: [HttpService, LoadingService, TranslateService, ProductionService, ResultHandlingService],
     bootstrap: [AppComponent]
