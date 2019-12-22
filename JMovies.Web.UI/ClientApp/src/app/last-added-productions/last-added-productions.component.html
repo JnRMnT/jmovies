@@ -1,5 +1,5 @@
-<mat-grid-list rowHeight="25em" gutterSize="1em" cols="4">
-  <mat-grid-tile *ngFor="let production of productions" class="card">
+<div class="row jumbotron p-3 p-md-5 rounded shadow">
+  <div class="p-2 col-lg-3 col-sm-6 text-primary-dark lap-item" *ngFor="let production of productions">
     <app-production-preview [production]="production"></app-production-preview>
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
+</div>
