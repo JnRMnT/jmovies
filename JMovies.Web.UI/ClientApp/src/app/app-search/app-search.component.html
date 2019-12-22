@@ -1,5 +1,5 @@
 <div class="form-inline">
-  <a (click)="toggleSearchBox($event)">
+  <a (click)="toggleSearchBox()">
     <i class="fas fa-search"></i>
   </a>
     <input type="text" [@openClose]="isOpen ? 'open' : 'closed'" placeholder="Search..." aria-label="Search" matInput  [formControl]="searchControl" [matAutocomplete]="auto"  class="form-control-sm">
