@@ -38,25 +38,24 @@ namespace JMovies.Jobs.ElasticSearchSync
 
             IElasticSearchConnectionProvider elasticSearchProvider = serviceProvider.GetRequiredService<IElasticSearchConnectionProvider>();
             ElasticClient elasticClient = elasticSearchProvider.GetElasticClient(ProductionsIndexName);
+
             using (JMoviesEntities entities = new JMoviesEntities())
             {
                 foreach (var production in entities.Production)
                 {
                     long productionID = production.ID;
-                    var response = elasticClient.Search<Production>((s => s
-                    .From(0)
-                    .Size(1)
-                    .Query(q => q
-                         .Match(m => m
-                            .Field(f => f.ID)
-                            .Query(productionID.ToString())
-                         )
-                    )));
-
-                    if (response.IsValid && response.Hits != null && response.Hits.Count == 0)
+                    if (production is JMovies.IMDb.Entities.Movies.Movie)
                     {
-                        elasticClient.IndexDocument(MapProduction(production as IMDb.Entities.Movies.Movie));
+                        using (JMoviesEntities innerEntities = new JMoviesEntities())
+                        {
+                            JMovies.IMDb.Entities.Movies.Movie movie = production as JMovies.IMDb.Entities.Movies.Movie;
+                            movie.AKAs = innerEntities.AKA.Where(e => e.ProductionID == productionID).ToArray();
+                            movie.Genres = innerEntities.Genre.Where(e => e.ProductionID == productionID).ToArray();
+                            movie.Keywords = innerEntities.Keyword.Where(e => e.ProductionID == productionID).ToArray();
+                            movie.TagLines = innerEntities.TagLine.Where(e => e.ProductionID == productionID).ToArray();
+                        }
                     }
+                    elasticClient.IndexDocument(MapProduction(production as IMDb.Entities.Movies.Movie));
                 }
             }
         }
