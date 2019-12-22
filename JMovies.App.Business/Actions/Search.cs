@@ -25,9 +25,12 @@ namespace JMovies.App.Business.Actions
 
             IElasticSearchConnectionProvider elasticSearchConnectionProvider = serviceProvider.GetRequiredService<IElasticSearchConnectionProvider>();
             ElasticClient productionsClient = elasticSearchConnectionProvider.GetElasticClient(ElasticSearchIndexNameConstants.Productions);
-            var searchResponse =
-                 productionsClient.Search<Production>(s => s
-                 .From(0).Take(10).Query(q => q.MatchPhrase(e => e.Query(requestMessage.SearchKey))));
+            var searchResponse = productionsClient.Search<Production>(s => s.Query(q => (
+              q.Term(f => f.Title, requestMessage.SearchKey, 1.5) || q.Term(f => f.OriginalTitle, requestMessage.SearchKey, 1.5)
+              || q.Term(f => f.AKAs, requestMessage.SearchKey, 1.5) || q.Term(f => f.Genres, requestMessage.SearchKey, 0.5)
+              || q.Term(f => f.Keywords, requestMessage.SearchKey, 0.8)
+            )));
+
             if (searchResponse.IsValid)
             {
                 responseMessage.SearchResults = searchResponse.Hits.Where(e => e.Score >= searchResponse.MaxScore * 0.7).Select(e => new

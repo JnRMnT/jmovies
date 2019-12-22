@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { trigger, state, style, animate, transition, AnimationEvent } from '@angular/animations';
 import { Observable, Observer } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
@@ -16,28 +16,35 @@ import { Router } from '@angular/router';
     selector: 'app-search',
     templateUrl: './app-search.component.html',
     styleUrls: ['./app-search.component.less'],
+    host: {
+        '[@openClose]': 'isOpen',
+        '(@openClose.done)': 'onAnimationCompleted($event)',
+    },
     animations: [
         trigger('openClose', [
             state('open', style({
-                width: '12em',
+                width: '16em',
                 opacity: 1
             })),
             state('closed', style({
                 opacity: 0,
-                width: 0
+                width: 0,
+                margin: 0,
+                padding: 0
             })),
             transition('open => closed', [
                 animate('0.5s')
             ]),
             transition('closed => open', [
                 animate('0.5s')
-            ]),
+            ])
         ]),
     ]
 })
 export class AppSearchComponent implements OnInit {
     searchControl = new FormControl();
     isOpen = false;
+    isHidden = true;
     searchKey: string;
     filteredOptions: Observable<any[]>;
     constructor(private httpService: HttpService, private router: Router) {
@@ -47,6 +54,11 @@ export class AppSearchComponent implements OnInit {
         var production = optionChangeEvent.source.value;
         this.router.navigate(["app/production", production.id]);
         this.searchControl.setValue("");
+    }
+    onAnimationCompleted(event: AnimationEvent) {
+        if (<any>(event.toState) == false && event.phaseName == "done") {
+            this.isHidden = true;
+        }
     }
 
     ngOnInit() {
@@ -64,7 +76,11 @@ export class AppSearchComponent implements OnInit {
                         searchKey: value
                     };
                     vm.httpService.postToAction<SearchResponse>("Search", searchRequest).subscribe(function (response) {
-                        vm.filteredOptionsObserver.next(response.searchResults.$values.map(e => e.source));
+                        var searchResults = [];
+                        if (JM.isDefined(response) && JM.isDefined(response.searchResults) && JM.isDefined(response.searchResults.$values)) {
+                            searchResults = response.searchResults.$values.map(e => e.source);
+                        }
+                        vm.filteredOptionsObserver.next(searchResults);
                     });
                 }
             });
@@ -76,6 +92,9 @@ export class AppSearchComponent implements OnInit {
 
     public toggleSearchBox(): void {
         this.isOpen = !this.isOpen;
+        if (this.isOpen) {
+            this.isHidden = false;
+        }
     }
 
     private filteredOptionsObserver: Observer<any[]>;
