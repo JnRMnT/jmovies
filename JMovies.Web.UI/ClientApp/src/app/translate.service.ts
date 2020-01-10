@@ -53,7 +53,7 @@ export class TranslateService {
             this.allResources.filter((item) => {
                 return item.culture == cultureCode;
             }).forEach((resource: Resource) => {
-                me.resources[resource.key] = resource.value;
+                me.resources[_.toLower(resource.key)] = resource.value;
             });
         }
 
@@ -65,15 +65,16 @@ export class TranslateService {
         if (!this.resources) {
             return "";
         }
-        if (this.resources[key]) {
-            return this.resources[key];
+        const searchKey = _.toLower(key);
+        if (this.resources[searchKey]) {
+            return this.resources[searchKey];
         } else {
             return key;
         }
     }
 
     public getLocalResource(key: string): string {
-        return this.localResources[this.activeCulture][key];
+        return this.localResources[_.toLower(this.activeCulture)][key];
     }
 
     public resources: any;

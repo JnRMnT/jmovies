@@ -19,17 +19,28 @@
           </h3>
           <h4 class="lead mb-0" *ngIf="(production | toMovie)?.originalTitle">{{(production | toMovie)?.originalTitle}}</h4>
           <hr />
-          <mat-grid-list cols="2" rowHeight="2:1">
-            <mat-grid-tile><img mat-card-image></mat-grid-tile>
-            <mat-grid-tile><img mat-card-image></mat-grid-tile>
-            <mat-grid-tile><img mat-card-image></mat-grid-tile>
-            <mat-grid-tile><img mat-card-image></mat-grid-tile>
-          </mat-grid-list>
-        </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+              </div>
+              <div class="col-sm">
+              </div>
+              <div class="col-sm">
+              </div>
+            </div>
+          </div>
+        </div> 
         <div class="col-md-3 col-sm-12 main-actors">
-          <div class="d-flex flex-column bd-highlight">
-            <div class="p-2 bd-highlight" *ngIf="(production | toMovie)?.runtime">
-             <b>{{'Title.Duration' | translate}}: </b> {{(production | toMovie)?.runtime}}
+          <div class="row">
+            <div class="col-md-12 col-4">
+              <div class="p-2 bd-highlight" *ngIf="(production | toMovie)?.runtime">
+                <b>{{'Title.Genre' | translate}}: </b> {{production ? ((production | toMovie)?.genres | toString:undefined:'Title':'identifier':3) : ''}}
+              </div>
+            </div>
+            <div class="col-md-12 col-4">
+              <div class="p-2 bd-highlight" *ngIf="(production | toMovie)?.runtime">
+                <b>{{'Title.Duration' | translate}}: </b> {{(production | toMovie)?.runtime}}
+              </div>
             </div>
           </div>
         </div>

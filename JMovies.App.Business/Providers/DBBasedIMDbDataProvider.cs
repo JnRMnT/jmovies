@@ -109,6 +109,8 @@ namespace JMovies.App.Business.Providers
                             credit.Person.PrimaryImage = entities.Image.FirstOrDefault(e => e.ID == credit.Person.PrimaryImageID);
                         }
                     }
+
+                    movie.Genres = entities.Genre.Where(e => e.ProductionID == production.ID).ToArray();
                 }
 
                 CleanupImageContents(settings, production);
