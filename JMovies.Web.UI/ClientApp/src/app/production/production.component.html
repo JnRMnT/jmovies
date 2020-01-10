@@ -33,7 +33,7 @@
         <div class="col-md-3 col-sm-12 main-actors">
           <div class="row">
             <div class="col-md-12 col-4">
-              <div class="p-2 bd-highlight" *ngIf="(production | toMovie)?.runtime">
+              <div class="p-2 bd-highlight" *ngIf="(production | toMovie)?.genres">
                 <b>{{'Title.Genre' | translate}}: </b> {{production ? ((production | toMovie)?.genres | toString:undefined:'Title':'identifier':3) : ''}}
               </div>
             </div>
