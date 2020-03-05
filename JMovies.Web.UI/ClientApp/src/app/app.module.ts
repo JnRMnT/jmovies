@@ -45,6 +45,7 @@ import { ProductionTitlePipe } from './production-title.pipe';
 import { AppSearchComponent } from './app-search/app-search.component';
 import { ToImdbIdPipe } from './to-imdbid.pipe';
 import { ToStringPipe } from './to-string.pipe';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
     declarations: [
@@ -70,7 +71,8 @@ import { ToStringPipe } from './to-string.pipe';
         ProductionTitlePipe,
         AppSearchComponent,
         ToImdbIdPipe,
-        ToStringPipe
+        ToStringPipe,
+        LoginComponent
     ],
     imports: [
         BrowserModule,

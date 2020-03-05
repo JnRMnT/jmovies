@@ -4,6 +4,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductionComponent } from './production/production.component';
 import { ProductionCastComponent } from './production-cast/production-cast.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
     { path: 'app/movie/:id', component: ProductionComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: 'not-found', component: PageNotFoundComponent },
     { path: 'error', component: PageNotFoundComponent },
     { path: 'logout', component: PageNotFoundComponent },
+    { path: 'login', component: LoginComponent },
     { path: '**', component: PageNotFoundComponent }
 ];
 

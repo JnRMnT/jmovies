@@ -4,12 +4,12 @@ using JMovies.Entities;
 using JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
 using JMovies.IMDb.Entities.Interfaces;
-using JMovies.IMDb.Providers;
 using JMovies.Utilities.Providers;
 using JMovies.Web.Configuration;
 using JMovies.Web.Middlewares;
 using JMovies.Web.Providers;
 using JMovies.Web.Providers.StaticDataProviders;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +19,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using System;
 using System.Globalization;
 
@@ -28,6 +27,7 @@ namespace JMovies
     public class Startup
     {
         private const string enUSCulture = "en-US";
+        private const string trTRCulture = "tr-TR";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -61,19 +61,36 @@ namespace JMovies
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(5);
                 options.Cookie.HttpOnly = true;
-            });
+            }).AddAuthorization();
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;
             });
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                //options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+           .AddCookie(options =>
+           {
+               options.SlidingExpiration = true;
+               options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+               options.LoginPath = "/login";
+               options.AccessDeniedPath = "/forbidden";
+           })
+           .AddJwtBearer(options =>
+           {
+               options.Audience = "http://localhost:44303/";
+               options.Authority = "http://localhost:44303/";
+           });
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 var supportedCultures = new[]
                 {
                 new CultureInfo(enUSCulture),
-                new CultureInfo("tr-TR")
+                new CultureInfo(trTRCulture)
                 };
 
                 options.DefaultRequestCulture = new RequestCulture(culture: enUSCulture, uiCulture: enUSCulture);
@@ -115,12 +132,17 @@ namespace JMovies
             app.UseStaticFiles();
             app.UseRouting();
             app.UseSpaStaticFiles();
-            app.UseCookiePolicy();
+            var cookiePolicyOptions = new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+            };
+            app.UseCookiePolicy(cookiePolicyOptions);
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseSession();
             app.UseMiddleware<ContextInitializerMiddleware>();
             app.UseEndpoints(endpoints =>

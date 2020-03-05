@@ -1,5 +1,6 @@
 ﻿using JMovies.IMDb.Entities.Interfaces;
 using JMovies.IMDb.Entities.Movies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JMovies.Controllers
