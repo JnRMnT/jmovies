@@ -36,7 +36,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "ng2-toastr": "^4.1.2",
-    "ngx-loading": "^3.0.1",
+    "ngx-loading": "^8.0.0",
     "q": "^1.5.1",
     "rxjs": "^6.5.3",
     "smooth-scroll": "^16.1.0",
