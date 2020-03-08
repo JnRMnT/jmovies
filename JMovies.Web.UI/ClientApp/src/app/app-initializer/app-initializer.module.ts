@@ -23,6 +23,8 @@ export function initializeResources(httpService: HttpService, translateService: 
 
     return (): Promise<any> => {
         return new Promise((resolve, reject) => {
+            window.JMContext = window.JMContext || {};
+
             translateService.initialize().then(() => {
                 resolve();
             }, (error) => {

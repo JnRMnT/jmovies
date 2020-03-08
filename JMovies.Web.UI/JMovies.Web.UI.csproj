@@ -41,15 +41,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\general-models\application-context.ts" />
+    <None Remove="ClientApp\src\app\models\general-models\authentication-info.ts" />
     <None Remove="ClientApp\src\app\models\general-models\result-handling\jm-result-item.ts" />
     <None Remove="ClientApp\src\app\models\general-models\result-handling\jm-result.ts" />
     <None Remove="ClientApp\src\app\models\general-models\result-handling\redirection-info.ts" />
     <None Remove="ClientApp\src\app\models\general-models\result-handling\redirection-type-enum.ts" />
     <None Remove="ClientApp\src\app\models\general-models\searchResult.ts" />
     <None Remove="ClientApp\src\app\models\request-models\getProductionCastRequest.ts" />
+    <None Remove="ClientApp\src\app\models\request-models\loginRequest.ts" />
     <None Remove="ClientApp\src\app\models\request-models\searchRequest.ts" />
     <None Remove="ClientApp\src\app\models\response-models\getLastAddedProductionsResponse.ts" />
     <None Remove="ClientApp\src\app\models\response-models\getProductionCastResponse.ts" />
+    <None Remove="ClientApp\src\app\models\response-models\loginResponse.ts" />
     <None Remove="ClientApp\src\app\models\response-models\searchResponse.ts" />
     <None Remove="Gulpfile.ts" />
   </ItemGroup>
@@ -61,15 +65,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\general-models\application-context.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\general-models\authentication-info.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\general-models\result-handling\jm-result-item.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\general-models\result-handling\jm-result.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\general-models\result-handling\redirection-info.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\general-models\result-handling\redirection-type-enum.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\general-models\searchResult.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\request-models\getProductionCastRequest.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\request-models\loginRequest.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\request-models\searchRequest.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\response-models\getLastAddedProductionsResponse.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\response-models\getProductionCastResponse.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\response-models\loginResponse.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\response-models\searchResponse.ts" />
     <TypeScriptCompile Include="Gulpfile.ts">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

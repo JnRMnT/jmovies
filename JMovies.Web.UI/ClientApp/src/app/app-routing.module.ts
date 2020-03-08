@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductionComponent } from './production/production.component';
 import { ProductionCastComponent } from './production-cast/production-cast.component';
 import { LoginComponent } from './login/login.component';
+import { AuthenticationGuard } from './authentication.guard';
 
 const routes: Routes = [
     { path: 'app/movie/:id', component: ProductionComponent },

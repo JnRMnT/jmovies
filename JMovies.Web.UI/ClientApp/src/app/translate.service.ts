@@ -11,11 +11,11 @@ import * as _ from 'lodash';
 export class TranslateService {
     private supportedLocales = ["en-US", "tr-TR"];
     private localResources: any = {
-        "en-US": {
+        "en-us": {
             "Title.Error": "Error",
             "Exception.Common": "	We are not able to process your request at the moment, please try again later."
         },
-        "tr-TR": {
+        "tr-tr": {
             "Title.Error": "Hata",
             "Exception.Common": "İsteğinizi şu anda gerçekleştiremiyoruz, lütfen daha sonra tekrar deneyiniz."
         }

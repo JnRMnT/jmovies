@@ -44,6 +44,10 @@ import { AppSearchComponent } from './app-search/app-search.component';
 import { ToImdbIdPipe } from './to-imdbid.pipe';
 import { ToStringPipe } from './to-string.pipe';
 import { LoginComponent } from './login/login.component';
+import { AuthenticationService } from './authentication.service';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { ApplicationContext } from "./models/general-models/application-context";
+import { JM } from 'jm-utilities';
 
 @NgModule({
     declarations: [
@@ -90,9 +94,18 @@ import { LoginComponent } from './login/login.component';
         MatGridListModule,
         MatCardModule,
         MatAutocompleteModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: getToken
+            }
+        })
     ],
-    providers: [HttpService, LoadingService, TranslateService, ProductionService, ResultHandlingService],
+    providers: [HttpService, LoadingService, TranslateService, ProductionService, ResultHandlingService, AuthenticationService ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function getToken(): string {
+    return JM.isDefined(window.JMContext.authenticationInfo) ? window.JMContext.authenticationInfo.token : undefined;
+}

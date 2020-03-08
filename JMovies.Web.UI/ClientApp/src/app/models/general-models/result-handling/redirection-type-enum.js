@@ -8,4 +8,4 @@ var RedirectionTypeEnum;
     RedirectionTypeEnum[RedirectionTypeEnum["RedirectToErrorPage"] = 3] = "RedirectToErrorPage";
     RedirectionTypeEnum[RedirectionTypeEnum["RedirectToLogout"] = 4] = "RedirectToLogout";
 })(RedirectionTypeEnum = exports.RedirectionTypeEnum || (exports.RedirectionTypeEnum = {}));
-//# sourceMappingURL=redirection-type.js.map
+//# sourceMappingURL=redirection-type-enum.js.map
