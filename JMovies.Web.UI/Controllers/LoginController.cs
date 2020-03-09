@@ -4,24 +4,30 @@ using JMovies.Entities.Responses;
 using JMovies.Entities.Interfaces;
 using JMovies.Common.Constants;
 using JMovies.Entities.Requests;
+using System.Security;
+using JM.Entities.Framework;
 
 namespace JMovies.Web.UI.Controllers
 {
     [Microsoft.AspNetCore.Mvc.Route("api/login")]
     public class LoginController : BaseApiController
     {
-        private IJMAppClientProvider jmAppClientProvider;
-        public LoginController(IJMAppClientProvider jmAppClientProvider)
+        private IAuthenticationProvider authenticationProvider;
+        public LoginController(IAuthenticationProvider authenticationProvider)
         {
-            this.jmAppClientProvider = jmAppClientProvider;
+            this.authenticationProvider = authenticationProvider;
         }
 
         [HttpPost]
         public LoginResponse Post([FromBody]LoginRequest request)
         {
-            LoginResponse loginResponse = jmAppClientProvider.CallAction<LoginResponse>(ActionNameConstants.Login, request);
+            LoginResponse response = authenticationProvider.Authenticate(request);
+            if (response.Result != Entities.UserManagement.LoginResultEnum.Successful)
+            {
+                throw new JMException(response.Result.ToString());
+            }
 
-            return loginResponse;
+            return response;
         }
     }
 }

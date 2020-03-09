@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JMovies.Entities.Misc;
+using Newtonsoft.Json;
 using System.Security;
-using System.Text;
 
 namespace JMovies.Entities.Requests
 {
     public class LoginRequest: BaseRequest
     {
-        public SecureString Username;
-        public SecureString Password;
+        [JsonConverter(typeof(SecureStringConverter))]
+        public SecureString Username { get; set; }
+        [JsonConverter(typeof(SecureStringConverter))]
+        public SecureString Password { get; set; }
     }
 }

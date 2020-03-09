@@ -7,6 +7,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,8 +46,7 @@ import { ToImdbIdPipe } from './to-imdbid.pipe';
 import { ToStringPipe } from './to-string.pipe';
 import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './authentication.service';
-import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
-import { ApplicationContext } from "./models/general-models/application-context";
+import { JwtModule } from '@auth0/angular-jwt';
 import { JM } from 'jm-utilities';
 
 @NgModule({
@@ -99,7 +99,8 @@ import { JM } from 'jm-utilities';
             config: {
                 tokenGetter: getToken
             }
-        })
+        }),
+        ToastrModule.forRoot()
     ],
     providers: [HttpService, LoadingService, TranslateService, ProductionService, ResultHandlingService, AuthenticationService ],
     bootstrap: [AppComponent]

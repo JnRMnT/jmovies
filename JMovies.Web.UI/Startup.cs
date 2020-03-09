@@ -39,11 +39,14 @@ namespace JMovies
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationInsightsTelemetry();
-            services.AddMvc().AddNewtonsoftJson(options =>
+            services.AddMvc(option =>
             {
-                options.SerializerSettings.TypeNameHandling = Utilities.Serialization.JsonSerializer.Settings.TypeNameHandling;
-                options.SerializerSettings.ReferenceLoopHandling = Utilities.Serialization.JsonSerializer.Settings.ReferenceLoopHandling;
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                option.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            }).AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.TypeNameHandling = Utilities.Serialization.JsonSerializer.Settings.TypeNameHandling;
+                    options.SerializerSettings.ReferenceLoopHandling = Utilities.Serialization.JsonSerializer.Settings.ReferenceLoopHandling;
+                }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -51,7 +54,10 @@ namespace JMovies
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddAntiforgery();
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-XSRF-TOKEN";
+            });
             services.AddDataProtection();
             // Add our Config object so it can be injected
             services.Configure<WebConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));
@@ -105,6 +111,7 @@ namespace JMovies
             services.AddSingleton<IFlowExecutionConfigurationProvider, JsonFileBasedFlowExecutionConfigurationProvider>();
             services.AddSingleton<IIMDbDataProvider, ActionBasedIMDbDataProvider>();
             services.AddSingleton<IExceptionHandler, ExceptionHandler>();
+            services.AddSingleton<IAuthenticationProvider, FlowBasedAuthenticationProvider>();
             MainStaticDataProvider.RegisterProvider<IResourcesStaticDataProvider, ResourcesStaticDataProvider>(services);
             MainStaticDataProvider.RegisterProvider<IResultConfigurationsStaticDataProvider, ResultConfigurationsStaticDataProvider>(services);
         }
@@ -145,6 +152,7 @@ namespace JMovies
             app.UseAuthorization();
             app.UseSession();
             app.UseMiddleware<ContextInitializerMiddleware>();
+            app.UseMiddleware<XsrfMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}");

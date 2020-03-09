@@ -3,6 +3,7 @@ using JMovies.DataAccess.Converters;
 using JMovies.DataAccess.Entities;
 using JMovies.DataAccess.Entities.Persisters;
 using JMovies.DataAccess.Entities.ResultHandling;
+using JMovies.Entities.UserManagement;
 using JMovies.IMDb.Entities.Common;
 using JMovies.IMDb.Entities.Misc;
 using JMovies.IMDb.Entities.Movies;
@@ -114,5 +115,7 @@ namespace JMovies.DataAccess
         public DbSet<ProductionCountry> ProductionCountry { get; set; }
         public DbSet<ProductionLanguage> ProductionLanguage { get; set; }
         public DbSet<TagLine> TagLine { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Password> Password { get; set; }
     }
 }

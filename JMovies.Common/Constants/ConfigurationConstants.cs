@@ -13,5 +13,7 @@ namespace JMovies.Common.Constants
 
         public static readonly string ProductionEnvironmentName = "Production";
         public static readonly string ConnectionStringEnvironmentName = "JMoviesConnectionString";
+
+        public static readonly int MaxPasswordRetryCount = 3;
     }
 }

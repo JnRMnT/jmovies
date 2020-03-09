@@ -3,6 +3,7 @@ import { JMResult } from './models/general-models/result-handling/jm-result';
 import { JM } from 'jm-utilities';
 import { RedirectionTypeEnum } from './models/general-models/result-handling/redirection-type-enum';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root'
@@ -38,7 +39,21 @@ export class ResultHandlingService {
     }
 
     private handleMessageDisplay(result: JMResult) {
-
+        if (JM.isDefined(result.errors)) {
+            result.errors.$values.forEach((value, index) => {
+                this.getToastr().error(value.message);
+            });
+        }
+        if (JM.isDefined(result.warnings)) {
+            result.warnings.$values.forEach((value, index) => {
+                this.getToastr().warning(value.message);
+            });
+        }
+        if (JM.isDefined(result.informations)) {
+            result.informations.$values.forEach((value, index) => {
+                this.getToastr().info(value.message);
+            });
+        }
     }
 
     private getRouter(): Router {
@@ -47,5 +62,13 @@ export class ResultHandlingService {
         }
         return this.router;
     }
+    private getToastr(): ToastrService {
+        if (!JM.isDefined(this.toastrService)) {
+            this.toastrService = this.injector.get(ToastrService);
+        }
+        return this.toastrService;
+    }
+
     private router: Router;
+    private toastrService: ToastrService
 }

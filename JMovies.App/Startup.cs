@@ -75,6 +75,7 @@ namespace JMovies.App
             services.AddSingleton<IIMDbDataProvider, DBBasedIMDbDataProvider>();
             services.AddSingleton<IExceptionHandler, ExceptionHandler>();
             services.AddSingleton<IElasticSearchConnectionProvider, ElasticSearchConnector>();
+            services.AddSingleton<IAuthenticationProvider, DBAuthenticationProvider>();
             // Add our Config object so it can be injected
             services.Configure<AppConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));
             services.Configure<CustomConfiguration>(Configuration.GetSection(ConfigurationConstants.CustomConfigurationSectionName));
