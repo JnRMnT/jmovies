@@ -1,3 +1,4 @@
+import { ApplicationContext } from './models/general-models/application-context';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
