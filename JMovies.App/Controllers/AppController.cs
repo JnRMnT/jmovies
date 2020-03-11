@@ -9,6 +9,7 @@ using JMovies.Utilities.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using JM.Entities.Interfaces;
+using JMovies.Utilities.Helpers;
 
 namespace JMovies.App.Controllers
 {
@@ -19,11 +20,14 @@ namespace JMovies.App.Controllers
         private IContextProvider contextProvider;
         private IFlowProvider flowProvider;
         private IServiceProvider serviceProvider;
-        public AppController(IContextProvider contextProvider, IFlowProvider flowProvider, IServiceProvider serviceProvider)
+        private IFlowConfigurationProvider flowConfigurationProvider;
+
+        public AppController(IContextProvider contextProvider, IFlowProvider flowProvider, IServiceProvider serviceProvider, IFlowConfigurationProvider flowConfigurationProvider)
         {
             this.contextProvider = contextProvider;
             this.flowProvider = flowProvider;
             this.serviceProvider = serviceProvider;
+            this.flowConfigurationProvider = flowConfigurationProvider;
         }
 
         [HttpGet]
@@ -38,6 +42,8 @@ namespace JMovies.App.Controllers
             try
             {
                 contextProvider.SetContext(requestMessage.Context);
+                FlowConfiguration configuration = flowConfigurationProvider.GetConfiguration(requestMessage.Action);
+                ValidationHelper.ExecuteValidations(configuration, requestMessage.Request);
                 BaseResponse response = flowProvider.ExecuteFlow(serviceProvider, requestMessage.Action, requestMessage.Request);
                 ResponsePayload responseMessage = new ResponsePayload
                 {

@@ -20,6 +20,45 @@
     "ResponseIdentifier": {
       "type": "string",
       "description": "Response Type fully qualified identifier."
+    },
+    "Validations": {
+      "type": "array",
+      "description": "Array of validations",
+      "items": {
+        "$ref": "#/definitions/validation"
+      }
+
+    }
+  },
+  "definitions": {
+    "validation": {
+      "type": "object",
+      "description": "Validation",
+      "required": [ "requestProperties", "errorResource", "serverValidator" ],
+      "properties": {
+        "errorResource": {
+          "type": "string"
+        },
+        "serverValidator": {
+          "type": "string",
+          "enum": [
+            "JMovies.Utilities.Validations.RequiredValidator, JMovies.Utilities",
+            "JMovies.Utilities.Validations.PasswordRulesValidator, JMovies.Utilities",
+            "JMovies.Utilities.Validations.EqualsValidator, JMovies.Utilities",
+            "JMovies.Utilities.Validations.UsernameRulesValidator, JMovies.Utilities",
+            "JMovies.App.Business.Validations.UsernameRulesValidator, JMovies.App.Business",
+            "JMovies.App.Business.Validations.EmailExistsValidator, JMovies.App.Business",
+            "JMovies.Utilities.Validations.RegexValidator, JMovies.Utilities"
+          ]
+        },
+        "requestProperties": {
+          "type": "array",
+          "description": "Array of request properties",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     }
   }
 }

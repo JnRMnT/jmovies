@@ -12,5 +12,6 @@ namespace JMovies.Entities.Framework
         public string ActionClassIdentifier { get; set; }
         public string RequestIdentifier { get; set; }
         public string ResponseIdentifier { get; set; }
+        public Validation[] Validations { get; set; }
     }
 }

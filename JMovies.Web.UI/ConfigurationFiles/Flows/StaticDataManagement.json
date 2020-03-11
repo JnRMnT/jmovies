@@ -1,5 +1,5 @@
 ﻿{
-  "$schema": "../schemas/flowconfiguration-schema.json#",
+  "$schema": "../../JMovies.App/ConfigurationFiles/schemas/flowconfiguration-schema.json#",
   "Name": "StaticDataManagement",
   "RequestIdentifier": "JMovies.Entities.Requests.StaticDataManagementRequest, JMovies.Entities",
   "ResponseIdentifier": "JMovies.Entities.Responses.StaticDataManagementResponse, JMovies.Entities",

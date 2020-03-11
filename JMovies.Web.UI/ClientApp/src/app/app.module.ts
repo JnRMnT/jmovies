@@ -49,6 +49,8 @@ import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './authentication.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { JM } from 'jm-utilities';
+import { RegisterComponent } from './register/register.component';
+import { RegisterCompleteComponent } from './register-complete/register-complete.component';
 
 @NgModule({
     declarations: [
@@ -75,7 +77,9 @@ import { JM } from 'jm-utilities';
         AppSearchComponent,
         ToImdbIdPipe,
         ToStringPipe,
-        LoginComponent
+        LoginComponent,
+        RegisterComponent,
+        RegisterCompleteComponent
     ],
     imports: [
         BrowserModule,

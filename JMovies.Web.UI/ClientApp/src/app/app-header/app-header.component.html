@@ -4,13 +4,13 @@
 
     </div>
     <div class="col-md-4 col-sm-12 text-center">
-      <a class="blog-header-logo text-primary-emp" href="#">JMovies</a>
+      <jm-link class="blog-header-logo text-primary-emp" [routerLink]="['/']">JMovies</jm-link>
     </div>
     <div class="col-md-4 col-sm-12 d-flex align-items-center header-right">
       <div class="search-panel">
         <app-search></app-search>
       </div>
-      <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+      <jm-button [routerLink]="['/register']" class="btn-sm" button-type="outline-secondary">{{'Title.SignUp' | translate}}</jm-button>
     </div>
   </div>
 </header>

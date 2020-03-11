@@ -1,0 +1,44 @@
+{
+  "$schema": "../schemas/flowconfiguration-schema.json#",
+  "Name": "Register",
+  "RequestIdentifier": "JMovies.Entities.Requests.RegisterRequest, JMovies.Entities",
+  "ResponseIdentifier": "JMovies.Entities.Responses.RegisterResponse, JMovies.Entities",
+  "ActionClassIdentifier": "JMovies.App.Business.Actions.Register, JMovies.App.Business",
+  "Validations": [
+    {
+      "serverValidator": "JMovies.Utilities.Validations.RequiredValidator, JMovies.Utilities",
+      "errorResource": "Title.InvalidUsername",
+      "requestProperties": [ "Username" ]
+    },
+    {
+      "serverValidator": "JMovies.Utilities.Validations.RequiredValidator, JMovies.Utilities",
+      "errorResource": "Title.InvalidPassword",
+      "requestProperties": [ "Password" ]
+    },
+    {
+      "serverValidator": "JMovies.Utilities.Validations.RequiredValidator, JMovies.Utilities",
+      "errorResource": "Title.InvalidEmail",
+      "requestProperties": [ "Email" ]
+    },
+    {
+      "serverValidator": "JMovies.App.Business.Validations.EmailExistsValidator, JMovies.App.Business",
+      "errorResource": "Title.InvalidEmail",
+      "requestProperties": [ "Email" ]
+    },
+    {
+      "serverValidator": "JMovies.Utilities.Validations.RegexValidator, JMovies.Utilities",
+      "errorResource": "Title.InvalidEmail",
+      "requestProperties": [ "Email", "$$^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$" ]
+    },
+    {
+      "serverValidator": "JMovies.Utilities.Validations.EqualsValidator, JMovies.Utilities",
+      "errorResource": "Title.PasswordsDontMatch",
+      "requestProperties": [ "Password", "PasswordConfirm" ]
+    },
+    {
+      "serverValidator": "JMovies.App.Business.Validations.UsernameRulesValidator, JMovies.App.Business",
+      "errorResource": "Title.InvalidUsername",
+      "requestProperties": [ "Username" ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "$schema": "../schemas/flowconfiguration-schema.json#",
+  "$schema": "../../JMovies.App/ConfigurationFiles/schemas/flowconfiguration-schema.json#",
   "Name": "GetPersonDetails",
   "RequestIdentifier": "JMovies.Entities.Requests.GetPersonDetailsRequest, JMovies.Entities",
   "ResponseIdentifier": "JMovies.Entities.Responses.GetPersonDetailsResponse, JMovies.Entities",

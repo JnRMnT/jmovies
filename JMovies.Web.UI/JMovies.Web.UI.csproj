@@ -50,10 +50,12 @@
     <None Remove="ClientApp\src\app\models\general-models\searchResult.ts" />
     <None Remove="ClientApp\src\app\models\request-models\getProductionCastRequest.ts" />
     <None Remove="ClientApp\src\app\models\request-models\loginRequest.ts" />
+    <None Remove="ClientApp\src\app\models\request-models\registerRequest.ts" />
     <None Remove="ClientApp\src\app\models\request-models\searchRequest.ts" />
     <None Remove="ClientApp\src\app\models\response-models\getLastAddedProductionsResponse.ts" />
     <None Remove="ClientApp\src\app\models\response-models\getProductionCastResponse.ts" />
     <None Remove="ClientApp\src\app\models\response-models\loginResponse.ts" />
+    <None Remove="ClientApp\src\app\models\response-models\registerResponse.ts" />
     <None Remove="ClientApp\src\app\models\response-models\searchResponse.ts" />
     <None Remove="Gulpfile.ts" />
   </ItemGroup>
@@ -74,10 +76,12 @@
     <TypeScriptCompile Include="ClientApp\src\app\models\general-models\searchResult.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\request-models\getProductionCastRequest.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\request-models\loginRequest.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\request-models\registerRequest.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\request-models\searchRequest.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\response-models\getLastAddedProductionsResponse.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\response-models\getProductionCastResponse.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\response-models\loginResponse.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\response-models\registerResponse.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\response-models\searchResponse.ts" />
     <TypeScriptCompile Include="Gulpfile.ts">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -104,12 +108,21 @@
     <Content Update="ConfigurationFiles\Flows\GetProductionDetails.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Update="ConfigurationFiles\Flows\Register.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Update="ConfigurationFiles\Flows\StaticDataManagement.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Validations\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

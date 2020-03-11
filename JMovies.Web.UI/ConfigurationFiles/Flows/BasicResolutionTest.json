@@ -1,5 +1,5 @@
 ﻿{
-  "$schema": "../schemas/flowconfiguration-schema.json#",
+  "$schema": "../../JMovies.App/ConfigurationFiles/schemas/flowconfiguration-schema.json#",
   "Name": "BasicResolutionTest",
   "RequestIdentifier": "JMovies.Entities.Requests.BasicResolutionTestRequest, JMovies.Entities",
   "ResponseIdentifier": "JMovies.Entities.Responses.BasicResolutionTestResponse, JMovies.Entities",

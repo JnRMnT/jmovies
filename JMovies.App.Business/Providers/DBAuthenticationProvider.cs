@@ -22,7 +22,7 @@ namespace JMovies.App.Business.Providers
                 if (request.Username != null && request.Password != null)
                 {
                     response.Result = LoginResultEnum.WrongUsernameOrPassword;
-                    User user = entities.User.Include(e=> e.Password).SingleOrDefault(e => e.UserName == request.Username.ToString());
+                    User user = entities.User.Include(e=> e.Password).SingleOrDefault(e => e.UserName == request.Username.ToPlainString());
                     if (user != null)
                     {
                         if (user.Password != null)

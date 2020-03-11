@@ -1,5 +1,5 @@
 {
-  "$schema": "../schemas/flowconfiguration-schema.json#",
+  "$schema": "../../JMovies.App/ConfigurationFiles/schemas/flowconfiguration-schema.json#",
   "Name": "Login",
   "RequestIdentifier": "JMovies.Entities.Requests.LoginRequest, JMovies.Entities",
   "ResponseIdentifier": "JMovies.Entities.Responses.LoginResponse, JMovies.Entities",

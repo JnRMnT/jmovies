@@ -6,6 +6,8 @@ import { ProductionComponent } from './production/production.component';
 import { ProductionCastComponent } from './production-cast/production-cast.component';
 import { LoginComponent } from './login/login.component';
 import { AuthenticationGuard } from './authentication.guard';
+import { RegisterComponent } from './register/register.component';
+import { RegisterCompleteComponent } from './register-complete/register-complete.component';
 
 const routes: Routes = [
     { path: 'app/movie/:id', component: ProductionComponent },
@@ -20,6 +22,8 @@ const routes: Routes = [
     { path: 'error', component: PageNotFoundComponent },
     { path: 'logout', component: PageNotFoundComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'register-complete', component: RegisterCompleteComponent },
     { path: '**', component: PageNotFoundComponent }
 ];
 

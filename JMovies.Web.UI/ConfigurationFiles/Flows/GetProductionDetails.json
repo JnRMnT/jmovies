@@ -1,5 +1,5 @@
 {
-  "$schema": "../schemas/flowconfiguration-schema.json#",
+  "$schema": "../../JMovies.App/ConfigurationFiles/schemas/flowconfiguration-schema.json#",
   "Name": "GetProductionDetails",
   "RequestIdentifier": "JMovies.Entities.Requests.GetProductionDetailsRequest, JMovies.Entities",
   "ResponseIdentifier": "JMovies.Entities.Responses.GetProductionDetailsResponse, JMovies.Entities",

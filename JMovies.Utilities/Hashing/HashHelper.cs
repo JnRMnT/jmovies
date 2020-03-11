@@ -14,6 +14,16 @@ namespace JMovies.Utilities.Hashing
             return hashedPassword == Hash(hashType, password, salt);
         }
 
+        public static string GenerateSalt()
+        {
+            byte[] salt = new byte[128 / 8];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+            return Convert.ToBase64String(salt);
+        }
+
         public static string Hash(HashTypeEnum hashType, SecureString password, string saltText)
         {
             KeyDerivationPrf keyDerivation;
@@ -30,21 +40,13 @@ namespace JMovies.Utilities.Hashing
                     break;
             }
 
-            byte[] salt;
-            if (!string.IsNullOrEmpty(saltText))
+            if (string.IsNullOrEmpty(saltText))
             {
-                salt = Encoding.UTF8.GetBytes(saltText);
+                saltText = GenerateSalt();
             }
-            else
-            {
-                salt = new byte[128 / 8];
-                using (var rng = RandomNumberGenerator.Create())
-                {
-                    rng.GetBytes(salt);
-                }
-            }
+            byte[] salt = Convert.FromBase64String(saltText);
             return Convert.ToBase64String(KeyDerivation.Pbkdf2(
-            password: password.ToString(),
+            password: password.ToPlainString(),
             salt: salt,
             prf: keyDerivation,
             iterationCount: 10000,
