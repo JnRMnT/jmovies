@@ -11,7 +11,11 @@ export class AuthenticationService {
 
     public isAuthenticated(): boolean {
         // Check whether the token is expired and return true or false
-        return JM.isDefined(window.JMContext.authenticationInfo) && JM.isDefined(window.JMContext.authenticationInfo.token)
-            && !this.jwtHelper.isTokenExpired(window.JMContext.authenticationInfo.token);
+        return JM.isDefined(window.localStorage.getItem("jmAuthToken"))
+            && !this.jwtHelper.isTokenExpired(window.localStorage.getItem("jmAuthToken"));
+    }
+
+    public setAuthenticated(token: string): void {
+        window.localStorage.setItem("jmAuthToken", token);
     }
 }

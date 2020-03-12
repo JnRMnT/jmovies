@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JMovies.Controllers
 {
+    [Authorize]
     [Route("api/production")]
     public class ProductionController : Web.Controllers.BaseProductionController 
     {

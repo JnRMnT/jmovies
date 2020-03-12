@@ -113,5 +113,5 @@ import { RegisterCompleteComponent } from './register-complete/register-complete
 export class AppModule { }
 
 export function getToken(): string {
-    return JM.isDefined(window.JMContext.authenticationInfo) ? window.JMContext.authenticationInfo.token : undefined;
+    return window.localStorage.getItem("jmAuthToken");
 }

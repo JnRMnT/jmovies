@@ -4,7 +4,7 @@ using JMovies.Entities.Interfaces;
 using JMovies.Entities.Requests;
 using JMovies.Entities.Responses;
 using JMovies.Entities.UserManagement;
-using JMovies.Utilities.Hashing;
+using JMovies.Utilities.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;

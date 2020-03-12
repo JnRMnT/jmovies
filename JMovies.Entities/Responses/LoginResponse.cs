@@ -9,5 +9,6 @@ namespace JMovies.Entities.Responses
     {
         public LoginResultEnum Result { get; set; }
         public User User { get; set; }
+        public object Token { get; set; }
     }
 }

@@ -4,12 +4,13 @@ import { LoadingService } from './loading.service';
 import { Observable, Observer } from 'rxjs';
 import { JM } from 'jm-utilities';
 import { ResultHandlingService } from './result-handling.service';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HttpService {
-    constructor(private http: HttpClient, private loadingService: LoadingService, private resultHandlingService: ResultHandlingService) {
+    constructor(private http: HttpClient, private loadingService: LoadingService, private resultHandlingService: ResultHandlingService, public router: Router) {
 
     }
 
@@ -25,6 +26,7 @@ export class HttpService {
                 }
             }, (error: HttpErrorResponse) => {
                 me.loadingService.attemptToDeactivate();
+                me.handleHttpStatuses(error);
                 if (!JM.isDefined(error) || !JM.isDefined(error.error) || !me.checkAndHandleErrors(error.error, observer)) {
                     observer.error(error);
                 }
@@ -44,6 +46,7 @@ export class HttpService {
                 }
             }, (error: HttpErrorResponse) => {
                 me.loadingService.attemptToDeactivate();
+                me.handleHttpStatuses(error);
                 if (!JM.isDefined(error) || !JM.isDefined(error.error) || !me.checkAndHandleErrors(error.error, observer)) {
                     observer.error(error);
                 }
@@ -78,6 +81,18 @@ export class HttpService {
             return true;
         } else {
             return false;
+        }
+    }
+
+    handleHttpStatuses(error: HttpErrorResponse): void {
+        if (!error.ok && JM.isDefined(error.status)) {
+            switch (error.status) {
+                case 401:
+                    this.router.navigate(["login"]);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

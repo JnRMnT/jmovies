@@ -4,12 +4,14 @@ using JMovies.Entities;
 using JMovies.Entities.Framework;
 using JMovies.Entities.Interfaces;
 using JMovies.IMDb.Entities.Interfaces;
+using JMovies.Utilities.Cryptography;
 using JMovies.Utilities.Providers;
 using JMovies.Web.Configuration;
 using JMovies.Web.Middlewares;
 using JMovies.Web.Providers;
 using JMovies.Web.Providers.StaticDataProviders;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +21,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Globalization;
 
@@ -73,10 +76,12 @@ namespace JMovies
                 options.EnableForHttps = true;
             });
 
+            byte[] signKey = RandomHelper.GenerateRandom(256 / 8);
+            byte[] encryptionKey = RandomHelper.GenerateRandom(256 / 8);
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                //options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
            .AddCookie(options =>
            {
@@ -87,8 +92,16 @@ namespace JMovies
            })
            .AddJwtBearer(options =>
            {
-               options.Audience = "http://localhost:44303/";
-               options.Authority = "http://localhost:44303/";
+               options.SaveToken = true;
+               options.TokenValidationParameters = new TokenValidationParameters
+               {
+                   IssuerSigningKey = new SymmetricSecurityKey(signKey),
+                   RequireSignedTokens = false,
+                   TokenDecryptionKey = new SymmetricSecurityKey(encryptionKey),
+                   ValidAudience = "jmovier",
+                   ValidIssuer = "jmovies",
+                   ValidateLifetime = true
+               };
            });
 
             services.Configure<RequestLocalizationOptions>(options =>
@@ -112,6 +125,10 @@ namespace JMovies
             services.AddSingleton<IIMDbDataProvider, ActionBasedIMDbDataProvider>();
             services.AddSingleton<IExceptionHandler, ExceptionHandler>();
             services.AddSingleton<IAuthenticationProvider, FlowBasedAuthenticationProvider>();
+            services.AddSingleton<ITokenProvider, JWTTokenProvider>((serviceProvider) =>
+            {
+                return new JWTTokenProvider(signKey, encryptionKey);
+            });
             MainStaticDataProvider.RegisterProvider<IResourcesStaticDataProvider, ResourcesStaticDataProvider>(services);
             MainStaticDataProvider.RegisterProvider<IResultConfigurationsStaticDataProvider, ResultConfigurationsStaticDataProvider>(services);
         }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JMovies.Controllers
 {
+    [Authorize]
     [Route("api/movie")]
     public class MovieController : BaseProductionController
     {

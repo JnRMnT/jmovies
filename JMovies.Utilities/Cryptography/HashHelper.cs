@@ -2,10 +2,8 @@
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Security;
-using System.Security.Cryptography;
-using System.Text;
 
-namespace JMovies.Utilities.Hashing
+namespace JMovies.Utilities.Cryptography
 {
     public class HashHelper
     {
@@ -16,12 +14,7 @@ namespace JMovies.Utilities.Hashing
 
         public static string GenerateSalt()
         {
-            byte[] salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-            return Convert.ToBase64String(salt);
+            return RandomHelper.GenerateRandomString(128 / 8);
         }
 
         public static string Hash(HashTypeEnum hashType, SecureString password, string saltText)
