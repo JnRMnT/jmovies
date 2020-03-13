@@ -47,7 +47,6 @@ import { ToImdbIdPipe } from './to-imdbid.pipe';
 import { ToStringPipe } from './to-string.pipe';
 import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './authentication.service';
-import { JwtModule } from '@auth0/angular-jwt';
 import { JM } from 'jm-utilities';
 import { RegisterComponent } from './register/register.component';
 import { RegisterCompleteComponent } from './register-complete/register-complete.component';
@@ -100,18 +99,9 @@ import { RegisterCompleteComponent } from './register-complete/register-complete
         MatCardModule,
         MatAutocompleteModule,
         MatFormFieldModule,
-        JwtModule.forRoot({
-            config: {
-                tokenGetter: getToken
-            }
-        }),
         ToastrModule.forRoot()
     ],
     providers: [HttpService, LoadingService, TranslateService, ProductionService, ResultHandlingService, AuthenticationService ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-export function getToken(): string {
-    return window.localStorage.getItem("jmAuthToken");
-}

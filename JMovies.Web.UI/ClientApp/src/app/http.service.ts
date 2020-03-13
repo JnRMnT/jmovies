@@ -5,12 +5,17 @@ import { Observable, Observer } from 'rxjs';
 import { JM } from 'jm-utilities';
 import { ResultHandlingService } from './result-handling.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HttpService {
-    constructor(private http: HttpClient, private loadingService: LoadingService, private resultHandlingService: ResultHandlingService, public router: Router) {
+    constructor(private http: HttpClient,
+        private loadingService: LoadingService,
+        private resultHandlingService: ResultHandlingService,
+        public router: Router,
+        public authenticationService: AuthenticationService) {
 
     }
 
@@ -69,6 +74,13 @@ export class HttpService {
     getHttpConfig(): any {
         var headers: HttpHeaders = new HttpHeaders();
         headers = headers.append("Accept-Language", this.activeCulture);
+        if (JM.isDefined(this.authenticationService.getToken)) {
+            var authenticationToken: string = this.authenticationService.getToken();
+            if (this.authenticationService.isAuthenticated()) {
+                headers = headers.append("Authorization", "Bearer " + authenticationToken);
+            }
+        }
+
         return {
             headers: headers
         };
