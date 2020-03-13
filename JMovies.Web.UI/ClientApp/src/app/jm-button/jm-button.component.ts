@@ -5,20 +5,20 @@ import { JM } from 'jm-utilities';
     selector: 'jm-button',
     templateUrl: './jm-button.component.html',
     styleUrls: ['./jm-button.component.less'],
-    inputs: ['class', 'disabled', 'onClick', 'routerLink', 'buttonType', 'actionType']
+    inputs: ['button-class', 'disabled', 'onClick', 'routerLink', 'buttonType', 'actionType']
 })
 export class JmButtonComponent implements OnInit, OnChanges {
 
     constructor() { }
 
     ngOnInit() {
-        this.setInternalClass(this.class);
+        this.setInternalClass(this.buttonClass);
         this.setInternalActionType(this.internalActionType);
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (JM.isDefined(changes.class)) {
-            this.setInternalClass(changes.class.currentValue);
+        if (JM.isDefined(changes.buttonClass)) {
+            this.setInternalClass(changes.buttonClass.currentValue);
         }
         if (JM.isDefined(changes.actionType)) {
             this.setInternalActionType(changes.actionType.currentValue);
@@ -39,7 +39,7 @@ export class JmButtonComponent implements OnInit, OnChanges {
         this.internalClass = "btn " + (this.buttonType ? this.buttonType : "btn-primary") + " " + classValue;
     }
 
-    @Input() class: string;
+    @Input("button-class") buttonClass: string;
     @Input() disabled: string;
     @Input() routerLink: string;
     @Input() onClick: Function;

@@ -10,7 +10,10 @@
       <div class="search-panel">
         <app-search></app-search>
       </div>
-      <jm-button [routerLink]="['/register']" class="btn-sm" button-type="outline-secondary">{{'Title.SignUp' | translate}}</jm-button>
+      <div class="btn-group" role="group">
+        <jm-button [routerLink]="['/login']" button-class="btn-sm mr-2" button-type="outline-secondary">{{'Title.SignIn' | translate}}</jm-button>
+        <jm-button [routerLink]="['/register']" button-class="btn-sm" button-type="outline-secondary">{{'Title.SignUp' | translate}}</jm-button>
+      </div>
     </div>
   </div>
 </header>
