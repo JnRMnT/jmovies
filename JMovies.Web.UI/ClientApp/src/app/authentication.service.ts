@@ -20,8 +20,13 @@ export class AuthenticationService {
         return window.localStorage.getItem("jmAuthToken");
     }
     
-    public setAuthenticated(token: string): void {
-        window.localStorage.setItem("jmAuthToken", token);
-        window.localStorage.setItem("jmAuthTokenIssueTime", new Date().toString());
+    public setAuthenticated(token?: string): void {
+        if (JM.isDefined(token)) {
+            window.localStorage.setItem("jmAuthToken", token);
+            window.localStorage.setItem("jmAuthTokenIssueTime", new Date().toString());
+        } else {
+            window.localStorage.removeItem("jmAuthToken");
+            window.localStorage.removeItem("jmAuthTokenIssueTime");
+        }
     }
 }

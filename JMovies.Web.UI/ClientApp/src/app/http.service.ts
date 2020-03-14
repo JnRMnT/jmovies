@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpEvent } from "@angular/common/http";
 import { LoadingService } from './loading.service';
 import { Observable, Observer } from 'rxjs';
 import { JM } from 'jm-utilities';
@@ -25,6 +25,7 @@ export class HttpService {
             me.loadingService.activeLoading();
             me.http.get<T>(this.getApiUrl(url), me.getHttpConfig()).subscribe(data => {
                 me.loadingService.attemptToDeactivate();
+                me.handleContext(data);
                 if (!me.checkAndHandleErrors(data, observer)) {
                     observer.next(data);
                     observer.complete();
@@ -45,6 +46,7 @@ export class HttpService {
             me.loadingService.activeLoading();
             me.http.post<T>(this.getApiUrl(url), requestObject, me.getHttpConfig()).subscribe(data => {
                 me.loadingService.attemptToDeactivate();
+                me.handleContext(data);
                 if (!me.checkAndHandleErrors(data, observer)) {
                     observer.next(data);
                     observer.complete();
@@ -105,6 +107,12 @@ export class HttpService {
                 default:
                     break;
             }
+        }
+    }
+
+    public handleContext<T>(data: T) {
+        if (data != undefined && data["context"] != undefined && data["context"]["user"] !== undefined && data["context"]["user"] === null) {
+            this.authenticationService.setAuthenticated();
         }
     }
 

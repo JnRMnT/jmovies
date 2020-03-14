@@ -5,6 +5,7 @@ using JMovies.Entities.Interfaces;
 using JMovies.Entities.Requests;
 using JM.Entities.Framework;
 using System.IdentityModel.Tokens.Jwt;
+using JMovies.Entities;
 
 namespace JMovies.Web.UI.Controllers
 {
@@ -13,10 +14,12 @@ namespace JMovies.Web.UI.Controllers
     {
         private IAuthenticationProvider authenticationProvider;
         private ITokenProvider tokenProvider;
-        public LoginController(IAuthenticationProvider authenticationProvider, ITokenProvider tokenProvider)
+        private IContextProvider contextProvider;
+        public LoginController(IAuthenticationProvider authenticationProvider, ITokenProvider tokenProvider, IContextProvider contextProvider)
         {
             this.authenticationProvider = authenticationProvider;
             this.tokenProvider = tokenProvider;
+            this.contextProvider = contextProvider;
         }
 
         [HttpPost]
@@ -31,6 +34,9 @@ namespace JMovies.Web.UI.Controllers
             {
                 //issue token
                 response.Token = tokenProvider.IssueToken(request.Username.ToPlainString());
+                Context context = contextProvider.GetContext();
+                context.User = response.User;
+                contextProvider.SetContext(context);
             }
 
             return response;

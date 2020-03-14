@@ -8,5 +8,6 @@ namespace JMovies.Entities
 {
     public class BaseResponse
     {
+        public Context Context { get; set; }
     }
 }

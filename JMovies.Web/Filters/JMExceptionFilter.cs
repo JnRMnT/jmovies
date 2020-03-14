@@ -7,7 +7,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using JMovies.Utilities.Logging;
 
-namespace JMovies.Web.UI.ErrorHandler
+namespace JMovies.Web.UI.Filters
 {
     public class JMExceptionFilter : ExceptionFilterAttribute
     {
