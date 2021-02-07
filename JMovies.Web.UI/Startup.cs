@@ -125,6 +125,7 @@ namespace JMovies
             services.AddSingleton<IIMDbDataProvider, ActionBasedIMDbDataProvider>();
             services.AddSingleton<IExceptionHandler, ExceptionHandler>();
             services.AddSingleton<IAuthenticationProvider, FlowBasedAuthenticationProvider>();
+            services.AddApplicationInsightsTelemetry();
             services.AddSingleton<ITokenProvider, JWTTokenProvider>((serviceProvider) =>
             {
                 return new JWTTokenProvider(signKey, encryptionKey);

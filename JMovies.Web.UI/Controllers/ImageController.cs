@@ -48,7 +48,7 @@ namespace JMovies.Controllers
                         }
                         ResizeOptions resizeOptions = new ResizeOptions
                         {
-                            Size = new SixLabors.Primitives.Size
+                            Size = new Size
                             {
                                 Width = w,
                                 Height = h
