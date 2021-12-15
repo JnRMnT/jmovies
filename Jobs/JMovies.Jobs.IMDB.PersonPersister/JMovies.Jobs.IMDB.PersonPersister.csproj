@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JMovies.IMDb" Version="1.5.5" />
-    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.16.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.16.0" />
+    <PackageReference Include="JMovies.IMDb" Version="1.6.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.19.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.19.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JMovies.IMDb" Version="1.5.5" />
+    <PackageReference Include="JMovies.IMDb" Version="1.6.0" />
   </ItemGroup>
 
 </Project>
