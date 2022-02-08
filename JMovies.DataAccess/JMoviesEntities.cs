@@ -64,13 +64,13 @@ namespace JMovies.DataAccess
             modelBuilder.Entity<Image>().Property(e => e.Content).HasColumnType("BYTEA");
 
             modelBuilder.Entity<Production>()
-             .HasDiscriminator<ProductionTypeEnum>("ProductionType")
+             .HasDiscriminator(e => e.ProductionType)
              .HasValue<Production>(ProductionTypeEnum.Undefined)
              .HasValue<TVSeries>(ProductionTypeEnum.TVSeries)
              .HasValue<Movie>(ProductionTypeEnum.Movie);
 
             modelBuilder.Entity<Credit>()
-         .HasDiscriminator<CreditRoleType>("RoleType")
+         .HasDiscriminator( e => e.RoleType)
          .HasValue<Credit>(CreditRoleType.Undefined)
          .HasValue<ActingCredit>(CreditRoleType.Actor)
          .HasValue<ActingCredit>(CreditRoleType.Actress)
@@ -83,7 +83,7 @@ namespace JMovies.DataAccess
          .HasValue<ActingCredit>(CreditRoleType.Acting);
 
             modelBuilder.Entity<Character>()
-         .HasDiscriminator<CharacterTypeEnum>("CharacterType")
+         .HasDiscriminator(e => e.CharacterType)
          .HasValue<Character>(CharacterTypeEnum.Character)
          .HasValue<TVCharacter>(CharacterTypeEnum.TVCharacter);
 
